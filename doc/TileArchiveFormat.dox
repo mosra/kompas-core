@@ -1,0 +1,78 @@
+/** @page TileArchiveFormat Tile archive format
+<p>Tile archive is designed for saving tile data with space efficiency and fast
+access, so the archive is not modifiable after creation (adding/replacing tiles
+is not possible without rebuilding whole archive from scratch). Key
+features:</p>
+<ul>
+<li>Minimal additional storage space - every tile occupies only four bytes more
+than its size, archive header has only 20 bytes.</li>
+<li>Works on both Little-Endian and Big-Endian systems</li>
+<li>Archive can be divided to smaller parts to overcome filesystem and storage
+limits</li>
+<li>Archive can be "sparse" - some tiles could be missing</li>
+</ul>
+@section TAv3 Format version 3 (proposal)
+<p>Format version 3 is not yet implemented, but it will fix some issues existing
+in version 2, mainly the neccesity to know number of tiles in one file before
+creating it.</p>
+@section TAv2 Format version 2 (deprecated)
+<p>Archive format version 2 is used since %Map2X version 0.0.5 and currently is
+supported read-only. Creating new archives of version 2 is not supported.</p>
+@subsection TAParts Archive parts
+<p>The archive is divided into two main parts: header, which defines tile data
+positions in the file, and the data itself. Header structure:</p>
+<table>
+<tr>
+<th>Byte</th>
+<th>Value (type)</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>0 - 2</td>
+<td><tt>0x4d 0x41 0x50</tt></td>
+<td>File signature (characters <tt>MAP</tt>)</td>
+</tr>
+<tr>
+<td>3</td>
+<td><tt>0x02</tt></td>
+<td>Version number (currently 2)</td>
+</tr>
+<tr>
+<td>4 - 7</td>
+<td>integer</td>
+<td>Total count of tiles</tt>
+</tr>
+<tr>
+<td>8 - 11</td>
+<td>integer</td>
+<td>Number of first tile in this archive (counted from 0)</td>
+</tr>
+<tr>
+<td>12 - 15</td>
+<td>integer</td>
+<td>Number of (one item after) last tile in this archive</td>
+</tr>
+<tr>
+<td>16 - (15+4n)</td>
+<td>integer</td>
+<td>Positions of particular tiles in the file ('n' is tile count)</td>
+</tr>
+<tr>
+<td>(16+4n) - (19+4n)</td>
+<td>integer</td>
+<td>(One position after) end of file</td>
+</tr>
+</table>
+<p>Notes:</p>
+<ul>
+<li>All numeric values are stored as @b Big-Endian. </li>
+<li>Count of tiles in actual file is computed easily by subtracting number of
+first tile from number of (one item after) last tile in the archive.</li>
+<li>Beginning and end position of tile data is taken from two adjacent
+numbers in the archive. This is also the reason why header contains EOF
+position - data extracting algorithm just simply takes two numbers for every
+tile, even for the last (which ends at EOF).</li>
+<li>If two adjacent positions tile are the same, it means that particular tile
+is missing.</li>
+</ul>
+ */
