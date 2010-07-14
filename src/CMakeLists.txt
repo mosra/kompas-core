@@ -3,7 +3,10 @@ add_definitions(-Wall -pedantic)
 add_subdirectory(PluginManager)
 add_subdirectory(Utility)
 
+include_directories(${CMAKE_SOURCE_DIR}/src ${CMAKE_BINARY_DIR}/src)
+
 set(Map2X_Core_SRCS
+    TileArchiveReader.cpp
     Wgs84Coords.cpp
 )
 
