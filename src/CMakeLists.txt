@@ -8,6 +8,7 @@ include_directories(${Map2XCore_SOURCE_DIR}/src ${Map2XCore_BINARY_DIR}/src)
 set(Map2X_Core_SRCS
     TileArchiveReader.cpp
     Wgs84Coords.cpp
+    AbstractTileModel.cpp
 )
 
 add_library(Map2XCore SHARED ${Map2X_Core_SRCS})
