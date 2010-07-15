@@ -26,7 +26,8 @@ namespace Map2X { namespace Core {
 /**
  * @brief WGS84 (GPS) coordinates
  *
- * Stores only valid coordinates. If a valid coordinates were not passed,
+ * Class for storing latitude and longtitude coordinates (in degrees).
+ * Only valid coordinates are stored. If a valid coordinates were not passed,
  * resets both longtitude and latitude to zero and marks the coordinates as
  * invalid. Coordinates can be converted to string representation with user
  * defined decimal precision of seconds and string format.

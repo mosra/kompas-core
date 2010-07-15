@@ -1,6 +1,6 @@
 /** @mainpage
 
-<p><strong>map2x-lib</strong> is a plugin-based library written in pure C++ and
+<p><strong>%Map2X Core</strong> is a plugin-based library written in pure C++ and
 released under LGPLv3 license. It provides core functionality for downloading
 maps from servers, loading and saving them from/to files or archives, converting
 coordinates, loading and saving tracks, points of interest and many more.</p>
@@ -29,4 +29,7 @@ POI etc.:
 
 GPS:
 - http://www.archlinux.org/packages/community/i686/gpsd/
+
+Navigation software:
+- http://oss.wayfinder.com/
  */
