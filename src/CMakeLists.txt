@@ -9,6 +9,7 @@ set(Map2X_Core_SRCS
     TileArchiveReader.cpp
     Wgs84Coords.cpp
     AbstractTileModel.cpp
+    AbstractMercatorTileModel.cpp
 )
 
 add_library(Map2XCore SHARED ${Map2X_Core_SRCS})
