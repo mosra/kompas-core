@@ -3,7 +3,7 @@ add_definitions(-Wall -pedantic)
 add_subdirectory(PluginManager)
 add_subdirectory(Utility)
 
-include_directories(${CMAKE_SOURCE_DIR}/src ${CMAKE_BINARY_DIR}/src)
+include_directories(${Map2XCore_SOURCE_DIR}/src ${Map2XCore_BINARY_DIR}/src)
 
 set(Map2X_Core_SRCS
     TileArchiveReader.cpp

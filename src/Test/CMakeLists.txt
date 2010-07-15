@@ -2,7 +2,7 @@ find_package(Qt4 REQUIRED)
 
 enable_testing()
 
-include_directories(${CMAKE_SOURCE_DIR}/src ${CMAKE_CURRENT_BINARY_DIR})
+include_directories(${Map2XCore_SOURCE_DIR}/src ${CMAKE_CURRENT_BINARY_DIR})
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/TileArchiveTestConfigure.h.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/TileArchiveTestConfigure.h)
