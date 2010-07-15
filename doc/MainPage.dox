@@ -12,5 +12,21 @@ consoles, mobile phones etc.)</li>
 <li>Plugin-based system for easy extensibility and scalability for different
 needs</li>
 </ul>
+@section MPBrainstorming Brainstorming (links, etc.)
+Tile servers:
+- http://code.google.com/intl/cs-CZ/apis/maps/documentation/javascript/v2/overlays.html#Google_Maps_Coordinates
+- http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
+- http://qmapcontrol.svn.sourceforge.net/viewvc/qmapcontrol/QMapControl/src/
 
+Distance between two WGS84 coordinates:
+- http://openmap.bbn.com/mailArchives/openmap-users/2002-03/0666.html (+ zip dl)
+- http://www.movable-type.co.uk/scripts/latlong-vincenty.html
+
+POI etc.:
+- http://www.geonames.org/about.html
+- icons: http://aur.archlinux.org/packages.php?ID=38879 (OSM)
+- http://www.poi.cz
+
+GPS:
+- http://www.archlinux.org/packages/community/i686/gpsd/
  */
