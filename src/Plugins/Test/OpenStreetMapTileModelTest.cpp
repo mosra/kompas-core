@@ -15,42 +15,44 @@
 
 #include "OpenStreetMapTileModelTest.h"
 
+#include <cmath>
 #include <QtTest/QTest>
 #include <QtCore/QDebug>
 
 #include "Plugins/OpenStreetMapTileModel.h"
 #include "Wgs84Coords.h"
 
+Q_DECLARE_METATYPE(Map2X::Core::Wgs84Coords)
 QTEST_APPLESS_MAIN(Map2X::Core::Plugins::Test::OpenStreetMapTileModelTest)
 
 namespace Map2X { namespace Core { namespace Plugins { namespace Test {
 
 void OpenStreetMapTileModelTest::coords_data() {
-    QTest::addColumn<double>("lat");
-    QTest::addColumn<double>("lon");
-    QTest::addColumn<Zoom>("z");
+    QTest::addColumn<Wgs84Coords>("coords");
 
-    QTest::newRow("Grenwich") << 0. << 0. << (Zoom) 1;
-    QTest::newRow("Grenwich zoom 10") << 0. << 0. << (Zoom) 10;
-    QTest::newRow("Prague") << 50.08333 << 14.46667 << (Zoom) 1;
-    QTest::newRow("Prague zoom 25") << 50.08333 << 14.46667 << (Zoom) 25;
-    QTest::newRow("New York") << 40.7142691 << -74.0059729 << (Zoom) 1;
-    QTest::newRow("New York zoom 3") << 40.7142691 << -74.0059729 << (Zoom) 3;
-    QTest::newRow("Sydney") << 	-33.88333 << 151.2167 << (Zoom) 3;
-    QTest::newRow("Sydney zoom 2") << 	-33.88333 << 151.2167 << (Zoom) 3;
+    QTest::newRow("Greenwich")
+        << Wgs84Coords(0.0, 0.0);
+    QTest::newRow("Prague")
+        << Wgs84Coords(50.08333, 14.46667);
+    QTest::newRow("New York")
+        << Wgs84Coords(40.7142691, -74.0059729);
+    QTest::newRow("Sydney")
+        << Wgs84Coords(-33.88333, 151.2167);
 }
 
 void OpenStreetMapTileModelTest::coords() {
-    QFETCH(double, lat);
-    QFETCH(double, lon);
-    QFETCH(Zoom, z);
+    QFETCH(Wgs84Coords, coords);
 
-    Wgs84Coords c1(lat, lon);
-    Wgs84Coords c2 = TileModel.toWgs84(z, TileModel.fromWgs84(z, c1));
+    Wgs84Coords actual = model.toWgs84(18, model.fromWgs84(18, coords));
+    Wgs84Coords actual0 = model.toWgs84(0, model.fromWgs84(0, coords));
 
-	qDebug() << c1.latitude() << c1.longtitude();
-	qDebug() << c2.latitude() << c2.longtitude();
-    QCOMPARE(c1, c2);
+    Wgs84Coords roundedCoords(round(coords.latitude()*7500)/7500, round(coords.longtitude()*7500)/7500);
+    Wgs84Coords roundedActual(round(actual.latitude()*7500)/7500, round(actual.longtitude()*7500)/7500);
+    Wgs84Coords roundedCoords0(round(coords.latitude()/3)*3, round(coords.longtitude()/3)*3);
+    Wgs84Coords roundedActual0(round(actual0.latitude()/3)*3, round(actual0.longtitude()/3)*3);
+
+    QVERIFY(roundedCoords == roundedActual);
+    QVERIFY(roundedActual0 == roundedCoords0);
 }
 
 }}}}

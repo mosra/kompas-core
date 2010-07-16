@@ -23,8 +23,8 @@ namespace Map2X { namespace Core { namespace Plugins { namespace Test {
 class OpenStreetMapTileModelTest: public QObject {
     Q_OBJECT
 
-	private:
-		OpenStreetMapTileModel TileModel;
+    private:
+        OpenStreetMapTileModel model;
 
     private slots:
         void coords_data();

@@ -42,8 +42,8 @@ RasterCoords AbstractMercatorTileModel::fromWgs84(Zoom z, const Map2X::Core::Wgs
     y *= pow(zoomStep(), z);
 
     return RasterCoords(
-        static_cast<int>(x),
-        static_cast<int>(y),
+        x,
+        y,
         (x-floor(x))*tileSize().x,
         (y-floor(y))*tileSize().y
     );
@@ -51,8 +51,8 @@ RasterCoords AbstractMercatorTileModel::fromWgs84(Zoom z, const Map2X::Core::Wgs
 
 Wgs84Coords AbstractMercatorTileModel::toWgs84(Zoom z, const Map2X::Core::RasterCoords& coords) const {
     /* Add pixel coordinates to Tile coordinates */
-    double lon = coords.x() + coords.moveX()/tileSize().x;
-    double lat = coords.y() + coords.moveY()/tileSize().y;
+    double lon = coords.x() + static_cast<double>(coords.moveX())/tileSize().x;
+    double lat = coords.y() + static_cast<double>(coords.moveY())/tileSize().y;
 
     /* Transform coordinates to zoom 1 */
     lon /= pow(zoomStep(), z);
