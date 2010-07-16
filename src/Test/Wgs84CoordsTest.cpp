@@ -66,4 +66,15 @@ void Wgs84CoordsTest::stringFormat() {
              QString("Latitude: 49 deg. 9 min. 33.1672 sec. North, Longtitude: 15 deg. 12 min. 4.7740 sec. East"));
 }
 
+void Wgs84CoordsTest::compare() {
+    /* Two similar */
+    QVERIFY(Wgs84Coords(15.7652, -120.2542) == Wgs84Coords(15.7652, -120.2542));
+
+    /* Two another */
+    QVERIFY(Wgs84Coords(23.23, 5.5) != Wgs84Coords(10.005, 11.0));
+
+    /* Invalid and valid with the same value */
+    QVERIFY(Wgs84Coords() != Wgs84Coords(0, 0));
+}
+
 }}}

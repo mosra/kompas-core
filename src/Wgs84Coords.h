@@ -108,6 +108,14 @@ class Wgs84Coords {
         std::string toString(int precision = 3, std::string _format = format) const;
 };
 
+/** @brief Comparing operator */
+bool operator==(const Wgs84Coords& a, const Wgs84Coords& b);
+
+/** @brief Comparing operator */
+inline bool operator!=(const Wgs84Coords& a, const Wgs84Coords& b) {
+    return !operator==(a, b);
+}
+
 }}
 
 #endif
