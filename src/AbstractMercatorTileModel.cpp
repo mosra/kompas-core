@@ -31,7 +31,7 @@ RasterCoords AbstractMercatorTileModel::fromWgs84(Zoom z, const Map2X::Core::Wgs
     y = log(tan(y) + 1/cos(y));
 
     /* Transform latitude range, shift origin */
-    y = (1 + y/PI)/2;
+    y = (1 - y/PI)/2;
 
     /* Apply shift and stretch */
     x = (x+coordinateShift().x)*coordinateStretch().x;
@@ -50,8 +50,28 @@ RasterCoords AbstractMercatorTileModel::fromWgs84(Zoom z, const Map2X::Core::Wgs
 }
 
 Wgs84Coords AbstractMercatorTileModel::toWgs84(Zoom z, const Map2X::Core::RasterCoords& coords) const {
-    /** @todo Implement! */
-    return Wgs84Coords();
+    /* Add pixel coordinates to Tile coordinates */
+    double lon = coords.x() + coords.moveX()/tileSize().x;
+    double lat = coords.y() + coords.moveY()/tileSize().y;
+
+    /* Transform coordinates to zoom 1 */
+    lon /= pow(zoomStep(), z);
+    lat /= pow(zoomStep(), z);
+
+    /* Substract shift and stretch */
+    lon = lon/coordinateStretch().x - coordinateShift().x;
+    lat = lat/coordinateStretch().y - coordinateShift().y;
+
+    /* Reset latitude range, unshift origin */
+    lat = (1 - 2*lat)*PI;
+
+    /* Reproject mercator projection to latitude in degrees */
+    lat = 180/PI * atan(0.5 * (exp(lat) - exp(-lat)));
+
+    /* Shift origin to center, transform 0 - 1 range to  -180° - +180° */
+    lon = (2*lon - 1)*180;
+
+    return Wgs84Coords(lat, lon);
 }
 
 }}

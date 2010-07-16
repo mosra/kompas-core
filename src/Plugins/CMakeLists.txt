@@ -5,3 +5,7 @@ set(Map2X_Core_Plugins_SRCS
 )
 
 add_library(Map2XCorePlugins STATIC ${Map2X_Core_Plugins_SRCS})
+
+if(BUILD_TESTS)
+    add_subdirectory(Test)
+endif()
