@@ -19,6 +19,8 @@
 #include <sstream>
 #include <cmath>
 
+#include "basictypes.h"
+
 using namespace std;
 
 namespace Map2X { namespace Core {
@@ -88,7 +90,10 @@ std::string Wgs84Coords::toString(int precision, string _format) const {
 }
 
 bool operator==(const Map2X::Core::Wgs84Coords& a, const Map2X::Core::Wgs84Coords& b) {
-    if(a.isValid() && b.isValid() && a.latitude() == b.latitude() && a.longtitude() == b.longtitude())
+    if(!a.isValid() || !b.isValid())
+        return false;
+
+    if(abs(a.latitude() - b.latitude()) < EPSILON && abs(a.longtitude() - b.longtitude()) < EPSILON)
         return true;
 
     return false;

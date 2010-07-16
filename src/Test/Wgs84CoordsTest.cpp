@@ -75,6 +75,10 @@ void Wgs84CoordsTest::compare() {
 
     /* Invalid and valid with the same value */
     QVERIFY(Wgs84Coords() != Wgs84Coords(0, 0));
+
+    /* Tolerance */
+    QVERIFY(Wgs84Coords(15.6999999901, 136.0000000099) == Wgs84Coords(15.7, 136.0));
+    QVERIFY(Wgs84Coords(15.6999999901, 136.0000000099) != Wgs84Coords(15.70000001, 135.99999999));
 }
 
 }}}

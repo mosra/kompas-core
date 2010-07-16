@@ -24,6 +24,9 @@ namespace Map2X { namespace Core {
 /** @brief Pi */
 #define PI 3.1415926535
 
+/** @brief Maximal tolerance when comparing doubles */
+#define EPSILON 1.0e-8
+
 /** @brief Coordinates */
 template <class PositionType> struct Coords {
     PositionType x,     /**< @brief X value */
