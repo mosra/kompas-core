@@ -94,7 +94,7 @@ class AbstractTileModel {
          * @param package   Package ID (returned by addPackage)
          * @return Attribute value
          */
-        std::string attribute(Attribute type, int package);
+        std::string attribute(Attribute type, int package) const;
 
         /**
          * @brief Zoom levels
@@ -160,7 +160,7 @@ class AbstractTileModel {
          * packages).
          * @see AbstractTileModel::LoadableFromFile
          */
-        virtual int addPackage(std::string packageDir);
+        virtual int addPackage(const std::string& packageDir);
 
         /**
          * @brief Enable/disable online maps
@@ -182,7 +182,7 @@ class AbstractTileModel {
          *
          * Downloaded tiles can be pushed into cache for later usage.
          */
-        virtual bool setCache(std::string cacheDir);
+        virtual bool setCache(const std::string& cacheDir);
 
         /*@}*/
 
@@ -205,7 +205,7 @@ class AbstractTileModel {
          * applied to tiles.
          * @note Default implementation returns empty string.
          */
-        virtual inline std::string tileUrl(std::string layer, Zoom z, const TileCoords& coords) const { return ""; }
+        virtual inline std::string tileUrl(const std::string& layer, Zoom z, const TileCoords& coords) const { return ""; }
 
         /**
          * @brief Tile filename
@@ -217,7 +217,7 @@ class AbstractTileModel {
          * Returns tile filename (without path).
          * @note Default implementation returns empty string.
          */
-        virtual std::string tileFilename(std::string layer, Zoom z, const TileCoords& coords) const { return ""; }
+        virtual std::string tileFilename(const std::string& layer, Zoom z, const TileCoords& coords) const { return ""; }
 
         /**
          * @brief Tile data
@@ -234,7 +234,7 @@ class AbstractTileModel {
          * If nothing found, returns empty string.
          * @see AbstractTileModel::LoadableFromFile, AbstractTileModel::tileFile(), AbstractTileModel::enableOnlineWithCache()
          */
-        virtual std::string tileData(std::string layer, Zoom z, const TileCoords& coords) const;
+        virtual std::string tileData(const std::string& layer, Zoom z, const TileCoords& coords);
 
         /*@}*/
 

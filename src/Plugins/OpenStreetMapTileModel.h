@@ -42,7 +42,7 @@ class OpenStreetMapTileModel: public Core::AbstractMercatorTileModel {
         virtual std::vector<std::string> layers() const;
         virtual std::vector<std::string> overlays() const;
 
-        virtual std::string tileUrl(std::string layer, Core::Zoom z, const Map2X::Core::TileCoords& coords) const;
+        virtual std::string tileUrl(const std::string& layer, Core::Zoom z, const Map2X::Core::TileCoords& coords) const;
 };
 
 }}}

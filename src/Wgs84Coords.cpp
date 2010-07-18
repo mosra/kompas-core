@@ -42,15 +42,16 @@ Wgs84Coords::Wgs84Coords(double __lat, double __lon) {
     }
 }
 
-std::string Wgs84Coords::toString(int precision, string _format) const {
+std::string Wgs84Coords::toString(int precision, const string& _format) const {
     /* Don't return anything if coordinates are not valid */
     if(!isValid()) return "";
 
     /* Parse format string, return empty string on error */
     vector<string> formatters;
+    string tmp;
     istringstream in(_format);
-    while(getline(in, _format, '\n'))
-        formatters.push_back(_format);
+    while(getline(in, tmp, '\n'))
+        formatters.push_back(tmp);
     if(formatters.size() != 10) return "";
 
     /* North / south, east / west */

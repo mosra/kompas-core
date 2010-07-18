@@ -49,7 +49,7 @@ vector<string> OpenStreetMapTileModel::overlays() const {
     return l;
 }
 
-string OpenStreetMapTileModel::tileUrl(string layer, Zoom z, const Map2X::Core::TileCoords& coords) const {
+string OpenStreetMapTileModel::tileUrl(const std::string& layer, Zoom z, const TileCoords& coords) const {
     if(z > 18) return "";
 
     ostringstream url;

@@ -105,7 +105,7 @@ class Wgs84Coords {
          * Converts numeric coordinates to text representation (e.g.
          * <tt>49°9'33.167"N 15°12'4.774"E</tt>).
          */
-        std::string toString(int precision = 3, std::string _format = format) const;
+        std::string toString(int precision = 3, const std::string& _format = format) const;
 };
 
 /** @brief Comparing operator */

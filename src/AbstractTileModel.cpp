@@ -15,14 +15,16 @@
 
 #include "AbstractTileModel.h"
 
+using namespace std;
+
 namespace Map2X { namespace Core {
 
-std::string AbstractTileModel::attribute(AbstractTileModel::Attribute type, int package) {
+string AbstractTileModel::attribute(Attribute type, int package) const {
     /** @todo Implement! */
     return "";
 }
 
-int AbstractTileModel::addPackage(std::string packageDir) {
+int AbstractTileModel::addPackage(const string& packageDir) {
     /** @todo Implement! */
     return -1;
 }
@@ -37,12 +39,12 @@ bool AbstractTileModel::setOnline(bool enabled) {
     return enabledOnline;
 }
 
-bool AbstractTileModel::setCache(std::string cacheDir) {
+bool AbstractTileModel::setCache(const string& cacheDir) {
     /** @todo Implement! */
     return false;
 }
 
-std::string AbstractTileModel::tileData(std::string layer, Zoom z, const Map2X::Core::TileCoords& coords) const {
+string AbstractTileModel::tileData(const string& layer, Zoom z, const TileCoords& coords) {
     /** @todo Implement! */
     return "";
 }
