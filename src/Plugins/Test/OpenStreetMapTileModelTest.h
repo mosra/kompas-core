@@ -2,6 +2,7 @@
 #define Map2X_Core_Plugins_Test_OpenStreetMapTileModelTest_h
 /*
     Copyright © 2007, 2008, 2009, 2010 Vladimír Vondruš <mosra@centrum.cz>
+    Copyright © 2010 Jan Dupal <dupal.j@seznam.cz>
 
     This file is part of Map2X.
 
