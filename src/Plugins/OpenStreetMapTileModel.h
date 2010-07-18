@@ -23,7 +23,11 @@
 
 namespace Map2X { namespace Core { namespace Plugins {
 
-/** @brief OpenStreetMap tile model */
+/**
+ * @brief OpenStreetMap tile model
+ *
+ * Based on: http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
+ */
 class OpenStreetMapTileModel: public Core::AbstractMercatorTileModel {
     public:
         inline virtual int features() const

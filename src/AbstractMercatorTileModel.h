@@ -23,7 +23,11 @@
 
 namespace Map2X { namespace Core {
 
-/** @brief Abstract class for maps with Mercator projection */
+/**
+ * @brief Abstract class for maps with Mercator projection
+ *
+ * Coordinate calculation based on http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
+ */
 class AbstractMercatorTileModel: public AbstractTileModel {
     public:
         inline virtual int features() const { return ConvertableCoords; }

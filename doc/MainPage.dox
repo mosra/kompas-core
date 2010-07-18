@@ -15,7 +15,6 @@ needs</li>
 @section MPBrainstorming Brainstorming (links, etc.)
 Tile servers:
 - http://code.google.com/intl/cs-CZ/apis/maps/documentation/javascript/v2/overlays.html#Google_Maps_Coordinates
-- http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
 - http://qmapcontrol.svn.sourceforge.net/viewvc/qmapcontrol/QMapControl/src/
 
 Distance between two WGS84 coordinates:
