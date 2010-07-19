@@ -44,6 +44,16 @@ template <class PositionType> struct Coords {
         x(_x), y(_y) {}
 };
 
+/** @brief Comparing operator for coordinates */
+template<class T> inline bool operator==(const Coords<T>& a, const Coords<T>& b) {
+    return a.x == b.x && a.y == b.y;
+}
+
+/** @brief Comparing operator for coordinates */
+template<class T> inline bool operator!=(const Coords<T>& a, const Coords<T>& b) {
+    return !operator==(a, b);
+}
+
 /** @brief %Area with defined position and size */
 template <class PositionType, class SizeType> struct Area {
     PositionType x,     /**< @brief X position */
