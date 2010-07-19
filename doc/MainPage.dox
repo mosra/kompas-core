@@ -16,6 +16,7 @@ needs</li>
 Tile servers:
 - http://code.google.com/intl/cs-CZ/apis/maps/documentation/javascript/v2/overlays.html#Google_Maps_Coordinates
 - http://qmapcontrol.svn.sourceforge.net/viewvc/qmapcontrol/QMapControl/src/
+- http://spatialreference.org/ref/sr-org/98/
 
 Distance between two WGS84 coordinates:
 - http://openmap.bbn.com/mailArchives/openmap-users/2002-03/0666.html (+ zip dl)
