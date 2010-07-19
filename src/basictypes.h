@@ -32,6 +32,9 @@ template <class PositionType> struct Coords {
     PositionType x,     /**< @brief X value */
         y;              /**< @brief Y value */
 
+    /** @brief Implicit constructor */
+    inline Coords(): x(0), y(0) {}
+
     /**
      * @brief Constructor
      * @param _x    X value
@@ -47,6 +50,9 @@ template <class PositionType, class SizeType> struct Area {
         y;              /**< @brief Y position */
     SizeType w,         /**< @brief Width */
         h;              /**< @brief Height */
+
+    /** @brief Implicit constructor */
+    inline Area(): x(0), y(0), w(0), h(0) {}
 
     /**
      * @brief Constructor
@@ -65,6 +71,9 @@ template <class PositionType> struct AbsoluteArea {
         y1,             /**< @brief Beginning Y position */
         x2,             /**< @brief Ending X position */
         y2;             /**< @brief Ending Y position */
+
+    /** @brief Implicit constructor */
+    inline AbsoluteArea(): x1(0), y1(0), x2(0), y2(0) {}
 
     /**
      * @brief Constructor
