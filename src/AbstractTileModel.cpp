@@ -30,13 +30,13 @@ int AbstractTileModel::addPackage(const string& packageDir) {
 }
 
 bool AbstractTileModel::setOnline(bool enabled) {
-    if(!enabled) enabledOnline = false;
+    if(!enabled) _online = false;
     else {
-        if(!(features() & LoadableFromUrl)) enabledOnline = false;
-        else enabledOnline = true;
+        if(!(features() & LoadableFromUrl)) _online = false;
+        else _online = true;
     }
 
-    return enabledOnline;
+    return _online;
 }
 
 bool AbstractTileModel::setCache(const string& cacheDir) {

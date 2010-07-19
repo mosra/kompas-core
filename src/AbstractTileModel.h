@@ -98,7 +98,7 @@ class AbstractTileModel {
         /*@}*/
 
         /** @brief Constructor  */
-        inline AbstractTileModel(): enabledOnline(false) {}
+        inline AbstractTileModel(): _online(false) {}
 
         /** @{ @name Map parameters */
 
@@ -189,6 +189,9 @@ class AbstractTileModel {
          */
         virtual bool setOnline(bool enabled);
 
+        /** @brief Whether online maps are enabled */
+        inline bool online() const { return _online; }
+
         /**
          * @brief Set cache for online maps
          * @param cacheDir  Directory with cache files.
@@ -278,7 +281,7 @@ class AbstractTileModel {
         /*@}*/
 
     private:
-        bool enabledOnline;
+        bool _online;
 };
 
 }}
