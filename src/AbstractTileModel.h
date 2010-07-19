@@ -65,6 +65,20 @@ class AbstractTileModel {
             Packager        /**< @brief Map packager */
         };
 
+        /** @{ @name Utilites */
+
+        /**
+         * @brief Minimum count of tiles to fill given area
+         * @param area  Area size in pixels
+         * @return Tile count
+         */
+        inline Coords<unsigned int> tilesInArea(Coords<unsigned int> area) const {
+            return Coords<unsigned int>((area.x-2)/tileSize().x + 2,
+                                        (area.y-2)/tileSize().y + 2);
+        }
+
+        /*@}*/
+
         /** @{ @name Model parameters
          * Common for all maps of the same type.
          */
@@ -98,6 +112,7 @@ class AbstractTileModel {
 
         /**
          * @brief Zoom levels
+         * @return List of zooms ordered in ascending order (lowest zoom first).
          *
          * All zoom levels provided by map.
          */
