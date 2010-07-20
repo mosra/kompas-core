@@ -1,5 +1,6 @@
 /*
     Copyright © 2007, 2008, 2009, 2010 Vladimír Vondruš <mosra@centrum.cz>
+    Copyright © 2010 Jan Dupal <dupal.j@seznam.cz>
 
     This file is part of Map2X.
 
@@ -16,10 +17,12 @@
 #include "Wgs84CoordsTest.h"
 
 #include <QtTest/QTest>
+#include <cmath>
 
 #include "Wgs84Coords.h"
 
 QTEST_APPLESS_MAIN(Map2X::Core::Test::Wgs84CoordsTest)
+Q_DECLARE_METATYPE(Map2X::Core::Wgs84Coords)
 
 namespace Map2X { namespace Core { namespace Test {
 
@@ -54,6 +57,32 @@ void Wgs84CoordsTest::construct() {
     }
 
     QCOMPARE(QString::fromStdString(c.toString()), toString);
+}
+
+void Wgs84CoordsTest::distance_data() {
+    QTest::addColumn<Wgs84Coords>("a");
+    QTest::addColumn<Wgs84Coords>("b");
+    QTest::addColumn<double>("distance");
+
+    Wgs84Coords Greenwich = Wgs84Coords(0.0,0.0);
+    Wgs84Coords Prague = Wgs84Coords(50.08333, 14.46667);
+    Wgs84Coords NewYork = Wgs84Coords(40.7142691, -74.0059729);
+    Wgs84Coords Sydney = Wgs84Coords(-33.88333, 151.2167);
+
+    QTest::newRow("Greenwich-Greenwich")
+        << Greenwich << Greenwich << 0.0;
+    QTest::newRow("New York-Sydney")
+        << NewYork << Sydney << 15988059.9;
+}
+
+void Wgs84CoordsTest::distance() {
+    QFETCH(Wgs84Coords, a);
+    QFETCH(Wgs84Coords, b);
+    QFETCH(double, distance);
+
+    double _distance = Wgs84Coords::distance(a, b);
+
+    QCOMPARE(round(distance), round(_distance));
 }
 
 void Wgs84CoordsTest::stringFormat() {

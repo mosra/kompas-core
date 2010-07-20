@@ -2,6 +2,7 @@
 #define Map2X_Core_Wgs84Coords_h
 /*
     Copyright © 2007, 2008, 2009, 2010 Vladimír Vondruš <mosra@centrum.cz>
+    Copyright © 2010 Jan Dupal <dupal.j@seznam.cz>
 
     This file is part of Map2X.
 
@@ -106,6 +107,16 @@ class Wgs84Coords {
          * <tt>49°9'33.167"N 15°12'4.774"E</tt>).
          */
         std::string toString(int precision = 3, const std::string& _format = format) const;
+
+        /**
+         * @brief Compute distance on WGS84 geoid
+         * @param a  Coordinates of first place
+         * @param b  Coordinates of second place
+         * @return Distance in meters
+         *
+         * Computes distance between two given coordinates on WGS84 geoid.
+         */
+        static double distance(const Wgs84Coords& _a, const Wgs84Coords& _b);
 };
 
 /** @brief Comparing operator */
