@@ -109,14 +109,18 @@ class Wgs84Coords {
         std::string toString(int precision = 3, const std::string& _format = format) const;
 
         /**
-         * @brief Compute distance on WGS84 geoid
-         * @param a  Coordinates of first place
-         * @param b  Coordinates of second place
-         * @return Distance in meters
+         * @brief Distance between two places
+         * @param a             First place
+         * @param b             Second place
+         * @return Distance in meters. When places are nearly antipodial, the
+         * function might fail to compute the distance. In that case returns -1.
          *
          * Computes distance between two given coordinates on WGS84 geoid.
+         * Based on Vincenty Inverse Solution of Geodesics on the Ellipsoid ©
+         * Chris Veness 2002-2010,
+         * http://www.movable-type.co.uk/scripts/latlong-vincenty.html .
          */
-        static double distance(const Wgs84Coords& _a, const Wgs84Coords& _b);
+        static double distance(const Wgs84Coords& a, const Wgs84Coords& b);
 };
 
 /** @brief Comparing operator */
