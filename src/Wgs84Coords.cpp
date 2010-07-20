@@ -101,7 +101,7 @@ bool operator==(const Map2X::Core::Wgs84Coords& a, const Map2X::Core::Wgs84Coord
     return false;
 }
 
-double Wgs84Coords::distance(const Wgs84Coords& a, const Wgs84Coords& b) {
+double Wgs84Coords::distance(const Wgs84Coords& a, const Wgs84Coords& b, double precision) {
     /* WGS84 ellipsoid params */
     double _a = 6378137, _b = 6356752.3142,  f = 1/298.257223563;
     double L = (a.longtitude()-b.longtitude())*PI/180;
@@ -143,7 +143,7 @@ double Wgs84Coords::distance(const Wgs84Coords& a, const Wgs84Coords& b) {
     B/6*cos2SigmaM*(-3+4*sinSigma*sinSigma)*(-3+4*cos2SigmaM*cos2SigmaM)));
     double s = _b*A*(sigma-deltaSigma);
 
-    s = round(s*1000.)/1000.; // round to 1mm precision, convert to meters
+    s = round(s/precision)*precision; // round to given precision
     return s;
 }
 

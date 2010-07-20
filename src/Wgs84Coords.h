@@ -112,6 +112,8 @@ class Wgs84Coords {
          * @brief Distance between two places
          * @param a             First place
          * @param b             Second place
+         * @param precision     Round to given precision (in meters). Default
+         *      is one decimeter.
          * @return Distance in meters. When places are nearly antipodial, the
          * function might fail to compute the distance. In that case returns -1.
          *
@@ -120,7 +122,7 @@ class Wgs84Coords {
          * Chris Veness 2002-2010,
          * http://www.movable-type.co.uk/scripts/latlong-vincenty.html .
          */
-        static double distance(const Wgs84Coords& a, const Wgs84Coords& b);
+        static double distance(const Wgs84Coords& a, const Wgs84Coords& b, double precision = 0.1);
 };
 
 /** @brief Comparing operator */
