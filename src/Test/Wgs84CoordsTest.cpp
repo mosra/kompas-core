@@ -17,7 +17,6 @@
 #include "Wgs84CoordsTest.h"
 
 #include <QtTest/QTest>
-#include <cmath>
 
 #include "Wgs84Coords.h"
 
@@ -64,15 +63,25 @@ void Wgs84CoordsTest::distance_data() {
     QTest::addColumn<Wgs84Coords>("b");
     QTest::addColumn<double>("distance");
 
-    Wgs84Coords Greenwich = Wgs84Coords(0.0,0.0);
-    Wgs84Coords Prague = Wgs84Coords(50.08333, 14.46667);
-    Wgs84Coords NewYork = Wgs84Coords(40.7142691, -74.0059729);
-    Wgs84Coords Sydney = Wgs84Coords(-33.88333, 151.2167);
+    Wgs84Coords greenwich(0.0,0.0);
+    Wgs84Coords prague(50.08333, 14.46667);
+    Wgs84Coords ny(40.7142691, -74.0059729);
+    Wgs84Coords sydney(-33.88333, 151.2167);
 
     QTest::newRow("Greenwich-Greenwich")
-        << Greenwich << Greenwich << 0.0;
-    QTest::newRow("New York-Sydney")
-        << NewYork << Sydney << 15988059.9;
+        << greenwich << greenwich << 0.0;
+    QTest::newRow("Greenwich-NY")
+        << greenwich << ny << 8667450.978;
+    QTest::newRow("Greenwich-Sydney")
+        << greenwich << sydney << 15209514.325;
+    QTest::newRow("Greenwich-Prague")
+        << greenwich << prague << 5718439.631;
+    QTest::newRow("NY-Sydney")
+        << ny << sydney << 15988059.978; // online is 977
+    QTest::newRow("Prague-NY")
+        << prague << ny << 6591583.293;
+    QTest::newRow("Prague-Sydney")
+        << prague << sydney << 16079006.106; // online is 107
 }
 
 void Wgs84CoordsTest::distance() {
@@ -80,9 +89,11 @@ void Wgs84CoordsTest::distance() {
     QFETCH(Wgs84Coords, b);
     QFETCH(double, distance);
 
-    double _distance = Wgs84Coords::distance(a, b);
+    double distance1 = Wgs84Coords::distance(a, b, 0.001);
+    double distance2 = Wgs84Coords::distance(b, a, 0.001);
 
-    QCOMPARE(round(distance), round(_distance));
+    QCOMPARE(distance, distance1);
+    QCOMPARE(distance, distance2);
 }
 
 void Wgs84CoordsTest::stringFormat() {
