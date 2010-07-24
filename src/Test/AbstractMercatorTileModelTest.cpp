@@ -14,21 +14,20 @@
     GNU Lesser General Public License version 3 for more details.
 */
 
-#include "OpenStreetMapTileModelTest.h"
+#include "AbstractMercatorTileModelTest.h"
 
 #include <cmath>
 #include <QtTest/QTest>
 #include <QtCore/QDebug>
 
-#include "Plugins/OpenStreetMapTileModel.h"
 #include "Wgs84Coords.h"
 
 Q_DECLARE_METATYPE(Map2X::Core::Wgs84Coords)
-QTEST_APPLESS_MAIN(Map2X::Core::Plugins::Test::OpenStreetMapTileModelTest)
+QTEST_APPLESS_MAIN(Map2X::Core::Test::AbstractMercatorTileModelTest)
 
-namespace Map2X { namespace Core { namespace Plugins { namespace Test {
+namespace Map2X { namespace Core { namespace Test {
 
-void OpenStreetMapTileModelTest::coords_data() {
+void AbstractMercatorTileModelTest::coords_data() {
     QTest::addColumn<Wgs84Coords>("coords");
 
     QTest::newRow("Greenwich")
@@ -41,7 +40,7 @@ void OpenStreetMapTileModelTest::coords_data() {
         << Wgs84Coords(-33.88333, 151.2167);
 }
 
-void OpenStreetMapTileModelTest::coords() {
+void AbstractMercatorTileModelTest::coords() {
     QFETCH(Wgs84Coords, coords);
 
     Wgs84Coords actual = model.toWgs84(18, model.fromWgs84(18, coords));
@@ -56,4 +55,4 @@ void OpenStreetMapTileModelTest::coords() {
     QVERIFY(roundedActual0 == roundedCoords0);
 }
 
-}}}}
+}}}

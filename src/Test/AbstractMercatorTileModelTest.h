@@ -17,21 +17,21 @@
 */
 
 #include <QtCore/QObject>
-#include "Plugins/OpenStreetMapTileModel.h"
+#include "DummyMercatorTileModel.h"
 
-namespace Map2X { namespace Core { namespace Plugins { namespace Test {
+namespace Map2X { namespace Core { namespace Test {
 
-class OpenStreetMapTileModelTest: public QObject {
+class AbstractMercatorTileModelTest: public QObject {
     Q_OBJECT
 
     private:
-        OpenStreetMapTileModel model;
+        DummyMercatorTileModel model;
 
     private slots:
         void coords_data();
         void coords();
 };
 
-}}}}
+}}}
 
 #endif
