@@ -47,9 +47,11 @@ class OpenStreetMapTileModel: public Core::AbstractMercatorTileModel {
 
 }}}
 
+#ifndef DOXYGEN_GENERATING_OUTPUT
 PLUGIN_REGISTER_STATIC(OpenStreetMap, Map2X::Core::Plugins::OpenStreetMapTileModel,
                        "cz.mosra.Map2X.Core.AbstractTileModel/0.1");
 PLUGIN_SET_NAME("OpenStreetMap");
 PLUGIN_FINISH
+#endif
 
 #endif

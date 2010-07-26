@@ -40,7 +40,7 @@ positions in the file, and the data itself. Header structure:</p>
 <tr>
 <td>4 - 7</td>
 <td>integer</td>
-<td>Total count of tiles</tt>
+<td>Total count of tiles</td>
 </tr>
 <tr>
 <td>8 - 11</td>
