@@ -92,8 +92,10 @@ std::string Wgs84Coords::toString(int precision, const string& _format) const {
 }
 
 bool operator==(const Map2X::Core::Wgs84Coords& a, const Map2X::Core::Wgs84Coords& b) {
-    if(!a.isValid() || !b.isValid())
+    if(!a.isValid() || !b.isValid()) {
+        if(!a.isValid() && !b.isValid()) return true;
         return false;
+    }
 
     if(abs(a.latitude() - b.latitude()) < EPSILON && abs(a.longtitude() - b.longtitude()) < EPSILON)
         return true;
