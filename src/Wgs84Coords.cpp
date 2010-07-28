@@ -149,4 +149,31 @@ double Wgs84Coords::distance(const Wgs84Coords& a, const Wgs84Coords& b, double 
     return s;
 }
 
-}}
+}
+
+#ifndef DOXYGEN_GENERATING_OUTPUT
+namespace Utility {
+
+template<> Core::Wgs84Coords configurationValueFromString<Core::Wgs84Coords>(const string& stringValue, int flags) {
+    double lat, lon;
+    istringstream stream(stringValue);
+    stream >> lat >> lon;
+
+    if(stream.fail()) return Core::Wgs84Coords();
+    return Core::Wgs84Coords(lat, lon);
+}
+
+template<> string configurationValueToString<Core::Wgs84Coords>(const Core::Wgs84Coords& value, int flags) {
+    if(!value.isValid()) return "0";
+
+    ostringstream stream;
+    stream.precision(12);
+    stream << value.latitude() << " " << value.longtitude();
+
+    return stream.str();
+}
+
+} // namespace Utility
+#endif
+
+}

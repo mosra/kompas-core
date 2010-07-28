@@ -21,6 +21,7 @@
  */
 
 #include <string>
+#include "Utility/ConfigurationGroup.h"
 
 namespace Map2X { namespace Core {
 
@@ -133,6 +134,33 @@ inline bool operator!=(const Wgs84Coords& a, const Wgs84Coords& b) {
     return !operator==(a, b);
 }
 
-}}
+}
+
+namespace Utility {
+
+/** @{ @copydoc ConversionFunctions */
+
+/**
+ * @brief Convert string from configuration to Wgs84Coords
+ * @copydetails Utility::configurationValueFromString()
+ *
+ * If the configuration string doesn't contain both numeric coordinates, invalid
+ * coordinates are returned.
+ */
+template<> Core::Wgs84Coords configurationValueFromString(const std::string& stringValue, int flags);
+
+/**
+ * @brief Convert Wgs84Coords to string storable in configuration
+ * @copydetails Utility::configurationValueToString()
+ *
+ * Invalid coordinates are converted to single zero character.
+ */
+template<> std::string configurationValueToString(const Core::Wgs84Coords& value, int flags);
+
+/*@}*/
+
+}
+
+}
 
 #endif
