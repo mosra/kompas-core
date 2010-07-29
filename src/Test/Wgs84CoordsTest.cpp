@@ -31,8 +31,8 @@ void Wgs84CoordsTest::construct_data() {
     QTest::addColumn<bool>("expectedValid");
     QTest::addColumn<QString>("toString");
 
-    QTest::newRow("invalidPositive") << 90.000001 << 180.00001 << false << "";
-    QTest::newRow("invalidNegative") << -90.000001 << -180.00001 << false << "";
+    QTest::newRow("invalidPositive") << 90.000001 << 180.00001 << false << "0°0'0.000\"N 0°0'0.000\"E";
+    QTest::newRow("invalidNegative") << -90.000001 << -180.00001 << false << "0°0'0.000\"N 0°0'0.000\"E";
     QTest::newRow("toString") << 49.1592131 << 15.2013261 << true << "49°9'33.167\"N 15°12'4.774\"E";
     QTest::newRow("negativeLat") << -10.0 << 100.0 << true << "10°0'0.000\"S 100°0'0.000\"E";
     QTest::newRow("negativeLon") << 15.0 << -150.0 << true << "15°0'0.000\"N 150°0'0.000\"W";

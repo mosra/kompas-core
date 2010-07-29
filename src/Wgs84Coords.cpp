@@ -44,9 +44,6 @@ Wgs84Coords::Wgs84Coords(double __lat, double __lon) {
 }
 
 std::string Wgs84Coords::toString(int precision, const string& _format) const {
-    /* Don't return anything if coordinates are not valid */
-    if(!isValid()) return "";
-
     /* Parse format string, return empty string on error */
     vector<string> formatters;
     string tmp;
