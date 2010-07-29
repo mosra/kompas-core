@@ -88,18 +88,6 @@ std::string Wgs84Coords::toString(int precision, const string& _format) const {
     return out.str();
 }
 
-bool operator==(const Map2X::Core::Wgs84Coords& a, const Map2X::Core::Wgs84Coords& b) {
-    if(!a.isValid() || !b.isValid()) {
-        if(!a.isValid() && !b.isValid()) return true;
-        return false;
-    }
-
-    if(abs(a.latitude() - b.latitude()) < EPSILON && abs(a.longtitude() - b.longtitude()) < EPSILON)
-        return true;
-
-    return false;
-}
-
 double Wgs84Coords::distance(const Wgs84Coords& a, const Wgs84Coords& b, double precision) {
     /* WGS84 ellipsoid params */
     double _a = 6378137, _b = 6356752.3142,  f = 1/298.257223563;
@@ -144,6 +132,18 @@ double Wgs84Coords::distance(const Wgs84Coords& a, const Wgs84Coords& b, double 
 
     s = round(s/precision)*precision; // round to given precision
     return s;
+}
+
+bool operator==(const Map2X::Core::Wgs84Coords& a, const Map2X::Core::Wgs84Coords& b) {
+    if(!a.isValid() || !b.isValid()) {
+        if(!a.isValid() && !b.isValid()) return true;
+        return false;
+    }
+
+    if(abs(a.latitude() - b.latitude()) < EPSILON && abs(a.longtitude() - b.longtitude()) < EPSILON)
+        return true;
+
+    return false;
 }
 
 }
