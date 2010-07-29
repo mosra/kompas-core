@@ -98,7 +98,10 @@ class Wgs84Coords {
 
         /**
          * @brief Convert coordinates to string
-         * @param precision     Decimal precision for seconds.
+         * @param precision     Precision. Non-negative value greater sets count
+         *      of decimal places. If set to @c -1, seconds are stripped away,
+         *      if set to @c -2, only degrees are in output, minutes and seconds
+         *      are stripped away.
          * @param _format       Format of converted string.
          *      See Wgs84Coords::format.
          * @return Converted string. If the coordinates or format are not valid
@@ -106,6 +109,7 @@ class Wgs84Coords {
          *
          * Converts numeric coordinates to text representation (e.g.
          * <tt>49°9'33.167"N 15°12'4.774"E</tt>).
+         * @todo Math-correctly round degrees/minutes on negative precision
          */
         std::string toString(int precision = 3, const std::string& _format = format) const;
 

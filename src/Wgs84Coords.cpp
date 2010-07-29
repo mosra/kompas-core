@@ -72,18 +72,24 @@ std::string Wgs84Coords::toString(int precision, const string& _format) const {
     out << formatters[0];
 
     /* Latitude */
-    out << static_cast<int>(latAbs) << formatters[3]
-        << static_cast<int>(latMinutes) << formatters[4];
-
-    out.precision(precision);
-    out << latSeconds << formatters[5] << formatters[ns] << formatters[1];
+    out << static_cast<int>(latAbs) << formatters[3];
+    if(precision > -2)
+        out << static_cast<int>(latMinutes) << formatters[4];
+    if(precision > -1) {
+        out.precision(precision);
+        out << latSeconds << formatters[5];
+    }
+    out << formatters[ns] << formatters[1];;
 
     /* Longtitude */
-    out << static_cast<int>(lonAbs) << formatters[3]
-        << static_cast<int>(lonMinutes) << formatters[4];
-
-    out.precision(precision);
-    out << lonSeconds << formatters[5] << formatters[ew] << formatters[2];
+    out << static_cast<int>(lonAbs) << formatters[3];
+    if(precision > -2)
+        out << static_cast<int>(lonMinutes) << formatters[4];
+    if(precision > -1) {
+        out.precision(precision);
+        out << lonSeconds << formatters[5];
+    }
+    out << formatters[ew] << formatters[2];
 
     return out.str();
 }
