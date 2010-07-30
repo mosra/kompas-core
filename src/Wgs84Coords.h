@@ -129,6 +129,9 @@ class Wgs84Coords {
          * http://www.movable-type.co.uk/scripts/latlong-vincenty.html .
          */
         static double distance(const Wgs84Coords& a, const Wgs84Coords& b, double precision = 0.1);
+
+    private:
+        std::vector<std::string> parseFormatters(const std::string& format) const;
 };
 
 /** @brief Comparing operator */

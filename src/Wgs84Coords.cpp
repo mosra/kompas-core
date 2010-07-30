@@ -45,12 +45,8 @@ Wgs84Coords::Wgs84Coords(double __lat, double __lon) {
 
 std::string Wgs84Coords::toString(int precision, const string& _format) const {
     /* Parse format string, return empty string on error */
-    vector<string> formatters;
-    string tmp;
-    istringstream in(_format);
-    while(getline(in, tmp, '\n'))
-        formatters.push_back(tmp);
-    if(formatters.size() != 10) return "";
+    vector<string> formatters = parseFormatters(_format);
+    if(formatters.empty()) return "";
 
     /* North / south, east / west */
     int ns, ew;
@@ -138,6 +134,17 @@ double Wgs84Coords::distance(const Wgs84Coords& a, const Wgs84Coords& b, double 
 
     s = round(s/precision)*precision; // round to given precision
     return s;
+}
+
+vector<string> Wgs84Coords::parseFormatters(const std::string& format) const {
+    vector<string> formatters;
+    string tmp;
+    istringstream in(format);
+    while(getline(in, tmp, '\n'))
+        formatters.push_back(tmp);
+
+    if(formatters.size() != 10) return vector<string>();
+    return formatters;
 }
 
 bool operator==(const Map2X::Core::Wgs84Coords& a, const Map2X::Core::Wgs84Coords& b) {
