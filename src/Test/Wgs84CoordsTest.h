@@ -30,8 +30,10 @@ class Wgs84CoordsTest: public QObject {
         void distance();
 
         void stringFormat();
-
         void compare();
+
+        void fromString_data();
+        void fromString();
 };
 
 }}}

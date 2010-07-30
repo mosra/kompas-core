@@ -63,6 +63,16 @@ class Wgs84Coords {
         static const std::string format;
 
         /**
+         * @brief Convert DMS representation to decimal number
+         * @param dms       DMS string
+         * @return Always positive decimal value or -1 on error.
+         *
+         * Goes through given string and gets at maximum three numeric parts,
+         * which are then converted to decimal number.
+         */
+        static double dmsToDecimal(const std::string& dms);
+
+        /**
          * @brief Latitude
          *
          * Positive value means north, negative south.
@@ -95,6 +105,17 @@ class Wgs84Coords {
          * invalid coordinates.
          */
         Wgs84Coords(double __lat, double __lon);
+
+        /**
+         * @brief Create coordinates from string
+         * @param coords    Coordinates as string
+         * @param _format   Format of input string. See Wgs84Coords::format.
+         *
+         * Tries to create coordinates from string with given format. If
+         * conversion fails, returns invalid coordinates.
+         * @todo Parser error to stderr, try/catch...
+         */
+        Wgs84Coords(const std::string& coords, const std::string& _format = format);
 
         /**
          * @brief Convert coordinates to string

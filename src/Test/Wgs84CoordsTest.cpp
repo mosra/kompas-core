@@ -22,6 +22,9 @@
 
 QTEST_APPLESS_MAIN(Map2X::Core::Test::Wgs84CoordsTest)
 Q_DECLARE_METATYPE(Map2X::Core::Wgs84Coords)
+Q_DECLARE_METATYPE(std::string)
+
+using namespace std;
 
 namespace Map2X { namespace Core { namespace Test {
 
@@ -99,7 +102,7 @@ void Wgs84CoordsTest::distance() {
 void Wgs84CoordsTest::stringFormat() {
     Wgs84Coords c(49.1592131, 15.2013261);
 
-    std::string format =
+    string format =
         "Latitude: \n, Longtitude: \n\n deg. \n min. \n sec. \nNorth\nSouth\nEast\nWest";
 
     QCOMPARE(QString::fromStdString(c.toString(4, format)),
@@ -130,6 +133,67 @@ void Wgs84CoordsTest::compare() {
     /* Tolerance */
     QVERIFY(Wgs84Coords(15.6999999901, 136.0000000099) == Wgs84Coords(15.7, 136.0));
     QVERIFY(Wgs84Coords(15.6999999901, 136.0000000099) != Wgs84Coords(15.70000001, 135.99999999));
+}
+
+void Wgs84CoordsTest::fromString_data() {
+    QTest::addColumn<string>("input");
+    QTest::addColumn<Wgs84Coords>("output");
+    QTest::addColumn<string>("format");
+
+    /* Valid */
+    QTest::newRow("fullPrecision")
+        << string("49°9'33.167\"N 15°12'4.774\"E")
+        << Wgs84Coords(49.159213056, 15.201326111) << string();
+    QTest::newRow("onlyNumbers")
+        << string("49 9 33.167 S 15 12 4.774 W")
+        << Wgs84Coords(-49.159213056, -15.201326111) << string();
+    QTest::newRow("doubleValue")
+        << string("49.1592131 N 15°12'4.774\"W")
+        << Wgs84Coords(49.1592131, -15.201326111) << string();
+    QTest::newRow("smallPrecision")
+        << string("49 S 15 E")
+        << Wgs84Coords(-49.0, 15.0) << string();
+    QTest::newRow("configurationValue")
+        << string("49.1592131 15.2013261")
+        << Wgs84Coords(49.1592131, 15.2013261) << string();
+
+    /* Period hell */
+    QTest::newRow("periodHell")
+        << string("... .1337. 49 0 .0102 N 25. .033 E")
+        << Wgs84Coords(49.000002833, 25.00055) << string();
+
+    /* Different format */
+    QTest::newRow("czFormat")
+        << string("49°9'33.167\" j.š. 15°12'4.774\" z.d.")
+        << Wgs84Coords(-49.159213056, -15.201326111)
+        << string("\n.š. \n.d.\n°\n'\n\"\ns\nj\nv\nz");
+
+    /* Invalid */
+    QTest::newRow("noNumbers")
+        << string("N E")
+        << Wgs84Coords() << string();
+    QTest::newRow("wrongNSEW")
+        << string("49°9'33.167\"S 15°12'4.774\"V")
+        << Wgs84Coords() << string();
+    QTest::newRow("switchedNSEW")
+        << string("15°12'4.774\"E 49°9'33.167\"N")
+        << Wgs84Coords() << string();
+}
+
+void Wgs84CoordsTest::fromString() {
+    QFETCH(string, input);
+    QFETCH(Wgs84Coords, output);
+    QFETCH(string, format);
+
+    if(format.empty()) format = Wgs84Coords::format;
+
+    Wgs84Coords actual(input, format);
+    if(!actual.isValid()) {
+        QVERIFY(actual.latitude() == 0);
+        QVERIFY(actual.longtitude() == 0);
+    }
+
+    QVERIFY(actual == output);
 }
 
 }}}

@@ -28,6 +28,56 @@ namespace Map2X { namespace Core {
 
 const string Wgs84Coords::format = "\n \n\n°\n'\n\"\nN\nS\nE\nW";
 
+double Wgs84Coords::dmsToDecimal(const std::string& dms) {
+    /* Invariant: 'begin' points to end of last non-numeric character sequence in
+        actually parsed part of string, 'numbers' stores all found numeric
+        sequences. */
+    vector<double> numbers;
+    size_t begin = 0;
+    for(size_t i = 0; i != dms.size(); ++i) {
+        /* Numbers 0-9 or period, not moving begin */
+        if((dms[i] >= 0x30 && dms[i] <= 0x39) || dms[i] == '.') continue;
+
+        /* If there is already a numeric seuqence, convert it
+            to double and store in vector */
+        if(begin != i) {
+            string numberString = dms.substr(begin, i-begin);
+
+            /* Skipping periods without numbers */
+            if(!(numberString[0] == '.' && numberString[numberString.size()-1] == '.')) {
+
+                /* There is already enough number parts => error */
+                if(numbers.size() == 3) return -1;
+
+                double number;
+                istringstream stream(numberString);
+                stream >> number;
+                numbers.push_back(number);
+            }
+        }
+
+        /* Move begin to next character */
+        begin=i+1;
+    }
+
+    /* Convert last numeric sequence if it is there */
+    if(begin != dms.size() && numbers.size() != 3) {
+        double number;
+        istringstream stream(dms.substr(begin));
+        stream >> number;
+        numbers.push_back(number);
+    }
+
+    /* No numbers found => error */
+    if(numbers.size() == 0) return -1;
+
+    double decimal = numbers[0];
+    if(numbers.size() > 1) decimal += numbers[1]/60;
+    if(numbers.size() > 2) decimal += numbers[2]/3600;
+
+    return decimal;
+}
+
 Wgs84Coords::Wgs84Coords(double __lat, double __lon) {
     /** @todo -180 and 180 is the same, which will be converted to other? */
     if(__lon >= -180.0 && __lon <= 180.0 &&
@@ -41,6 +91,61 @@ Wgs84Coords::Wgs84Coords(double __lat, double __lon) {
         _lat = 0;
         _isValid = false;
     }
+}
+
+Wgs84Coords::Wgs84Coords(const std::string& coords, const std::string& _format): _lat(0), _lon(0), _isValid(false) {
+    vector<string> formatters = parseFormatters(_format);
+    if(formatters.empty()) return;
+
+    /* Get N/S E/W position */
+    size_t nPos = coords.find_first_of(formatters[6]);
+    size_t sPos = coords.find_first_of(formatters[7]);
+    size_t ePos = coords.find_first_of(formatters[8]);
+    size_t wPos = coords.find_first_of(formatters[9]);
+
+    /* N/S and E/W were not found, try to convert it as a
+        "configuration value"-format: two signed doubles */
+    if(nPos == string::npos && sPos == string::npos && ePos == string::npos && wPos == string::npos) {
+        double lat, lon;
+        istringstream stream(coords);
+        stream >> lat >> lon;
+
+        if(stream.fail()) return;
+        _lat = lat; _lon = lon; _isValid = true;
+        return;
+    }
+
+    /* Positive/negative lat/lon */
+    int latMultiplier = 0; int lonMultiplier = 0;
+
+    /* Where latitude number ends */
+    size_t half = string::npos;
+
+    /* Decide on N/S */
+    if(nPos != string::npos && sPos == string::npos) {
+        half = nPos;
+        latMultiplier = 1;
+    }
+    else if(nPos == string::npos && sPos != string::npos) {
+        half = sPos;
+        latMultiplier = -1;
+    } else return;
+
+    /* Decide on E/W, check whether it is after N/S position */
+    if(ePos != string::npos && wPos == string::npos && ePos > half)
+        lonMultiplier = 1;
+    else if(ePos == string::npos && wPos != string::npos && wPos > half)
+        lonMultiplier = -1;
+    else return;
+
+    double lat = dmsToDecimal(coords.substr(0, half));
+    double lon = dmsToDecimal(coords.substr(half+1));
+    if(lat == -1 || lon == -1) return;
+
+    /* Get decimal number from latitude and longitude part, make them signed */
+    _lat = lat*latMultiplier;
+    _lon = lon*lonMultiplier;
+    _isValid = true;
 }
 
 std::string Wgs84Coords::toString(int precision, const string& _format) const {
