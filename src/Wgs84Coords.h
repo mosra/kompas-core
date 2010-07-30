@@ -104,12 +104,13 @@ class Wgs84Coords {
          *      are stripped away.
          * @param _format       Format of converted string.
          *      See Wgs84Coords::format.
-         * @return Converted string. If the coordinates or format are not valid
-         *      returns empty string.
+         * @return Converted string. If the format is not valid, returns empty
+         *      string. If the coords are not valid, returns position 0°N 0°E.
          *
          * Converts numeric coordinates to text representation (e.g.
          * <tt>49°9'33.167"N 15°12'4.774"E</tt>).
          * @todo Math-correctly round degrees/minutes on negative precision
+         * @todo Automatic precision (don't display M/S when there are zeros)
          */
         std::string toString(int precision = 3, const std::string& _format = format) const;
 
