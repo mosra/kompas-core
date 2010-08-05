@@ -1,12 +1,9 @@
-include_directories(${Map2XCore_SOURCE_DIR}/src)
+add_subdirectory(OpenStreetMapTileModel)
 
-set(Map2X_Core_Plugins_SRCS
-    OpenStreetMapTileModel.cpp
-)
-
-add_library(Map2XCorePlugins STATIC ${Map2X_Core_Plugins_SRCS})
+set(Map2XCore_Plugins
+    Map2XCorePluginsOpenStreetMapTileModel
+    PARENT_SCOPE)
 
 if(BUILD_TESTS)
     enable_testing()
-    add_subdirectory(Test)
 endif()

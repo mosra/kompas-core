@@ -14,7 +14,7 @@ set(Map2X_Core_SRCS
 )
 
 add_library(Map2XCore SHARED ${Map2X_Core_SRCS})
-target_link_libraries(Map2XCore Map2XUtility Map2XPluginManager Map2XCorePlugins)
+target_link_libraries(Map2XCore Map2XUtility Map2XPluginManager ${Map2XCore_Plugins})
 
 if(BUILD_TESTS)
     enable_testing()
