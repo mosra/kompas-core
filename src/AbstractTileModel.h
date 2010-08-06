@@ -25,7 +25,6 @@
 #include "basictypes.h"
 #include "RasterCoords.h"
 #include "Wgs84Coords.h"
-#include "PluginManager/definitions.h"
 #include "PluginManager/Plugin.h"
 
 namespace Map2X { namespace Core {
