@@ -26,6 +26,7 @@
 #include "RasterCoords.h"
 #include "Wgs84Coords.h"
 #include "PluginManager/definitions.h"
+#include "PluginManager/Plugin.h"
 
 namespace Map2X { namespace Core {
 
@@ -42,7 +43,7 @@ typedef Area<unsigned int, unsigned int> TileArea;  /**< @brief Tile area */
  * @todo Installing a image filter plugin for modifying tileData
  *      (compression with pngnq, etc.)
  */
-class AbstractTileModel {
+class AbstractTileModel: public PluginManager::Plugin {
     PLUGIN_INTERFACE("cz.mosra.Map2X.Core.AbstractTileModel/0.1")
 
     public:
@@ -98,7 +99,8 @@ class AbstractTileModel {
         /*@}*/
 
         /** @brief Constructor  */
-        inline AbstractTileModel(): _online(false) {}
+        AbstractTileModel(PluginManager::AbstractPluginManager* manager, const std::string& plugin):
+            Plugin(manager, plugin), _online(false) {}
 
         /** @{ @name Map parameters */
 

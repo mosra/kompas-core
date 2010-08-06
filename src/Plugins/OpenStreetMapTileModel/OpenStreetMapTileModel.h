@@ -30,6 +30,9 @@ namespace Map2X { namespace Core { namespace Plugins {
  */
 class OpenStreetMapTileModel: public Core::AbstractMercatorTileModel {
     public:
+        OpenStreetMapTileModel(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
+            AbstractMercatorTileModel(manager, plugin) {}
+
         inline virtual int features() const
             { return AbstractMercatorTileModel::features()|LoadableFromUrl; }
         inline virtual Core::TileSize tileSize() const

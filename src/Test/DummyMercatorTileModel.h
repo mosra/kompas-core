@@ -22,6 +22,9 @@ namespace Map2X { namespace Core { namespace Test {
 
 class DummyMercatorTileModel: public AbstractMercatorTileModel {
     public:
+        DummyMercatorTileModel(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
+            AbstractMercatorTileModel(manager, plugin) {}
+
         inline virtual TileArea area() const { return TileArea(0, 0, 1, 1); }
         inline virtual std::string copyright() const { return ""; }
         inline virtual std::vector<std::string> layers() const { return std::vector<std::string>(); }

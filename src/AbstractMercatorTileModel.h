@@ -30,6 +30,9 @@ namespace Map2X { namespace Core {
  */
 class AbstractMercatorTileModel: public AbstractTileModel {
     public:
+        AbstractMercatorTileModel(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = 0):
+            AbstractTileModel(manager, plugin) {}
+
         inline virtual int features() const { return ConvertableCoords; }
         RasterCoords fromWgs84(Zoom z, const Map2X::Core::Wgs84Coords& coords) const;
         Wgs84Coords toWgs84(Zoom z, const Map2X::Core::RasterCoords& coords) const;
