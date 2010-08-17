@@ -167,8 +167,6 @@ inline bool operator!=(const Wgs84Coords& a, const Wgs84Coords& b) {
 
 namespace Utility {
 
-/** @{ @copydoc ConversionFunctions */
-
 /**
  * @brief Convert string from configuration to Wgs84Coords
  * @copydetails Utility::configurationValueFromString()
@@ -185,8 +183,6 @@ template<> Core::Wgs84Coords configurationValueFromString(const std::string& str
  * Invalid coordinates are converted to single zero character.
  */
 template<> std::string configurationValueToString(const Core::Wgs84Coords& value, int flags);
-
-/*@}*/
 
 }
 
