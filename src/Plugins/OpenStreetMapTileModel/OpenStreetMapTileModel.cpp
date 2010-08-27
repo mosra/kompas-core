@@ -44,9 +44,7 @@ vector<string> OpenStreetMapTileModel::layers() const {
 }
 
 vector<string> OpenStreetMapTileModel::overlays() const {
-    vector<string> l;
-    l.push_back("Maplint");
-    return l;
+    return vector<string>();
 }
 
 string OpenStreetMapTileModel::tileUrl(const std::string& layer, Zoom z, const TileCoords& coords) const {
@@ -59,8 +57,6 @@ string OpenStreetMapTileModel::tileUrl(const std::string& layer, Zoom z, const T
         url << "http://tah.openstreetmap.org/Tiles/tile/";
     else if(layer == "Cycle")
         url << "http://andy.sandbox.cloudmade.com/tiles/cycle/";
-    else if(layer == "Maplint")
-        url << "http://tah.openstreetmap.org/Tiles/maplint/";
     else return "";
 
     url << z << "/" << coords.x << "/" << coords.y << ".png";
