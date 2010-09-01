@@ -11,6 +11,7 @@ set(Map2X_Core_SRCS
     Wgs84Coords.cpp
     AbstractTileModel.cpp
     AbstractMercatorTileModel.cpp
+    Plugins/registerStatic.cpp
 )
 
 add_library(Map2XCore SHARED ${Map2X_Core_SRCS})

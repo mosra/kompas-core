@@ -4,7 +4,8 @@ set(Map2X_Core_Plugins_OpenStreetMapTileModel_SRCS
     OpenStreetMapTileModel.cpp
 )
 
-add_library(Map2XCorePluginsOpenStreetMapTileModel STATIC ${Map2X_Core_Plugins_OpenStreetMapTileModel_SRCS})
+map2x_add_static_plugin(Map2XCore_Plugins
+    OpenStreetMap OpenStreetMapTileModel.conf OpenStreetMapTileModel.cpp)
 
 if(BUILD_TESTS)
     enable_testing()
