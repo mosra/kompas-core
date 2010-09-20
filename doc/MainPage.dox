@@ -18,6 +18,8 @@ Tile servers:
 - http://qmapcontrol.svn.sourceforge.net/viewvc/qmapcontrol/QMapControl/src/
 - http://spatialreference.org/ref/sr-org/98/
 - http://www.freemap.sk/
+- http://wiki.openstreetmap.org/wiki/Mapquest
+- http://maps.ovi.com/
 
 Mapy.cz new api:
 - http://mapy.cz.sblog.cz/2010/07/14/37
@@ -39,6 +41,7 @@ GPS:
 
 Navigation software:
 - http://oss.wayfinder.com/
+- http://navigatorfree.mapfactor.com/en/
 
 Routing:
 - http://openrouteservice.org/
