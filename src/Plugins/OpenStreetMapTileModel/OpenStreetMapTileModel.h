@@ -57,7 +57,7 @@ class OpenStreetMapTileModel: public Core::AbstractTileModel {
 }}
 
 #ifndef DOXYGEN_GENERATING_OUTPUT
-PLUGIN_REGISTER_STATIC(OpenStreetMap,
+PLUGIN_REGISTER_STATIC(OpenStreetMapTileModel,
                        Map2X::Plugins::OpenStreetMapTileModel,
                        "cz.mosra.Map2X.Core.AbstractTileModel/0.1")
 #endif
