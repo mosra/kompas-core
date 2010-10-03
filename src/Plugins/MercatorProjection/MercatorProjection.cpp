@@ -14,13 +14,15 @@
     GNU Lesser General Public License version 3 for more details.
 */
 
-#include "AbstractMercatorTileModel.h"
+#include "MercatorProjection.h"
 
 #include <cmath>
 
-namespace Map2X { namespace Core {
+using namespace Map2X::Core;
 
-RasterCoords AbstractMercatorTileModel::fromWgs84(Zoom z, const Map2X::Core::Wgs84Coords& coords) const {
+namespace Map2X { namespace Plugins {
+
+Coords<double> MercatorProjection::fromWgs84(const Wgs84Coords& coords) const {
     /* Transform longtitude range from -180° - +180° to 0 - 1 and shift origin
         to left top corner */
     double x = (1 + coords.longtitude()/180)/2;
@@ -35,33 +37,17 @@ RasterCoords AbstractMercatorTileModel::fromWgs84(Zoom z, const Map2X::Core::Wgs
     y = (1 - y/PI)/2;
 
     /* Apply shift and stretch */
-    x = (x+coordinateShift().x)*coordinateStretch().x;
-    y = (y+coordinateShift().y)*coordinateStretch().y;
+    x = (x+_coordinateShift.x)*_coordinateStretch.x;
+    y = (y+_coordinateShift.y)*_coordinateStretch.y;
 
-    /* Apply coordinates to map area size at given zoom */
-    x *= pow(zoomStep(), z);
-    y *= pow(zoomStep(), z);
-
-    return RasterCoords(
-        x,
-        y,
-        (x-floor(x))*tileSize().x,
-        (y-floor(y))*tileSize().y
-    );
+    /* Transform coordinates to world map size */
+    return Coords<double>(x, y);
 }
 
-Wgs84Coords AbstractMercatorTileModel::toWgs84(Zoom z, const Map2X::Core::RasterCoords& coords) const {
-    /* Add pixel coordinates to Tile coordinates */
-    double lon = coords.x() + static_cast<double>(coords.moveX())/tileSize().x;
-    double lat = coords.y() + static_cast<double>(coords.moveY())/tileSize().y;
-
-    /* Transform coordinates to zoom 1 */
-    lon /= pow(zoomStep(), z);
-    lat /= pow(zoomStep(), z);
-
+Wgs84Coords MercatorProjection::toWgs84(const Coords<double>& coords) const {
     /* Substract shift and stretch */
-    lon = lon/coordinateStretch().x - coordinateShift().x;
-    lat = lat/coordinateStretch().y - coordinateShift().y;
+    double lon = coords.x/_coordinateStretch.x - _coordinateShift.x;
+    double lat = coords.y/_coordinateStretch.y - _coordinateShift.y;
 
     /* Reset latitude range, unshift origin */
     lat = (1 - 2*lat)*PI;

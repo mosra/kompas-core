@@ -14,7 +14,7 @@
     GNU Lesser General Public License version 3 for more details.
 */
 
-#include "AbstractMercatorTileModelTest.h"
+#include "MercatorProjectionTest.h"
 
 #include <cmath>
 #include <QtTest/QTest>
@@ -23,11 +23,13 @@
 #include "Wgs84Coords.h"
 
 Q_DECLARE_METATYPE(Map2X::Core::Wgs84Coords)
-QTEST_APPLESS_MAIN(Map2X::Core::Test::AbstractMercatorTileModelTest)
+QTEST_APPLESS_MAIN(Map2X::Plugins::Test::MercatorProjectionTest)
 
-namespace Map2X { namespace Core { namespace Test {
+using namespace Map2X::Core;
 
-void AbstractMercatorTileModelTest::coords_data() {
+namespace Map2X { namespace Plugins { namespace Test {
+
+void MercatorProjectionTest::coords_data() {
     QTest::addColumn<Wgs84Coords>("coords");
 
     QTest::newRow("Greenwich")
@@ -40,19 +42,9 @@ void AbstractMercatorTileModelTest::coords_data() {
         << Wgs84Coords(-33.88333, 151.2167);
 }
 
-void AbstractMercatorTileModelTest::coords() {
+void MercatorProjectionTest::coords() {
     QFETCH(Wgs84Coords, coords);
-
-    Wgs84Coords actual = model.toWgs84(18, model.fromWgs84(18, coords));
-    Wgs84Coords actual0 = model.toWgs84(0, model.fromWgs84(0, coords));
-
-    Wgs84Coords roundedCoords(round(coords.latitude()*7500)/7500, round(coords.longtitude()*7500)/7500);
-    Wgs84Coords roundedActual(round(actual.latitude()*7500)/7500, round(actual.longtitude()*7500)/7500);
-    Wgs84Coords roundedCoords0(round(coords.latitude()/3)*3, round(coords.longtitude()/3)*3);
-    Wgs84Coords roundedActual0(round(actual0.latitude()/3)*3, round(actual0.longtitude()/3)*3);
-
-    QVERIFY(roundedCoords == roundedActual);
-    QVERIFY(roundedActual0 == roundedCoords0);
+    QVERIFY(projection.toWgs84(projection.fromWgs84(coords)) == coords);
 }
 
 }}}

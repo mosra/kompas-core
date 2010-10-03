@@ -1,5 +1,5 @@
-#ifndef Map2X_Plugins_Test_OpenStreetMapTileModelTest_h
-#define Map2X_Plugins_Test_OpenStreetMapTileModelTest_h
+#ifndef Map2X_Plugins_Test_MercatorProjectionTest_h
+#define Map2X_Plugins_Test_MercatorProjectionTest_h
 /*
     Copyright © 2007, 2008, 2009, 2010 Vladimír Vondruš <mosra@centrum.cz>
     Copyright © 2010 Jan Dupal <dupal.j@seznam.cz>
@@ -17,15 +17,15 @@
 */
 
 #include <QtCore/QObject>
-#include "DummyMercatorTileModel.h"
+#include "../MercatorProjection.h"
 
-namespace Map2X { namespace Core { namespace Test {
+namespace Map2X { namespace Plugins { namespace Test {
 
-class AbstractMercatorTileModelTest: public QObject {
+class MercatorProjectionTest: public QObject {
     Q_OBJECT
 
     private:
-        DummyMercatorTileModel model;
+        MercatorProjection projection;
 
     private slots:
         void coords_data();

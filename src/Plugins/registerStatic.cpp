@@ -3,5 +3,6 @@
 
 int registerCoreStaticPlugins() {
     PLUGIN_IMPORT(OpenStreetMap)
+    PLUGIN_IMPORT(MercatorProjection)
     return 1;
 } AUTOMATIC_INITIALIZER(registerCoreStaticPlugins)

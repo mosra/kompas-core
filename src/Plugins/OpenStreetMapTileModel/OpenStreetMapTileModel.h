@@ -19,7 +19,8 @@
  * @brief Class Map2X::Plugins::OpenStreetMapTileModel
  */
 
-#include "AbstractMercatorTileModel.h"
+#include "AbstractTileModel.h"
+#include "../MercatorProjection/MercatorProjection.h"
 
 namespace Map2X { namespace Plugins {
 
@@ -28,13 +29,15 @@ namespace Map2X { namespace Plugins {
  *
  * Based on: http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
  */
-class OpenStreetMapTileModel: public Core::AbstractMercatorTileModel {
+class OpenStreetMapTileModel: public Core::AbstractTileModel {
     public:
-        OpenStreetMapTileModel(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
-            AbstractMercatorTileModel(manager, plugin) {}
+        inline OpenStreetMapTileModel(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
+            AbstractTileModel(manager, plugin) {}
 
         inline virtual int features() const
-            { return AbstractMercatorTileModel::features()|LoadableFromUrl; }
+            { return LoadableFromUrl; }
+        inline virtual const Core::AbstractProjection* projection() const
+            { return &_projection; }
         inline virtual Core::TileSize tileSize() const
             { return Core::TileSize(256,256); }
         inline virtual std::string copyright() const
@@ -46,6 +49,9 @@ class OpenStreetMapTileModel: public Core::AbstractMercatorTileModel {
         virtual std::vector<std::string> overlays() const;
 
         virtual std::string tileUrl(const std::string& layer, Core::Zoom z, const Map2X::Core::TileCoords& coords) const;
+
+    private:
+        MercatorProjection _projection;
 };
 
 }}

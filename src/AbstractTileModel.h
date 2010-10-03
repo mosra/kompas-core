@@ -29,6 +29,8 @@
 
 namespace Map2X { namespace Core {
 
+class AbstractProjection;
+
 typedef Coords<unsigned int> TileSize;              /**< @brief Tile size */
 typedef unsigned int Zoom;                          /**< @brief Map zoom */
 typedef Coords<unsigned int> TileCoords;            /**< @brief Tile coordinates */
@@ -88,6 +90,14 @@ class AbstractTileModel: public PluginManager::Plugin {
          * @return OR-ed values from AbstractTileModel::Feature
          */
         virtual int features() const = 0;
+
+        /**
+         * @brief Map projection
+         *
+         * Default implementation returns zero pointer which means that
+         * this particular TileModel doesn't have specified projection.
+         */
+        virtual const AbstractProjection* projection() const { return 0; }
 
         /** @brief Tile size */
         virtual TileSize tileSize() const = 0;
@@ -256,56 +266,6 @@ class AbstractTileModel: public PluginManager::Plugin {
         virtual std::string tileData(const std::string& layer, Zoom z, const TileCoords& coords);
 
         /*@}*/
-
-        /** @{ @name Coordinates conversion */
-
-        /**
-         * @brief Get raster map coordinates from WGS84 coordinates
-         * @param z         Zoom level of raster coordinates
-         * @param coords    WGS84 coordinates
-         * @return Raster map coordinates
-         *
-         * Default implementation in AbstractTileModel returns invalid coordinates.
-         */
-        inline virtual RasterCoords fromWgs84(Zoom z, const Wgs84Coords& coords) const { return RasterCoords(); }
-
-        /**
-         * @brief Get WGS84 coordinates from raster map coordinates
-         * @param z         Zoom level of raster coordinates
-         * @param coords    Raster map coordinates
-         * @return WGS84 coordinates
-         *
-         * Default implementation in AbstractTileModel returns invalid coordinates.
-         */
-        inline virtual Wgs84Coords toWgs84(Zoom z, const RasterCoords& coords) const { return Wgs84Coords(); }
-
-        /*@}*/
-
-    protected:
-        /**
-         * @brief Coordinate shifting
-         *
-         * By default, in zoom 0 the map is only one tile containing whole world
-         * from -180°W to 180°E and -85.05113°S to 85.05113°N. If the map
-         * doesn't comply with these values, reimplement this function to move
-         * coordinate origin from left top corner. Value is portion of size of
-         * the map at zoom 0, varying from -1 to 1. If the value is positive, it
-         * means WGS84 coordinate origin will be moved move right / down on the
-         * map, negative moves it left / up.
-         */
-        inline virtual Coords<double> coordinateShift() const { return Coords<double>(0, 0); }
-
-        /**
-         * @brief Coordinate stretching
-         *
-         * If the map at zoom 0 is not precisely containing the whole world in
-         * one tile as described in coordinateShift(), reimplement this function
-         * to stretch the coordinates on the map. Values greater than one will
-         * enlarge WGS84 coordinates out of the map bounds, so the map will
-         * occupy only portion of whole range, values lower than one will make
-         * the coordinate system smaller than the map.
-         */
-        inline virtual Coords<double> coordinateStretch() const { return Coords<double>(1, 1); }
 
     private:
         bool _online;
