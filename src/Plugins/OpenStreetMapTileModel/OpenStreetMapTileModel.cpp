@@ -18,8 +18,9 @@
 #include <sstream>
 
 using namespace std;
+using namespace Map2X::Core;
 
-namespace Map2X { namespace Core { namespace Plugins {
+namespace Map2X { namespace Plugins {
 
 vector<Zoom> OpenStreetMapTileModel::zoomLevels() const {
     /** @todo Implement for packages */
@@ -64,4 +65,4 @@ string OpenStreetMapTileModel::tileUrl(const std::string& layer, Zoom z, const T
     return url.str();
 }
 
-}}}
+}}

@@ -21,7 +21,7 @@
 
 #include "AbstractMercatorTileModel.h"
 
-namespace Map2X { namespace Core { namespace Plugins {
+namespace Map2X { namespace Plugins {
 
 /**
  * @brief OpenStreetMap tile model
@@ -48,11 +48,11 @@ class OpenStreetMapTileModel: public Core::AbstractMercatorTileModel {
         virtual std::string tileUrl(const std::string& layer, Core::Zoom z, const Map2X::Core::TileCoords& coords) const;
 };
 
-}}}
+}}
 
 #ifndef DOXYGEN_GENERATING_OUTPUT
 PLUGIN_REGISTER_STATIC(OpenStreetMap,
-                       Map2X::Core::Plugins::OpenStreetMapTileModel,
+                       Map2X::Plugins::OpenStreetMapTileModel,
                        "cz.mosra.Map2X.Core.AbstractTileModel/0.1")
 #endif
 #endif
