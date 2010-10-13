@@ -1,5 +1,3 @@
-include_directories(${Map2XCore_SOURCE_DIR}/src)
-
 add_subdirectory(OpenStreetMapTileModel)
 add_subdirectory(MercatorProjection)
 

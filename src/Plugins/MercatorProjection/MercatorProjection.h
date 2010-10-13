@@ -15,7 +15,7 @@
     GNU Lesser General Public License version 3 for more details.
 */
 
-#include "../../AbstractProjection.h"
+#include "AbstractProjection.h"
 
 namespace Map2X { namespace Plugins {
 

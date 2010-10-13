@@ -1,10 +1,10 @@
 add_definitions(-Wall -pedantic)
 
+include_directories(${MAP2X_CORE_INCLUDE_DIR} ${MAP2X_PLUGINS_INCLUDE_DIR})
+
 add_subdirectory(PluginManager)
 add_subdirectory(Plugins)
 add_subdirectory(Utility)
-
-include_directories(${Map2XCore_SOURCE_DIR}/src ${Map2XCore_BINARY_DIR}/src)
 
 set(Map2X_Core_SRCS
     TileArchiveReader.cpp

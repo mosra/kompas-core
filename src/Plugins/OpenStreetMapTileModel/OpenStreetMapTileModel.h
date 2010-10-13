@@ -20,7 +20,7 @@
  */
 
 #include "AbstractTileModel.h"
-#include "../MercatorProjection/MercatorProjection.h"
+#include "MercatorProjection/MercatorProjection.h"
 
 namespace Map2X { namespace Plugins {
 
