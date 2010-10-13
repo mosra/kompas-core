@@ -1,10 +1,10 @@
 # Author: mosra <mosra@centrum.cz>
-pkgname=libmap2x
+pkgname=map2x-core
 pkgver=dev
 pkgrel=1
-pkgdesc="Lightweight library for displaying and managing maps."
+pkgdesc="Core library for Map2X navigation system"
 arch=('i686' 'x86_64')
-url="http://archerfx.cz/blog/map2x.php"
+url="http://mosra.cz/blog/map2x.php"
 license=('LGPLv3')
 makedepends=('cmake')
 optdepends=('qt')
