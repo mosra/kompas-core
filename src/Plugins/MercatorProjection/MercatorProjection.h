@@ -76,8 +76,4 @@ class MercatorProjection: public Core::AbstractProjection {
 
 }}
 
-PLUGIN_REGISTER_STATIC(MercatorProjection,
-    Map2X::Plugins::MercatorProjection,
-    "cz.mosra.Map2X.Core.AbstractProjection/0.1")
-
 #endif

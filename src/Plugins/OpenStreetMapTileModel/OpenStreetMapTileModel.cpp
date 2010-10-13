@@ -20,6 +20,10 @@
 using namespace std;
 using namespace Map2X::Core;
 
+PLUGIN_REGISTER_STATIC(OpenStreetMapTileModel,
+                       Map2X::Plugins::OpenStreetMapTileModel,
+                       "cz.mosra.Map2X.Core.AbstractTileModel/0.1")
+
 namespace Map2X { namespace Plugins {
 
 vector<Zoom> OpenStreetMapTileModel::zoomLevels() const {

@@ -20,6 +20,10 @@
 
 using namespace Map2X::Core;
 
+PLUGIN_REGISTER_STATIC(MercatorProjection,
+    Map2X::Plugins::MercatorProjection,
+    "cz.mosra.Map2X.Core.AbstractProjection/0.1")
+
 namespace Map2X { namespace Plugins {
 
 Coords<double> MercatorProjection::fromWgs84(const Wgs84Coords& coords) const {
