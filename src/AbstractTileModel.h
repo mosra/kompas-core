@@ -102,7 +102,11 @@ class AbstractTileModel: public PluginManager::Plugin {
         /** @brief Tile size */
         virtual TileSize tileSize() const = 0;
 
-        /** @brief Map copyright */
+        /**
+         * @brief Map copyright
+         * @todo Make optional (for public domain maps), depending on
+         * coordinates and map layer (to "properly" support Google)
+         */
         virtual std::string copyright() const = 0;
 
         /*@}*/
