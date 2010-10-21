@@ -34,6 +34,7 @@ class AbstractProjection: public PluginManager::Plugin {
     PLUGIN_INTERFACE("cz.mosra.Map2X.Core.AbstractProjection/0.1")
 
     public:
+        /** @copydoc Map2X::PluginManager::Plugin::Plugin */
         inline AbstractProjection(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
             Plugin(manager, plugin) {}
 
