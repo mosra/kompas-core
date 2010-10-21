@@ -32,37 +32,36 @@ Coords<double> MercatorProjection::fromWgs84(const Wgs84Coords& coords) const {
     double x = (1 + coords.longtitude()/180)/2;
 
     /* Convert latitude to radians */
-    double y = coords.latitude()*PI/180;
+    double latitude = coords.latitude()*PI/180;
 
-    /* Reproject latitude to Mercator projection */
-    y = log(tan(y) + 1/cos(y));
-
-    /* Transform latitude range, shift origin */
-    y = (1 - y/PI)/2;
+    /* Reproject latitude to Mercator projection, transform to range 0 - 1 */
+    double y = (1 - log(tan(latitude) + 1/cos(latitude))/PI)/2;
 
     /* Apply shift and stretch */
-    x = (x+_coordinateShift.x)*_coordinateStretch.x;
-    y = (y+_coordinateShift.y)*_coordinateStretch.y;
+    x = x*stretch.x + shift.x;
+    y = y*stretch.y + shift.y;
 
     /* Transform coordinates to world map size */
     return Coords<double>(x, y);
 }
 
 Wgs84Coords MercatorProjection::toWgs84(const Coords<double>& coords) const {
-    /* Substract shift and stretch */
-    double lon = coords.x/_coordinateStretch.x - _coordinateShift.x;
-    double lat = coords.y/_coordinateStretch.y - _coordinateShift.y;
+    Coords<double> _coords = coords;
 
-    /* Reset latitude range, unshift origin */
-    lat = (1 - 2*lat)*PI;
+    /* Remove shift and stretch */
+    _coords.x = _coords.x/stretch.x - shift.x;
+    _coords.y = _coords.y/stretch.y - shift.y;
 
-    /* Reproject mercator projection to latitude in degrees */
-    lat = 180/PI * atan(0.5 * (exp(lat) - exp(-lat)));
+    /* Convert latitude range */
+    _coords.y = (1 - 2*_coords.y)*PI;
 
-    /* Shift origin to center, transform 0 - 1 range to  -180° - +180° */
-    lon = (2*lon - 1)*180;
+    /* Reproject Mercator projection to latitude, transform to -90 - 90° */
+    double latitude = atan(0.5 * (exp(_coords.y) - exp(-_coords.y)))*180/PI;
 
-    return Wgs84Coords(lat, lon);
+    /* Convert longtitude range from 0 - 1 to  -180° - 180° */
+    double longtitude = (2*_coords.x - 1)*180;
+
+    return Wgs84Coords(latitude, longtitude);
 }
 
 }}

@@ -20,58 +20,61 @@
 namespace Map2X { namespace Plugins {
 
 /**
- * @brief Mercator projection
- *
- * Coordinate calculation based on http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
+@brief Mercator projection
+
+Customizable shift and stretch.
+@section MercatorProjection_fromWgs84 Converting from WGS84 coordinates
+X coordinate is latitude, converted from range @f$ [ - \pi ; \pi ] @f$ to
+@f$ [ 0 ; 1 ] @f$. Y coordinate is reprojected from longtitude and converted to
+range @f$ [ 0; 1 ] @f$ like this:
+@f[
+    y = \left(
+        1 - \frac{\ln ( {\tan latitude} + {1 \over {\cos latitude}} )}{\pi}
+    \right) \cdot {1 \over 2}
+@f]
+Last step is to apply shift and stretch.
+@section MercatorProjection_toWgs84 Converting to WGS84 coordinates
+First is removed shift and stretch from both coordinates. Latitude is X
+coordinate, converted from range @f$ [ 0 ; 1 ] @f$ to @f$ [ - \pi ; \pi ] @f$.
+Longtitude is reprojected to Y coordinate and converted to range
+@f$ [ - {\pi \over 2}; {\pi \over 2} ] @f$ like this:
+@f[
+    longtitude = \arctan \left(
+        {1 \over 2} \cdot (e^y - e^{-y})
+    \right)
+@f]
+Coordinate calculation based on http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
  */
 class MercatorProjection: public Core::AbstractProjection {
     public:
+        /** @copydoc Map2X::Core::AbstractProjection::AbstractProjection */
         inline MercatorProjection(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
-            AbstractProjection(manager, plugin), _coordinateShift(Core::Coords<double>(0, 0)), _coordinateStretch(Core::Coords<double>(1, 1)) {}
+            AbstractProjection(manager, plugin), stretch(Core::Coords<double>(1, 1)), shift(Core::Coords<double>(0, 0)) {}
 
         virtual Core::Coords<double> fromWgs84(const Core::Wgs84Coords& coords) const;
         virtual Core::Wgs84Coords toWgs84(const Core::Coords<double>& coords) const;
 
         /**
-         * @brief Coordinate shifting
+         * @brief Set map stretch
          *
-         * By default, in zoom 0 the map is only one tile containing whole world
-         * from -180°W to 180°E and -85.05113°S to 85.05113°N. If the map
-         * doesn't comply with these values, reimplement this function to move
-         * coordinate origin from left top corner. Value is portion of size of
-         * the map at zoom 0, varying from -1 to 1. If the value is positive, it
-         * means WGS84 coordinate origin will be moved right / down on the
-         * map, negative moves it left / up.
+         * By default the map occupies whole area, so stretch is set to (1, 1).
+         * If the map is smaller, set it to lower values.
          */
-        inline Core::Coords<double> coordinateShift() const { return _coordinateShift; }
+        inline void setStretch(const Core::Coords<double>& _stretch)
+            { stretch = _stretch; }
 
         /**
-         * @brief Set coordinate shifting
-         * @param shift Coordinate shift
-         */
-        inline void setCoordinateShift(const Core::Coords<double>& shift) { _coordinateShift = shift; }
-
-        /**
-         * @brief Coordinate stretching
+         * @brief Set map shift
          *
-         * If the map at zoom 0 is not precisely containing the whole world in
-         * one tile as described in coordinateShift(), reimplement this function
-         * to stretch the coordinates on the map. Values greater than one will
-         * enlarge WGS84 coordinates out of the map bounds, so the map will
-         * occupy only portion of whole range, values lower than one will make
-         * the coordinate system smaller than the map.
+         * By default the map touches left and top map border, so shift is set
+         * to (0, 0). The values are in range 0 - 1 (portion of map size in
+         * given direction).
          */
-        inline virtual Core::Coords<double> coordinateStretch() const { return _coordinateStretch; }
-
-        /**
-         * @brief Set coordinate stretching
-         * @param shift Coordinate shift
-         */
-        inline void setCoordinateStretch(const Core::Coords<double>& stretch) { _coordinateStretch = stretch; }
+        inline void setShift(const Core::Coords<double>& _shift)
+            { shift = _shift; }
 
     private:
-        Core::Coords<double> _coordinateShift,
-            _coordinateStretch;
+        Core::Coords<double> stretch, shift;
 };
 
 }}
