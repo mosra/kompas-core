@@ -94,6 +94,24 @@ template <class PositionType> struct AbsoluteArea {
      */
     inline AbsoluteArea(PositionType _x1, PositionType _y1, PositionType _x2, PositionType _y2):
         x1(_x1), y1(_y1), x2(_x2), y2(_y2) {}
+
+    template<class T> AbsoluteArea<PositionType> operator*(T multiplier) const {
+        return AbsoluteArea<PositionType>(
+            x1*multiplier,
+            y1*multiplier,
+            x2*multiplier,
+            y2*multiplier
+        );
+    }
+
+    template<class T> AbsoluteArea<PositionType> operator/(T divisor) const {
+        return AbsoluteArea<PositionType>(
+            x1/divisor,
+            y1/divisor,
+            x2/divisor,
+            y2/divisor
+        );
+    }
 };
 
 }}
