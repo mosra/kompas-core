@@ -1,5 +1,5 @@
-#ifndef Map2X_Core_AbstractTileModel_h
-#define Map2X_Core_AbstractTileModel_h
+#ifndef Map2X_Core_AbstractRasterModel_h
+#define Map2X_Core_AbstractRasterModel_h
 /*
     Copyright © 2007, 2008, 2009, 2010 Vladimír Vondruš <mosra@centrum.cz>
 
@@ -16,7 +16,7 @@
 */
 
 /** @file
- * @brief Class Map2X::Core::AbstractTileModel and related types
+ * @brief Class Map2X::Core::AbstractRasterModel and related types
  */
 
 #include <string>
@@ -37,15 +37,15 @@ typedef Coords<unsigned int> TileCoords;            /**< @brief Tile coordinates
 typedef Area<unsigned int, unsigned int> TileArea;  /**< @brief Tile area */
 
 /**
- * @brief Abstract model for tiled maps
+ * @brief Abstract model for raster maps
  *
  * @todo Subclassing documentation
  * @todo Saving tiles to cache, Cache* tileCache()
  * @todo Installing a image filter plugin for modifying tileData
  *      (compression with pngnq, etc.)
  */
-class AbstractTileModel: public PluginManager::Plugin {
-    PLUGIN_INTERFACE("cz.mosra.Map2X.Core.AbstractTileModel/0.1")
+class AbstractRasterModel: public PluginManager::Plugin {
+    PLUGIN_INTERFACE("cz.mosra.Map2X.Core.AbstractRasterModel/0.1")
 
     public:
         /**
@@ -87,7 +87,7 @@ class AbstractTileModel: public PluginManager::Plugin {
 
         /**
          * @brief Features provided by model
-         * @return OR-ed values from AbstractTileModel::Feature
+         * @return OR-ed values from AbstractRasterModel::Feature
          */
         virtual int features() const = 0;
 
@@ -95,7 +95,7 @@ class AbstractTileModel: public PluginManager::Plugin {
          * @brief Map projection
          *
          * Default implementation returns zero pointer which means that
-         * this particular TileModel doesn't have specified projection.
+         * this particular RasterModel doesn't have specified projection.
          */
         virtual const AbstractProjection* projection() const { return 0; }
 
@@ -112,7 +112,7 @@ class AbstractTileModel: public PluginManager::Plugin {
         /*@}*/
 
         /** @brief Constructor  */
-        AbstractTileModel(PluginManager::AbstractPluginManager* manager, const std::string& plugin):
+        AbstractRasterModel(PluginManager::AbstractPluginManager* manager, const std::string& plugin):
             Plugin(manager, plugin), _online(false) {}
 
         /** @{ @name Map parameters */
@@ -155,7 +155,7 @@ class AbstractTileModel: public PluginManager::Plugin {
          *
          * List of layers provided by map. Layer is not transparent map
          * background and on top of it can be placed overlays.
-         * @see AbstractTileModel::overlays()
+         * @see AbstractRasterModel::overlays()
          */
         virtual std::vector<std::string> layers() const = 0;
 
@@ -165,7 +165,7 @@ class AbstractTileModel: public PluginManager::Plugin {
          * List of overlays provided by map. Overlay is semi-transparent layer
          * which can be rendered on top of normal layers and brings an
          * additional to them.
-         * @see AbstractTileModel::layers()
+         * @see AbstractRasterModel::layers()
          */
         virtual std::vector<std::string> overlays() const = 0;
 
@@ -188,7 +188,7 @@ class AbstractTileModel: public PluginManager::Plugin {
          * be added to a single model and tiles from them will be loaded in
          * reverse order (tiles will be first searched in most-recently-added
          * packages).
-         * @see AbstractTileModel::LoadableFromFile
+         * @see AbstractRasterModel::LoadableFromFile
          */
         virtual int addPackage(const std::string& packageDir);
 
@@ -200,7 +200,7 @@ class AbstractTileModel: public PluginManager::Plugin {
          * When online maps are enabled, all map parameters are set to maximum
          * possible values. Otherwise the map area size is determined from
          * loaded packages.
-         * @see AbstractTileModel::LoadableFromUrl
+         * @see AbstractRasterModel::LoadableFromUrl
          */
         virtual bool setOnline(bool enabled);
 
@@ -233,7 +233,7 @@ class AbstractTileModel: public PluginManager::Plugin {
          * -# get the URL from model
          * -# download tile data from the URL
          * -# save that data to cache
-         * -# load tile with AbstractTileModel::tileData()
+         * -# load tile with AbstractRasterModel::tileData()
          * This way can be properly used the tile cache and image filters
          * applied to tiles.
          * @note Default implementation returns empty string.
@@ -265,7 +265,7 @@ class AbstractTileModel: public PluginManager::Plugin {
          * - from single file (if any package is added and file feature is
          *   implemented)
          * If nothing found, returns empty string.
-         * @see AbstractTileModel::LoadableFromFile, AbstractTileModel::tileFile(), AbstractTileModel::enableOnlineWithCache()
+         * @see AbstractRasterModel::LoadableFromFile, AbstractRasterModel::tileFile(), AbstractRasterModel::enableOnlineWithCache()
          */
         virtual std::string tileData(const std::string& layer, Zoom z, const TileCoords& coords);
 

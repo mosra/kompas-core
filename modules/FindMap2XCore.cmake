@@ -16,7 +16,7 @@
 # MAP2X_CORE_INCLUDE_INSTALL_DIR        - Include installation directory for Core headers
 # MAP2X_PLUGINS_INCLUDE_INSTALL_DIR     - Include installation directory for plugin headers
 # MAP2X_PLUGINS_INSTALL_DIR             - Plugins installation directory
-# MAP2X_PLUGINS_TILEMODEL_INSTALL_DIR   - Tile model plugins installation directory
+# MAP2X_PLUGINS_RASTERMODEL_INSTALL_DIR - Tile model plugins installation directory
 # MAP2X_PLUGINS_PROJECTION_INSTALL_DIR  - Projection plugins installation directory
 #
 
@@ -40,7 +40,7 @@ else()
         PATH_SUFFIXES Map2X/Core
     )
     find_path(MAP2X_PLUGINS_INCLUDE_DIR
-        NAMES MercatorProjection OpenStreetMapTileModel
+        NAMES MercatorProjection OpenStreetMapRasterModel
         PATH_SUFFIXES Map2X/Plugins
     )
 
@@ -62,4 +62,4 @@ set_parent_scope(MAP2X_CORE_INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/include/
 set_parent_scope(MAP2X_PLUGINS_INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/include/Map2X/Plugins)
 set_parent_scope(MAP2X_PLUGINS_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/map2x/plugins)
 set_parent_scope(MAP2X_PLUGINS_PROJECTION_INSTALL_DIR ${MAP2X_PLUGINS_INSTALL_DIR}/projections)
-set_parent_scope(MAP2X_PLUGINS_TILEMODEL_INSTALL_DIR ${MAP2X_PLUGINS_INSTALL_DIR}/tileModels)
+set_parent_scope(MAP2X_PLUGINS_RASTERMODEL_INSTALL_DIR ${MAP2X_PLUGINS_INSTALL_DIR}/rasterModels)

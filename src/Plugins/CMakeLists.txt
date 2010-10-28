@@ -1,4 +1,4 @@
-add_subdirectory(OpenStreetMapTileModel)
+add_subdirectory(OpenStreetMapRasterModel)
 add_subdirectory(MercatorProjection)
 
 # Propagate plugin list variable to parent scope

@@ -1,5 +1,5 @@
-#ifndef Map2X_Plugins_OpenStreetMapTileModel_h
-#define Map2X_Plugins_OpenStreetMapTileModel_h
+#ifndef Map2X_Plugins_OpenStreetMapRasterModel_h
+#define Map2X_Plugins_OpenStreetMapRasterModel_h
 /*
     Copyright © 2007, 2008, 2009, 2010 Vladimír Vondruš <mosra@centrum.cz>
 
@@ -16,23 +16,23 @@
 */
 
 /** @file
- * @brief Class Map2X::Plugins::OpenStreetMapTileModel
+ * @brief Class Map2X::Plugins::OpenStreetMapRasterModel
  */
 
-#include "AbstractTileModel.h"
+#include "AbstractRasterModel.h"
 #include "MercatorProjection/MercatorProjection.h"
 
 namespace Map2X { namespace Plugins {
 
 /**
- * @brief OpenStreetMap tile model
+ * @brief OpenStreetMap raster model
  *
  * Based on: http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
  */
-class OpenStreetMapTileModel: public Core::AbstractTileModel {
+class OpenStreetMapRasterModel: public Core::AbstractRasterModel {
     public:
-        inline OpenStreetMapTileModel(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
-            AbstractTileModel(manager, plugin) {}
+        inline OpenStreetMapRasterModel(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
+            AbstractRasterModel(manager, plugin) {}
 
         inline virtual int features() const
             { return LoadableFromUrl; }

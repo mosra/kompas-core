@@ -13,23 +13,23 @@
     GNU Lesser General Public License version 3 for more details.
 */
 
-#include "AbstractTileModel.h"
+#include "AbstractRasterModel.h"
 
 using namespace std;
 
 namespace Map2X { namespace Core {
 
-string AbstractTileModel::attribute(Attribute type, int package) const {
+string AbstractRasterModel::attribute(Attribute type, int package) const {
     /** @todo Implement! */
     return "";
 }
 
-int AbstractTileModel::addPackage(const string& packageDir) {
+int AbstractRasterModel::addPackage(const string& packageDir) {
     /** @todo Implement! */
     return -1;
 }
 
-bool AbstractTileModel::setOnline(bool enabled) {
+bool AbstractRasterModel::setOnline(bool enabled) {
     if(!enabled) _online = false;
     else {
         if(!(features() & LoadableFromUrl)) _online = false;
@@ -39,12 +39,12 @@ bool AbstractTileModel::setOnline(bool enabled) {
     return _online;
 }
 
-bool AbstractTileModel::setCache(const string& cacheDir) {
+bool AbstractRasterModel::setCache(const string& cacheDir) {
     /** @todo Implement! */
     return false;
 }
 
-string AbstractTileModel::tileData(const string& layer, Zoom z, const TileCoords& coords) {
+string AbstractRasterModel::tileData(const string& layer, Zoom z, const TileCoords& coords) {
     /** @todo Implement! */
     return "";
 }

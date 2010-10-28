@@ -13,20 +13,20 @@
     GNU Lesser General Public License version 3 for more details.
 */
 
-#include "OpenStreetMapTileModel.h"
+#include "OpenStreetMapRasterModel.h"
 
 #include <sstream>
 
 using namespace std;
 using namespace Map2X::Core;
 
-PLUGIN_REGISTER_STATIC(OpenStreetMapTileModel,
-                       Map2X::Plugins::OpenStreetMapTileModel,
-                       "cz.mosra.Map2X.Core.AbstractTileModel/0.1")
+PLUGIN_REGISTER_STATIC(OpenStreetMapRasterModel,
+                       Map2X::Plugins::OpenStreetMapRasterModel,
+                       "cz.mosra.Map2X.Core.AbstractRasterModel/0.1")
 
 namespace Map2X { namespace Plugins {
 
-vector<Zoom> OpenStreetMapTileModel::zoomLevels() const {
+vector<Zoom> OpenStreetMapRasterModel::zoomLevels() const {
     /** @todo Implement for packages */
     vector<Zoom> z;
     for(Zoom i = 0; i != 19; ++i)
@@ -34,13 +34,13 @@ vector<Zoom> OpenStreetMapTileModel::zoomLevels() const {
     return z;
 }
 
-TileArea OpenStreetMapTileModel::area() const {
+TileArea OpenStreetMapRasterModel::area() const {
     /** @todo Implement for packages */
     /* For zoom 0 */
     return TileArea(0, 0, 1, 1);
 }
 
-vector<string> OpenStreetMapTileModel::layers() const {
+vector<string> OpenStreetMapRasterModel::layers() const {
     vector<string> l;
     l.push_back("Mapnik");
     l.push_back("Osmarender");
@@ -48,11 +48,11 @@ vector<string> OpenStreetMapTileModel::layers() const {
     return l;
 }
 
-vector<string> OpenStreetMapTileModel::overlays() const {
+vector<string> OpenStreetMapRasterModel::overlays() const {
     return vector<string>();
 }
 
-string OpenStreetMapTileModel::tileUrl(const std::string& layer, Zoom z, const TileCoords& coords) const {
+string OpenStreetMapRasterModel::tileUrl(const std::string& layer, Zoom z, const TileCoords& coords) const {
     if(z > 18) return "";
 
     ostringstream url;

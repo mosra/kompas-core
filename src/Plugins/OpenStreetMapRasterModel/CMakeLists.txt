@@ -1,5 +1,5 @@
 map2x_add_static_plugin(Map2XCore_Plugins
-    OpenStreetMapTileModel OpenStreetMapTileModel.conf OpenStreetMapTileModel.cpp)
+    OpenStreetMapRasterModel OpenStreetMapRasterModel.conf OpenStreetMapRasterModel.cpp)
 
 if(BUILD_TESTS)
     enable_testing()
