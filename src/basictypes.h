@@ -19,6 +19,8 @@
  * @brief Basic template types
  */
 
+#include "Utility/ConfigurationGroup.h"
+
 namespace Map2X { namespace Core {
 
 /** @brief Pi */
@@ -128,6 +130,75 @@ template <class PositionType> struct AbsoluteArea {
     }
     inline bool operator!=(const AbsoluteArea<PositionType>& other) {
         return !operator==(other);
+    }
+};
+
+}
+
+namespace Utility {
+
+template<class PositionType> struct ConfigurationValue<Core::Coords<PositionType> > {
+    static std::string toString(const Core::Coords<PositionType>& value, int flags = 0) {
+        return
+            ConfigurationValue<PositionType>::toString(value.x, flags) + ' ' +
+            ConfigurationValue<PositionType>::toString(value.y, flags);
+    }
+
+    static Core::Coords<PositionType> fromString(const std::string& stringValue, int flags = 0) {
+        std::istringstream i(stringValue);
+        std::string x, y;
+
+        Core::Coords<PositionType> coords;
+        (i >> x) && (coords.x = ConfigurationValue<PositionType>::fromString(x, flags));
+        (i >> y) && (coords.y = ConfigurationValue<PositionType>::fromString(y, flags));
+
+        return coords;
+    }
+};
+
+template<class PositionType, class SizeType> struct ConfigurationValue<Core::Area<PositionType, SizeType> > {
+    static std::string toString(const Core::Area<PositionType, SizeType>& value, int flags = 0) {
+        return
+            ConfigurationValue<PositionType>::toString(value.x, flags) + ' ' +
+            ConfigurationValue<PositionType>::toString(value.y, flags) + ' ' +
+            ConfigurationValue<SizeType>::toString(value.w, flags) + ' ' +
+            ConfigurationValue<SizeType>::toString(value.h, flags);
+    }
+
+    static Core::Area<PositionType, SizeType> fromString(const std::string& stringValue, int flags = 0) {
+        std::istringstream i(stringValue);
+        std::string x, y, w, h;
+
+        Core::Area<PositionType, SizeType> area;
+        (i >> x) && (area.x = ConfigurationValue<PositionType>::fromString(x, flags));
+        (i >> y) && (area.y = ConfigurationValue<PositionType>::fromString(y, flags));
+        (i >> w) && (area.w = ConfigurationValue<SizeType>::fromString(w, flags));
+        (i >> h) && (area.h = ConfigurationValue<SizeType>::fromString(h, flags));
+
+        return area;
+    }
+};
+
+template<class PositionType> struct ConfigurationValue<Core::AbsoluteArea<PositionType> > {
+    static std::string toString(const Core::AbsoluteArea<PositionType>& value, int flags = 0) {
+        return
+            ConfigurationValue<PositionType>::toString(value.x1, flags) + ' ' +
+            ConfigurationValue<PositionType>::toString(value.y1, flags) + ' ' +
+            ConfigurationValue<PositionType>::toString(value.x2, flags) + ' ' +
+            ConfigurationValue<PositionType>::toString(value.y2, flags);
+    }
+
+    static Core::AbsoluteArea<PositionType> fromString(const std::string& stringValue, int flags = 0) {
+        std::istringstream i(stringValue);
+        std::string x1, y1, x2, y2;
+
+        Core::AbsoluteArea<PositionType> area;
+        (i >> x1) && (area.x1 = ConfigurationValue<PositionType>::fromString(x1, flags));
+        (i >> y1) && (area.y1 = ConfigurationValue<PositionType>::fromString(y1, flags));
+        (i >> x2) && (area.x2 = ConfigurationValue<PositionType>::fromString(x2, flags));
+        (i >> y2) && (area.y2 = ConfigurationValue<PositionType>::fromString(y2, flags));
+
+        return area;
     }
 };
 
