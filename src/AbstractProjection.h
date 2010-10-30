@@ -20,7 +20,7 @@
  */
 
 #include "PluginManager/Plugin.h"
-#include "basictypes.h"
+#include "Coords.h"
 #include "Wgs84Coords.h"
 
 namespace Map2X { namespace Core {

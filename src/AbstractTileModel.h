@@ -22,7 +22,8 @@
 #include <string>
 #include <vector>
 
-#include "basictypes.h"
+#include "Coords.h"
+#include "Area.h"
 #include "Wgs84Coords.h"
 #include "PluginManager/Plugin.h"
 

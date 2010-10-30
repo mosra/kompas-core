@@ -17,7 +17,7 @@
 
 #include <QtTest/QTest>
 
-#include "basictypes.h"
+#include "Coords.h"
 #include "Utility/ConfigurationGroup.h"
 
 typedef Map2X::Core::Coords<unsigned int> UCoords;

@@ -18,6 +18,8 @@
 
 #include <cmath>
 
+#include "constants.h"
+
 using namespace Map2X::Core;
 
 PLUGIN_REGISTER_STATIC(MercatorProjection,

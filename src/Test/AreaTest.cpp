@@ -17,7 +17,7 @@
 
 #include <QtTest/QTest>
 
-#include "basictypes.h"
+#include "Area.h"
 #include "Utility/ConfigurationGroup.h"
 
 typedef Map2X::Core::Area<unsigned int, unsigned int> UArea;
