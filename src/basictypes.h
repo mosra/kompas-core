@@ -42,17 +42,14 @@ template <class PositionType> struct Coords {
      */
     inline Coords(PositionType _x, PositionType _y):
         x(_x), y(_y) {}
+
+    inline bool operator==(const Coords<PositionType>& other) {
+        return other.x == x && other.y == y;
+    }
+    inline bool operator!=(const Coords<PositionType>& other) {
+        return !operator==(other);
+    }
 };
-
-/** @brief Comparing operator for coordinates */
-template<class T> inline bool operator==(const Coords<T>& a, const Coords<T>& b) {
-    return a.x == b.x && a.y == b.y;
-}
-
-/** @brief Comparing operator for coordinates */
-template<class T> inline bool operator!=(const Coords<T>& a, const Coords<T>& b) {
-    return !operator==(a, b);
-}
 
 /** @brief %Area with defined position and size */
 template <class PositionType, class SizeType> struct Area {
@@ -73,6 +70,16 @@ template <class PositionType, class SizeType> struct Area {
      */
     inline Area(PositionType _x, PositionType _y, SizeType _w, SizeType _h):
         x(_x), y(_y), w(_w), h(_h) {}
+
+    bool operator==(const Area<PositionType, SizeType>& other) {
+        return other.x == x &&
+               other.y == y &&
+               other.w == w &&
+               other.h == h;
+    }
+    inline bool operator!=(const Area<PositionType, SizeType>& other) {
+        return !operator==(other);
+    }
 };
 
 /** @brief Absolutely defined area */
@@ -111,6 +118,16 @@ template <class PositionType> struct AbsoluteArea {
             x2/divisor,
             y2/divisor
         );
+    }
+
+    bool operator==(const AbsoluteArea<PositionType>& other) {
+        return other.x1 == x1 &&
+               other.y1 == y1 &&
+               other.x2 == x2 &&
+               other.y2 == y2;
+    }
+    inline bool operator!=(const AbsoluteArea<PositionType>& other) {
+        return !operator==(other);
     }
 };
 
