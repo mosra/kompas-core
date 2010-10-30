@@ -23,7 +23,6 @@
 #include <vector>
 
 #include "basictypes.h"
-#include "RasterCoords.h"
 #include "Wgs84Coords.h"
 #include "PluginManager/Plugin.h"
 
