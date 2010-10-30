@@ -269,7 +269,7 @@ bool operator==(const Map2X::Core::Wgs84Coords& a, const Map2X::Core::Wgs84Coord
 #ifndef DOXYGEN_GENERATING_OUTPUT
 namespace Utility {
 
-template<> Core::Wgs84Coords configurationValueFromString<Core::Wgs84Coords>(const string& stringValue, int flags) {
+Core::Wgs84Coords ConfigurationValue<Core::Wgs84Coords>::fromString(const string& stringValue, int flags) {
     double lat, lon;
     istringstream stream(stringValue);
     stream >> lat >> lon;
@@ -278,7 +278,7 @@ template<> Core::Wgs84Coords configurationValueFromString<Core::Wgs84Coords>(con
     return Core::Wgs84Coords(lat, lon);
 }
 
-template<> string configurationValueToString<Core::Wgs84Coords>(const Core::Wgs84Coords& value, int flags) {
+string ConfigurationValue<Core::Wgs84Coords>::toString(const Core::Wgs84Coords& value, int flags) {
     if(!value.isValid()) return "0";
 
     ostringstream stream;

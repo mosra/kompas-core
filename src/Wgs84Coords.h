@@ -167,22 +167,24 @@ inline bool operator!=(const Wgs84Coords& a, const Wgs84Coords& b) {
 
 namespace Utility {
 
-/**
- * @brief Convert string from configuration to Wgs84Coords
- * @copydetails Utility::configurationValueFromString()
- *
- * If the configuration string doesn't contain both numeric coordinates, invalid
- * coordinates are returned.
- */
-template<> Core::Wgs84Coords configurationValueFromString(const std::string& stringValue, int flags);
+template<> struct ConfigurationValue<Core::Wgs84Coords> {
+    /**
+    * @brief Convert string from configuration to Wgs84Coords
+    * @copydetails Utility::configurationValueFromString()
+    *
+    * If the configuration string doesn't contain both numeric coordinates, invalid
+    * coordinates are returned.
+    */
+    static Core::Wgs84Coords fromString(const std::string& stringValue, int flags);
 
-/**
- * @brief Convert Wgs84Coords to string storable in configuration
- * @copydetails Utility::configurationValueToString()
- *
- * Invalid coordinates are converted to single zero character.
- */
-template<> std::string configurationValueToString(const Core::Wgs84Coords& value, int flags);
+    /**
+    * @brief Convert Wgs84Coords to string storable in configuration
+    * @copydetails Utility::configurationValueToString()
+    *
+    * Invalid coordinates are converted to single zero character.
+    */
+    static std::string toString(const Core::Wgs84Coords& value, int flags);
+};
 
 }
 
