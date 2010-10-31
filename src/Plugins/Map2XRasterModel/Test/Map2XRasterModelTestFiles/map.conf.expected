@@ -1,0 +1,12 @@
+version=3
+model=Map2XRasterModel
+tileSize="256 256"
+zoomStep=2
+area="6 7 2 2"
+zoom=2
+zoom=3
+layer=base
+overlay=relief
+name="Map2X testing package"
+description="Buggy and sparse"
+packager=mosra

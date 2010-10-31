@@ -22,6 +22,7 @@
 #include "AbstractRasterModel.h"
 
 #include "Map2XRasterArchiveReader.h"
+#include "Map2XRasterArchiveMaker.h"
 
 namespace Map2X { namespace Plugins {
 
@@ -35,10 +36,10 @@ class Map2XRasterModel: public Core::AbstractRasterModel {
     public:
         /** @copydoc Core::AbstractRasterModel::AbstractRasterModel */
         inline Map2XRasterModel(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
-            AbstractRasterModel(manager, plugin), _zoomStep(0), currentPackageZoom(0) {}
+            AbstractRasterModel(manager, plugin), _zoomStep(0), currentPackageZoom(0), currentlyCreatedPackage(0) {}
         inline virtual ~Map2XRasterModel() { closePackages(); }
 
-        inline virtual int features() const { return MultiplePackages; }
+        inline virtual int features() const { return MultiplePackages|WriteableFormat|SequentialFormat; }
         inline virtual Core::TileSize tileSize() const { return _tileSize; }
 
         virtual std::string attribute(Attribute type, int package) const;
@@ -56,6 +57,11 @@ class Map2XRasterModel: public Core::AbstractRasterModel {
          */
         virtual int addPackage(const std::string& filename);
         virtual std::string tileFromPackage(const std::string& layer, Core::Zoom z, const Map2X::Core::TileCoords& coords);
+
+        virtual bool initializePackage(const std::string& filename, Core::TileSize tileSize, std::vector<Core::Zoom> zoomLevels, double zoomStep, Core::TileArea area, std::vector<std::string> layers, std::vector<std::string> overlays);
+        virtual bool setPackageAttribute(Attribute type, const std::string& data);
+        virtual bool tileToPackage(const std::string& layer, Core::Zoom z, const Map2X::Core::TileCoords& coords, const std::string& data);
+        virtual bool finalizePackage();
 
     protected:
         /** @brief Opened package */
@@ -107,6 +113,16 @@ class Map2XRasterModel: public Core::AbstractRasterModel {
         virtual std::string tileFromArchive(const std::string& path, const std::string& layer, Core::Zoom z, std::vector<Map2XRasterArchiveReader*>* archives, unsigned int archiveId, int packageVersion, unsigned int tileId);
 
     private:
+        struct CurrentlyCreatedPackage {
+            CurrentlyCreatedPackage(const std::string& filename): conf(filename, Utility::Configuration::Truncate) {}
+            Utility::Configuration conf;
+            std::string path;
+            std::map<std::string, Map2XRasterArchiveMaker*> archives;
+            Core::TileArea area;
+            Core::Zoom minZoom;
+            double zoomStep;
+        };
+
         Core::TileSize _tileSize;
         double _zoomStep;
         std::vector<Core::Zoom> _zoomLevels;
@@ -114,6 +130,8 @@ class Map2XRasterModel: public Core::AbstractRasterModel {
         std::vector<std::string> _layers, _overlays;
         Core::Zoom currentPackageZoom;
         std::vector<Package*> packages;
+
+        CurrentlyCreatedPackage* currentlyCreatedPackage;
 
         void closeArchives();
         void closePackages();

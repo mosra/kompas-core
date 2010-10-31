@@ -72,7 +72,29 @@ class AbstractRasterModel: public PluginManager::Plugin {
              * Multiple packages can be loaded at once.
              * @see addPackage(), tileFromPackage()
              */
-            MultiplePackages        = 0x04
+            MultiplePackages        = 0x04,
+
+            /**
+             * The format supports writing new packages (has implemented
+             * all needed functions).
+             * @see initializePackage(), tileToPackage(), finalizePackage()
+             */
+            WriteableFormat         = 0x08,
+
+            /**
+             * New packages can be created only from online maps or packages
+             * with the same type, not any other formats.
+             * @see tileToPackage()
+             */
+            NonConvertableFormat    = 0x10,
+
+            /**
+             * Tiles to new packages must be saved in sequential order (first
+             * tile in first row, second tile in first row, ...). If not set,
+             * the tiles can be saved in arbitrary order.
+             * @see tileToPackage()
+             */
+            SequentialFormat        = 0x20
         };
 
         /** @brief Map attribute types */
@@ -261,6 +283,63 @@ class AbstractRasterModel: public PluginManager::Plugin {
          * @see addPackage(), AbstractRasterModel::MultiplePackages
          */
         virtual std::string tileFromPackage(const std::string& layer, Zoom z, const TileCoords& coords) = 0;
+
+        /*@}*/
+
+        /** @{ @name Saving map data */
+
+        /**
+         * @brief Create new package
+         * @param filename      Package filename
+         * @param tileSize      Tile size
+         * @param zoomLevels    Zoom levels
+         * @param zoomStep      Zoom step
+         * @param area          Tile area for lowest zoom
+         * @param layers        Map layers
+         * @param overlays      Map overlays
+         * @return Whether the package was successfully initialized. Default
+         *      implementation returns false.
+         *
+         * Creates new package which can then be filled with tileToPackage().
+         * @see finalizePackage(), AbstractRasterModel::WriteableFormat
+         */
+        inline virtual bool initializePackage(const std::string& filename, TileSize tileSize, std::vector<Zoom> zoomLevels, double zoomStep, TileArea area, std::vector<std::string> layers, std::vector<std::string> overlays) { return false; }
+
+        /**
+         * @brief Set package attribute
+         * @param type      Attribute type
+         * @param data      Attribute data
+         * @return Whether the attribute was set. If the package wasn't
+         *      initialized with initializePackage(), the attribute is not
+         *      supported in the format, or saving was not successful,
+         *      returns false. Default implementation returns false.
+         */
+        inline virtual bool setPackageAttribute(Attribute type, const std::string& data) { return false; }
+
+        /**
+         * @brief Save tile to package
+         * @param layer     Map layer or overlay
+         * @param z         Zoom level
+         * @param coords    Coordinates
+         * @param data      Tile data
+         * @return If new package wasn't initialized with initializePackage() or
+         *      the saving was not successful, returns false. Default
+         *      implementation returns false.
+         * @see initializePackage(), finalizePackage(), AbstractRasterModel::WriteableFormat, AbstractRasterModel::NonConvertableFormat, AbstractRasterModel::SequentialFormat
+         */
+        inline virtual bool tileToPackage(const std::string& layer, Zoom z, const TileCoords& coords, const std::string& data) { return false; }
+
+        /**
+         * @brief Finalize package
+         * @return If new package wasn't initialized with initializePackage() or
+         *      finalizing was not successful, returns false. Default
+         *      implementation returns false.
+         *
+         * Saves all remaining data to the package and closes it, so it's
+         * possible to create another package.
+         * @see initializePackage(), tileToPackage(), AbstractRasterModel::WriteableFormat
+         */
+        inline virtual bool finalizePackage() { return false; }
 
         /*@}*/
 

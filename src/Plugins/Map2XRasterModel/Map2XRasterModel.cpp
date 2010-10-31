@@ -216,6 +216,107 @@ Map2XRasterModel::Package* Map2XRasterModel::parsePackage(const Configuration* c
     return p;
 }
 
+bool Map2XRasterModel::initializePackage(const string& filename, TileSize tileSize, vector<Zoom> zoomLevels, double zoomStep, TileArea area, vector<string> layers, vector<string> overlays) {
+    if(currentlyCreatedPackage != 0) return false;
+
+    std::string path = Directory::path(filename);
+
+    /* Create path, if it doesn't exist */
+    if(!Directory::mkpath(path)) return false;
+
+    /* Check if there is non-zero area, at least one zoom level and one layer */
+    if(zoomLevels.empty() || !area.w || !area.h || layers.empty()) return false;
+
+    /* Sort zoom level array */
+    sort(zoomLevels.begin(), zoomLevels.end());
+
+    /* Fill in configuration file */
+    currentlyCreatedPackage = new CurrentlyCreatedPackage(filename);
+    currentlyCreatedPackage->conf.setValue("version", 3);
+    currentlyCreatedPackage->conf.setValue<string>("model", "Map2XRasterModel");
+    currentlyCreatedPackage->conf.setValue("tileSize", tileSize);
+    currentlyCreatedPackage->conf.setValue("zoomStep", zoomStep);
+    currentlyCreatedPackage->conf.setValue("area", area);
+
+    for(vector<Zoom>::const_iterator it = zoomLevels.begin(); it != zoomLevels.end(); ++it)
+        currentlyCreatedPackage->conf.addValue("zoom", *it);
+
+    for(vector<string>::const_iterator it = layers.begin(); it != layers.end(); ++it)
+        currentlyCreatedPackage->conf.addValue("layer", *it);
+
+    for(vector<string>::const_iterator it = overlays.begin(); it != overlays.end(); ++it)
+        currentlyCreatedPackage->conf.addValue("overlay", *it);
+
+    /* Save frequently used values */
+    currentlyCreatedPackage->path = path;
+    currentlyCreatedPackage->area = area;
+    currentlyCreatedPackage->minZoom = zoomLevels[0];
+    currentlyCreatedPackage->zoomStep = zoomStep;
+
+    return true;
+}
+
+bool Map2XRasterModel::setPackageAttribute(AbstractRasterModel::Attribute type, const std::string& data) {
+    if(!currentlyCreatedPackage) return false;
+
+    string attribute;
+    switch(type) {
+        case Name:          attribute = "name";         break;
+        case Description:   attribute = "description";  break;
+        case Packager:      attribute = "packager";     break;
+        default:            return false;
+    }
+
+    currentlyCreatedPackage->conf.setValue(attribute, data);
+    return true;
+}
+
+bool Map2XRasterModel::tileToPackage(const string& layer, Zoom z, const TileCoords& coords, const string& data) {
+    if(!currentlyCreatedPackage) return false;
+
+    /* Archive prefix */
+    ostringstream prefix;
+    prefix << layer << '/' << z;
+
+    /* Compute total count of tiles in current zoom level */
+    TileArea area = currentlyCreatedPackage->area*pow(currentlyCreatedPackage->zoomStep, z-currentlyCreatedPackage->minZoom);
+
+    /* Try to find archive with that prefix, otherwise create new */
+    map<string, Map2XRasterArchiveMaker*>::iterator found = currentlyCreatedPackage->archives.find(prefix.str());
+    if(found == currentlyCreatedPackage->archives.end()) {
+        /* Make directory for given layer, if not exists */
+        if(!Directory::mkpath(Directory::join(currentlyCreatedPackage->path, layer))) return false;
+
+        unsigned int total = area.w*area.h;
+        Map2XRasterArchiveMaker* maker = new Map2XRasterArchiveMaker(Directory::join(currentlyCreatedPackage->path, prefix.str()), 3, total);
+
+        found = currentlyCreatedPackage->archives.insert(pair<string, Map2XRasterArchiveMaker*>(prefix.str(), maker)).first;
+    }
+
+    /* Tile came out of order */
+    if((coords.y-area.y)*area.w+(coords.x-area.x) != found->second->tileCount()) return false;
+
+    /* Append tile */
+    int ret = found->second->append(data);
+    if(ret == Map2XRasterArchiveMaker::Ok || ret == Map2XRasterArchiveMaker::NextFile) return true;
+
+    return false;
+}
+
+bool Map2XRasterModel::finalizePackage() {
+    if(!currentlyCreatedPackage) return false;
+
+    /* Delete all makers */
+    for(map<string, Map2XRasterArchiveMaker*>::iterator it = currentlyCreatedPackage->archives.begin(); it != currentlyCreatedPackage->archives.end(); ++it)
+        delete it->second;
+
+    /* Everything should be automagically saved & finished upon destruction */
+    delete currentlyCreatedPackage;
+    currentlyCreatedPackage = 0;
+
+    return true;
+}
+
 string Map2XRasterModel::tileFromArchive(const string& path, const string& layer, Zoom z, vector<Map2XRasterArchiveReader*>* archives, unsigned int archiveId, int packageVersion, unsigned int tileId) {
     /* In the archive vector could be only one invalid archive, placed at the end */
 

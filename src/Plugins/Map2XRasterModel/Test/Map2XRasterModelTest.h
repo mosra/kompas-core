@@ -28,6 +28,8 @@ class Map2XRasterModelTest: public QObject {
         void metadata();
         void tiles();
 
+        void create();
+
     private:
         Map2XRasterModel model;
 };
