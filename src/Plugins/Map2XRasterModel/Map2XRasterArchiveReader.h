@@ -1,5 +1,5 @@
-#ifndef Map2X_Core_TileArchiveReader_h
-#define Map2X_Core_TileArchiveReader_h
+#ifndef Map2X_Plugins_Map2XRasterArchiveReader_h
+#define Map2X_Plugins_Map2XRasterArchiveReader_h
 /*
     Copyright © 2007, 2008, 2009, 2010 Vladimír Vondruš <mosra@centrum.cz>
 
@@ -16,22 +16,22 @@
 */
 
 /** @file
- * @brief Class Map2X::Core::TileArchiveReader
+ * @brief Class Map2X::Plugins::Map2XRasterArchiveReader
  */
 
 #include <fstream>
 
-namespace Map2X { namespace Core {
+namespace Map2X { namespace Plugins {
 
 /**
  * @brief Reader for tile archives
  *
- * Supports tile archive version 2. See also @ref TileArchiveFormat.
+ * Supports tile archive version 2. See also @ref Map2XRasterArchiveFormat.
  * @todo Archive version 3
  * @todo Support for files > 4GB
  * @todo Creating from istream
  */
-class TileArchiveReader {
+class Map2XRasterArchiveReader {
     private:
         int _version;
         unsigned int _total,
@@ -66,16 +66,16 @@ class TileArchiveReader {
          *
          * Opens the archive file, checks file signature and version and gets
          * tile counts for the file. Success of this operation can be verified
-         * with TileArchiveReader::isValid().
+         * with Map2XRasterArchiveReader::isValid().
          */
-        TileArchiveReader(const std::string& _file);
+        Map2XRasterArchiveReader(const std::string& _file);
 
         /**
          * @brief Destructor
          *
          * Closes the archive file.
          */
-        ~TileArchiveReader();
+        ~Map2XRasterArchiveReader();
 
         /**
          * @brief Get tile from archive

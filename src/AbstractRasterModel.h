@@ -43,6 +43,7 @@ typedef Area<unsigned int, unsigned int> TileArea;  /**< @brief Tile area */
  * @todo Saving tiles to cache, Cache* tileCache()
  * @todo Installing a image filter plugin for modifying tileData
  *      (compression with pngnq, etc.)
+ * @todo Document order of getting tile data
  */
 class AbstractRasterModel: public PluginManager::Plugin {
     PLUGIN_INTERFACE("cz.mosra.Map2X.Core.AbstractRasterModel/0.1")
@@ -51,13 +52,27 @@ class AbstractRasterModel: public PluginManager::Plugin {
         /**
          * @brief Features provided by map model
          *
-         * Every map model is capable of at least loading maps from map archive,
-         * if not anything else.
+         * Every map model must be capable of at least loading maps from
+         * package, if not anything else.
          */
         enum Feature {
-            LoadableFromUrl     = 0x01, /**< @brief Maps are loadable from URLs */
-            LoadableFromFile    = 0x02, /**< @brief Maps are loadable from local files */
-            ConvertableCoords   = 0x04  /**< @brief Coordinates can be converted to and from WGS84 */
+            /**
+             * Map tiles are loadable from URLs.
+             * @see tileUrl()
+             */
+            LoadableFromUrl         = 0x01,
+
+            /**
+             * Coordinates can be converted to and from WGS84.
+             * @see projection()
+             */
+            ConvertableCoords       = 0x02,
+
+            /**
+             * Multiple packages can be loaded at once.
+             * @see addPackage(), tileFromPackage()
+             */
+            MultiplePackages        = 0x04
         };
 
         /** @brief Map attribute types */
@@ -89,7 +104,7 @@ class AbstractRasterModel: public PluginManager::Plugin {
          * @brief Features provided by model
          * @return OR-ed values from AbstractRasterModel::Feature
          */
-        virtual int features() const = 0;
+        inline virtual int features() const { return 0; }
 
         /**
          * @brief Map projection
@@ -190,9 +205,9 @@ class AbstractRasterModel: public PluginManager::Plugin {
          * be added to a single model and tiles from them will be loaded in
          * reverse order (tiles will be first searched in most-recently-added
          * packages).
-         * @see AbstractRasterModel::LoadableFromFile
+         * @see tileFromPackage(), AbstractRasterModel::MultiplePackages
          */
-        virtual int addPackage(const std::string& packageDir);
+        virtual int addPackage(const std::string& filename) = 0;
 
         /**
          * @brief Enable/disable online maps
@@ -234,21 +249,18 @@ class AbstractRasterModel: public PluginManager::Plugin {
         virtual inline std::string tileUrl(const std::string& layer, Zoom z, const TileCoords& coords) const { return ""; }
 
         /**
-         * @brief Tile data
+         * @brief Get tile data from package
          * @param layer     Map layer or overlay
          * @param z         Zoom level
          * @param coords    Coordinates
-         * @return Tile data (image) or empty string
+         * @return Tile data (image) or empty string, if tile was not found in
+         *      any loaded package.
          *
-         * Tries to find tile data in this order:
-         * - from map archive (if any package is added)
-         * - from tile cache (if any cache is set up)
-         * - from single file (if any package is added and file feature is
-         *   implemented)
-         * If nothing found, returns empty string.
-         * @see AbstractRasterModel::LoadableFromFile, AbstractRasterModel::tileFile(), AbstractRasterModel::enableOnlineWithCache()
+         * Tries to get given tile from all packages in ascending order (first
+         * from first package, if not, from second package and so on).
+         * @see addPackage(), AbstractRasterModel::MultiplePackages
          */
-        virtual std::string tileData(const std::string& layer, Zoom z, const TileCoords& coords);
+        virtual std::string tileFromPackage(const std::string& layer, Zoom z, const TileCoords& coords) = 0;
 
         /*@}*/
 

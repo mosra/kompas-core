@@ -13,16 +13,16 @@
     GNU Lesser General Public License version 3 for more details.
 */
 
-#include "TileArchiveReader.h"
+#include "Map2XRasterArchiveReader.h"
 
 #include "Utility/Endianness.h"
 
 using namespace std;
 using Map2X::Utility::Endianness;
 
-namespace Map2X { namespace Core {
+namespace Map2X { namespace Plugins {
 
-TileArchiveReader::TileArchiveReader(const string& _file): _version(0), _total(0), _begin(0), _end(0), _isValid(false) {
+Map2XRasterArchiveReader::Map2XRasterArchiveReader(const string& _file): _version(0), _total(0), _begin(0), _end(0), _isValid(false) {
     file.open(_file.c_str(), fstream::binary);
     if(!file.is_open()) return;
 
@@ -58,11 +58,11 @@ TileArchiveReader::TileArchiveReader(const string& _file): _version(0), _total(0
         position leads really to EOF etc? */
 }
 
-TileArchiveReader::~TileArchiveReader() {
+Map2XRasterArchiveReader::~Map2XRasterArchiveReader() {
     if(file.is_open()) file.close();
 }
 
-string TileArchiveReader::get(unsigned int tileNumber) {
+string Map2XRasterArchiveReader::get(unsigned int tileNumber) {
     /* If the archive is invalid, file is not ready or tileNumber is out of bounds, return empty data */
     if(!isValid() || !file.good() || tileNumber < begin() || tileNumber >= end()) return "";
 

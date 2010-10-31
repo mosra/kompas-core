@@ -13,23 +13,23 @@
     GNU Lesser General Public License version 3 for more details.
 */
 
-#include "TileArchiveTest.h"
+#include "Map2XRasterArchiveTest.h"
 
 #include <string>
 #include <QtTest/QTest>
 
-#include "TileArchiveReader.h"
+#include "Map2XRasterModel/Map2XRasterArchiveReader.h"
 
-#include "TileArchiveTestConfigure.h"
+#include "Map2XRasterArchiveTestConfigure.h"
 
-QTEST_APPLESS_MAIN(Map2X::Core::Test::TileArchiveTest)
+QTEST_APPLESS_MAIN(Map2X::Plugins::Test::Map2XRasterArchiveTest)
 
 using namespace std;
 
-namespace Map2X { namespace Core { namespace Test {
+namespace Map2X { namespace Plugins { namespace Test {
 
-void TileArchiveTest::reader() {
-    TileArchiveReader r(TILEARCHIVE_TEST_DIR + string("version2.map"));
+void Map2XRasterArchiveTest::reader() {
+    Map2XRasterArchiveReader r(RASTERARCHIVE_TEST_DIR + string("version2.map"));
 
     QVERIFY(r.isValid());
     QVERIFY(r.version() == 2);

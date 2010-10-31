@@ -1,5 +1,5 @@
-#ifndef Map2X_Core_Test_TileArchiveTest_h
-#define Map2X_Core_Test_TileArchiveTest_h
+#ifndef Map2X_Plugins_Test_Map2XRasterArchiveTest_h
+#define Map2X_Plugins_Test_Map2XRasterArchiveTest_h
 /*
     Copyright © 2007, 2008, 2009, 2010 Vladimír Vondruš <mosra@centrum.cz>
 
@@ -17,9 +17,9 @@
 
 #include <QtCore/QObject>
 
-namespace Map2X { namespace Core { namespace Test {
+namespace Map2X { namespace Plugins { namespace Test {
 
-class TileArchiveTest: public QObject {
+class Map2XRasterArchiveTest: public QObject {
     Q_OBJECT
 
     private slots:

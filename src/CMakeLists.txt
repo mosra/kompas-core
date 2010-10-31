@@ -7,7 +7,6 @@ add_subdirectory(Plugins)
 add_subdirectory(Utility)
 
 set(Map2X_Core_SRCS
-    TileArchiveReader.cpp
     Wgs84Coords.cpp
     AbstractRasterModel.cpp
     Plugins/registerStatic.cpp

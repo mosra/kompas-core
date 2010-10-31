@@ -1,3 +1,4 @@
+add_subdirectory(Map2XRasterModel)
 add_subdirectory(OpenStreetMapRasterModel)
 add_subdirectory(MercatorProjection)
 

@@ -19,7 +19,7 @@
  * @brief Class Map2X::Plugins::OpenStreetMapRasterModel
  */
 
-#include "AbstractRasterModel.h"
+#include "Map2XRasterModel/Map2XRasterModel.h"
 #include "MercatorProjection/MercatorProjection.h"
 
 namespace Map2X { namespace Plugins {
@@ -29,13 +29,14 @@ namespace Map2X { namespace Plugins {
  *
  * Based on: http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
  */
-class OpenStreetMapRasterModel: public Core::AbstractRasterModel {
+class OpenStreetMapRasterModel: public Map2XRasterModel {
     public:
         inline OpenStreetMapRasterModel(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
-            AbstractRasterModel(manager, plugin) {}
+            Map2XRasterModel(manager, plugin) {}
 
-        inline virtual int features() const
-            { return LoadableFromUrl; }
+        inline virtual int features() const {
+            return Map2XRasterModel::features()|LoadableFromUrl|NonConvertableFormat;
+        }
         inline virtual const Core::AbstractProjection* projection() const
             { return &_projection; }
         inline virtual Core::TileSize tileSize() const
