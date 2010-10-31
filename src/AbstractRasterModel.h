@@ -104,10 +104,9 @@ class AbstractRasterModel: public PluginManager::Plugin {
 
         /**
          * @brief Map copyright
-         * @todo Make optional (for public domain maps), depending on
-         * coordinates and map layer (to "properly" support Google)
+         * @todo Depending on coordinates and map layer (to "properly" support Google)
          */
-        virtual std::string copyright() const = 0;
+        inline virtual std::string copyright() const { return ""; }
 
         /*@}*/
 
