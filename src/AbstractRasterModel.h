@@ -137,11 +137,12 @@ class AbstractRasterModel: public PluginManager::Plugin {
          *
          * How many times will the map enlarge in each direction when zooming
          * in. Default value is 2.
+         * @todo Go to hell with that (unneccessary floating point arithmetrics).
          */
         virtual inline double zoomStep() const { return 2; }
 
         /**
-         * @brief Map area for given zoom
+         * @brief Map area for lowest zoom
          *
          * Position and size of map area which is available for the lowest
          * available zoom. Map area at greater zoom values can be computed using
@@ -220,24 +221,15 @@ class AbstractRasterModel: public PluginManager::Plugin {
 
         /*@}*/
 
-        /** @{ @name Map data */
+        /** @{ @name Getting map data */
 
         /**
-         * @brief Tile URL
+         * @brief Get URL of tile at given position
          * @param layer     Map layer or overlay
          * @param z         Zoom level
          * @param coords    Coordinates
-         * @return Tile URL
-         *
-         * Returns URL of tile at given position. Recommended method of getting
-         * tiles from URL is:
-         * -# get the URL from model
-         * -# download tile data from the URL
-         * -# save that data to cache
-         * -# load tile with AbstractRasterModel::tileData()
-         * This way can be properly used the tile cache and image filters
-         * applied to tiles.
-         * @note Default implementation returns empty string.
+         * @return Tile URL. Default implementation returns empty string.
+         * @see AbstractRasterModel::LoadableFromUrl
          */
         virtual inline std::string tileUrl(const std::string& layer, Zoom z, const TileCoords& coords) const { return ""; }
 

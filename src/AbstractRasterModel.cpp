@@ -25,11 +25,10 @@ int AbstractRasterModel::addPackage(const string& packageDir) {
 }
 
 bool AbstractRasterModel::setOnline(bool enabled) {
-    if(!enabled) _online = false;
-    else {
-        if(!(features() & LoadableFromUrl)) _online = false;
-        else _online = true;
-    }
+    if(!enabled || !(features() & LoadableFromUrl))
+        _online = false;
+    else
+        _online = true;
 
     return _online;
 }
