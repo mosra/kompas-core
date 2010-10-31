@@ -48,10 +48,6 @@ vector<string> OpenStreetMapRasterModel::layers() const {
     return l;
 }
 
-vector<string> OpenStreetMapRasterModel::overlays() const {
-    return vector<string>();
-}
-
 string OpenStreetMapRasterModel::tileUrl(const std::string& layer, Zoom z, const TileCoords& coords) const {
     if(z > 18) return "";
 

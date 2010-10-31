@@ -166,7 +166,9 @@ class AbstractRasterModel: public PluginManager::Plugin {
          * additional to them.
          * @see AbstractRasterModel::layers()
          */
-        virtual std::vector<std::string> overlays() const = 0;
+        inline virtual std::vector<std::string> overlays() const {
+            return std::vector<std::string>();
+        }
 
         /*@}*/
 
