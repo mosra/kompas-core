@@ -234,18 +234,6 @@ class AbstractRasterModel: public PluginManager::Plugin {
         virtual inline std::string tileUrl(const std::string& layer, Zoom z, const TileCoords& coords) const { return ""; }
 
         /**
-         * @brief Tile filename
-         * @param layer     Map layer or overlay
-         * @param z         Zoom level
-         * @param coords    Coordinates
-         * @return Filename (with optional path)
-         *
-         * Returns tile filename (without path).
-         * @note Default implementation returns empty string.
-         */
-        virtual std::string tileFilename(const std::string& layer, Zoom z, const TileCoords& coords) const { return ""; }
-
-        /**
          * @brief Tile data
          * @param layer     Map layer or overlay
          * @param z         Zoom level
