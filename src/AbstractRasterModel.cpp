@@ -19,11 +19,6 @@ using namespace std;
 
 namespace Map2X { namespace Core {
 
-string AbstractRasterModel::attribute(Attribute type, int package) const {
-    /** @todo Implement! */
-    return "";
-}
-
 int AbstractRasterModel::addPackage(const string& packageDir) {
     /** @todo Implement! */
     return -1;

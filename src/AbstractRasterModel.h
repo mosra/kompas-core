@@ -120,9 +120,9 @@ class AbstractRasterModel: public PluginManager::Plugin {
          * @brief User defined map attributes
          * @param type      Map attribute type
          * @param package   Package ID (returned by addPackage)
-         * @return Attribute value
+         * @return Attribute value. Default implementation returns empty string.
          */
-        std::string attribute(Attribute type, int package) const;
+        inline virtual std::string attribute(Attribute type, int package) const { return ""; }
 
         /**
          * @brief Zoom levels
