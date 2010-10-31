@@ -97,7 +97,7 @@ class AbstractRasterModel: public PluginManager::Plugin {
          * Default implementation returns zero pointer which means that
          * this particular RasterModel doesn't have specified projection.
          */
-        virtual const AbstractProjection* projection() const { return 0; }
+        inline virtual const AbstractProjection* projection() const { return 0; }
 
         /** @brief Tile size */
         virtual TileSize tileSize() const = 0;
