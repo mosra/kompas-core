@@ -19,6 +19,9 @@ subdirectory, which contains tile archives. First tile archive for a zoom level
 where @c # goes from 1 up.</p>
 @subsection Map2XRasterArchiveV3_conf Configuration file example
 <pre>
+# Format version
+version=3
+
 # Model with which the archive was created, tile size and zoom step
 model=Map2XRasterModel
 tileSize=256 256

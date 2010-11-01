@@ -1,0 +1,9 @@
+version=3
+
+model=Map2XRasterModel
+tileSize=256 256
+zoomStep=4
+
+area=0 0 1 1
+zoom=0
+layer=base

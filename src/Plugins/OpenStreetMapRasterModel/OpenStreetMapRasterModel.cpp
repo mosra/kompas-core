@@ -26,26 +26,15 @@ PLUGIN_REGISTER_STATIC(OpenStreetMapRasterModel,
 
 namespace Map2X { namespace Plugins {
 
-vector<Zoom> OpenStreetMapRasterModel::zoomLevels() const {
-    /** @todo Implement for packages */
-    vector<Zoom> z;
+OpenStreetMapRasterModel::OpenStreetMapRasterModel(PluginManager::AbstractPluginManager* manager, const std::string& plugin): Map2XRasterModel(manager, plugin), areaOnline(0, 0, 1, 1) {
+    /* All zoom levels for online maps */
     for(Zoom i = 0; i != 19; ++i)
-        z.push_back(i);
-    return z;
-}
+        zoomLevelsOnline.push_back(i);
 
-TileArea OpenStreetMapRasterModel::area() const {
-    /** @todo Implement for packages */
-    /* For zoom 0 */
-    return TileArea(0, 0, 1, 1);
-}
-
-vector<string> OpenStreetMapRasterModel::layers() const {
-    vector<string> l;
-    l.push_back("Mapnik");
-    l.push_back("Osmarender");
-    l.push_back("Cycle");
-    return l;
+    /* All layers for online maps */
+    layersOnline.push_back("Mapnik");
+    layersOnline.push_back("Osmarender");
+    layersOnline.push_back("Cycle");
 }
 
 string OpenStreetMapRasterModel::tileUrl(const std::string& layer, Zoom z, const TileCoords& coords) const {
