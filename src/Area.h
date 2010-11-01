@@ -43,6 +43,22 @@ template <class PositionType, class SizeType> struct Area {
     inline Area(PositionType _x, PositionType _y, SizeType _w, SizeType _h):
         x(_x), y(_y), w(_w), h(_h) {}
 
+    template<class T> Area<PositionType, SizeType> operator*(T multiplier) const {
+        return Area<PositionType, SizeType>(
+            x*multiplier,
+            y*multiplier,
+            w*multiplier,
+            h*multiplier
+        );
+    }
+    template<class T> Area<PositionType, SizeType> operator/(T divisor) const {
+        return Area<PositionType, SizeType>(
+            x/divisor,
+            y/divisor,
+            w/divisor,
+            h/divisor
+        );
+    }
     bool operator==(const Area<PositionType, SizeType>& other) {
         return other.x == x &&
                other.y == y &&
