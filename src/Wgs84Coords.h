@@ -33,7 +33,6 @@ namespace Map2X { namespace Core {
  * resets both longtitude and latitude to zero and marks the coordinates as
  * invalid. Coordinates can be converted to string representation with user
  * defined decimal precision of seconds and string format.
- * @todo Conversion from string
  */
 class Wgs84Coords {
     private:
@@ -167,22 +166,21 @@ class Wgs84Coords {
 
 namespace Utility {
 
+/** @copydoc Utility::ConfigurationValue */
 template<> struct ConfigurationValue<Core::Wgs84Coords> {
     /**
-    * @brief Convert string from configuration to Wgs84Coords
-    * @copydetails Utility::configurationValueFromString()
-    *
-    * If the configuration string doesn't contain both numeric coordinates, invalid
-    * coordinates are returned.
-    */
+     * @copydoc Utility::ConfigurationValue::fromString()
+     * Expects two values separated with space. If the configuration string
+     * doesn't contain both numeric coordinates, invalid coordinates are
+     * returned.
+     */
     static Core::Wgs84Coords fromString(const std::string& stringValue, int flags);
 
     /**
-    * @brief Convert Wgs84Coords to string storable in configuration
-    * @copydetails Utility::configurationValueToString()
-    *
-    * Invalid coordinates are converted to single zero character.
-    */
+     * @copydoc Utility::ConfigurationValue::toString()
+     * Returns two values separated with space. Invalid coordinates are
+     * converted to single zero character.
+     */
     static std::string toString(const Core::Wgs84Coords& value, int flags);
 };
 

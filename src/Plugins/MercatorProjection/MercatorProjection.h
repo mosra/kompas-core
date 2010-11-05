@@ -15,6 +15,10 @@
     GNU Lesser General Public License version 3 for more details.
 */
 
+/** @file
+ * @brief Class Map2X::Plugins::MercatorProjection
+ */
+
 #include "AbstractProjection.h"
 
 namespace Map2X { namespace Plugins {
@@ -47,7 +51,7 @@ Coordinate calculation based on http://wiki.openstreetmap.org/wiki/Slippy_map_ti
  */
 class MercatorProjection: public Core::AbstractProjection {
     public:
-        /** @copydoc Map2X::Core::AbstractProjection::AbstractProjection */
+        /** @copydoc Core::AbstractProjection::AbstractProjection */
         inline MercatorProjection(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
             AbstractProjection(manager, plugin), stretch(Core::Coords<double>(1, 1)), shift(Core::Coords<double>(0, 0)) {}
 

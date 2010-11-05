@@ -86,7 +86,7 @@ class AbstractRasterModel: public PluginManager::Plugin {
 
         /**
          * @brief Minimum count of tiles to fill given area
-         * @param area  Area size in pixels
+         * @param area      %Area size in pixels
          * @return Tile count
          */
         inline Coords<unsigned int> tilesInArea(Coords<unsigned int> area) const {
@@ -125,7 +125,7 @@ class AbstractRasterModel: public PluginManager::Plugin {
 
         /*@}*/
 
-        /** @brief Constructor  */
+        /** @copydoc PluginManager::Plugin::Plugin() */
         AbstractRasterModel(PluginManager::AbstractPluginManager* manager, const std::string& plugin):
             Plugin(manager, plugin), _online(false) {}
 

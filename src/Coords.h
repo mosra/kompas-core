@@ -39,9 +39,12 @@ template <class PositionType> struct Coords {
     inline Coords(PositionType _x, PositionType _y):
         x(_x), y(_y) {}
 
+    /** @brief Equality operator */
     inline bool operator==(const Coords<PositionType>& other) {
         return other.x == x && other.y == y;
     }
+
+    /** @brief Non-equality operator */
     inline bool operator!=(const Coords<PositionType>& other) {
         return !operator==(other);
     }
@@ -51,13 +54,22 @@ template <class PositionType> struct Coords {
 
 namespace Utility {
 
+/** @copydoc Utility::ConfigurationValue */
 template<class PositionType> struct ConfigurationValue<Core::Coords<PositionType> > {
+    /**
+     * @copydoc Utility::ConfigurationValue::toString()
+     * Returns two values separated with space.
+     */
     static std::string toString(const Core::Coords<PositionType>& value, int flags = 0) {
         return
             ConfigurationValue<PositionType>::toString(value.x, flags) + ' ' +
             ConfigurationValue<PositionType>::toString(value.y, flags);
     }
 
+    /**
+     * @copydoc Utility::ConfigurationValue::fromString()
+     * Expects two values separated with space. Missing values are set to zero.
+     */
     static Core::Coords<PositionType> fromString(const std::string& stringValue, int flags = 0) {
         std::istringstream i(stringValue);
         std::string x, y;

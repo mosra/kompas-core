@@ -43,6 +43,10 @@ template <class PositionType, class SizeType> struct Area {
     inline Area(PositionType _x, PositionType _y, SizeType _w, SizeType _h):
         x(_x), y(_y), w(_w), h(_h) {}
 
+    /**
+     * @brief Multiplication operator
+     * @return All coordinates multiplied with given number
+     */
     template<class T> Area<PositionType, SizeType> operator*(T multiplier) const {
         return Area<PositionType, SizeType>(
             x*multiplier,
@@ -51,6 +55,11 @@ template <class PositionType, class SizeType> struct Area {
             h*multiplier
         );
     }
+
+    /**
+     * @brief Division operator
+     * @return All coordinates divided with given number
+     */
     template<class T> Area<PositionType, SizeType> operator/(T divisor) const {
         return Area<PositionType, SizeType>(
             x/divisor,
@@ -59,12 +68,16 @@ template <class PositionType, class SizeType> struct Area {
             h/divisor
         );
     }
+
+    /** @brief Equality operator */
     bool operator==(const Area<PositionType, SizeType>& other) {
         return other.x == x &&
                other.y == y &&
                other.w == w &&
                other.h == h;
     }
+
+    /** @brief Non-equality operator */
     inline bool operator!=(const Area<PositionType, SizeType>& other) {
         return !operator==(other);
     }
@@ -74,7 +87,12 @@ template <class PositionType, class SizeType> struct Area {
 
 namespace Utility {
 
+/** @copydoc Utility::ConfigurationValue */
 template<class PositionType, class SizeType> struct ConfigurationValue<Core::Area<PositionType, SizeType> > {
+    /**
+     * @copydoc Utility::ConfigurationValue::toString()
+     * Returns four values separated with spaces.
+     */
     static std::string toString(const Core::Area<PositionType, SizeType>& value, int flags = 0) {
         return
             ConfigurationValue<PositionType>::toString(value.x, flags) + ' ' +
@@ -83,6 +101,11 @@ template<class PositionType, class SizeType> struct ConfigurationValue<Core::Are
             ConfigurationValue<SizeType>::toString(value.h, flags);
     }
 
+    /**
+     * @copydoc Utility::ConfigurationValue::fromString()
+     * Expects four values separated with spaces. Missing values are set to
+     * zero.
+     */
     static Core::Area<PositionType, SizeType> fromString(const std::string& stringValue, int flags = 0) {
         std::istringstream i(stringValue);
         std::string x, y, w, h;

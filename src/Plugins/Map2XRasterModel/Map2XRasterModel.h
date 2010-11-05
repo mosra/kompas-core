@@ -26,13 +26,14 @@
 namespace Map2X { namespace Plugins {
 
 /**
- * @brief Map2X raster model
+ * @brief %Map2X raster model
  *
  * Built-in format for storing offline maps.
  * @todo Document subclassing
  */
 class Map2XRasterModel: public Core::AbstractRasterModel {
     public:
+        /** @copydoc Core::AbstractRasterModel::AbstractRasterModel */
         inline Map2XRasterModel(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
             AbstractRasterModel(manager, plugin), _zoomStep(0), currentPackageZoom(0) {}
         inline virtual ~Map2XRasterModel() { closePackages(); }

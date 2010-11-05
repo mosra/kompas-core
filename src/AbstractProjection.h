@@ -34,13 +34,12 @@ class AbstractProjection: public PluginManager::Plugin {
     PLUGIN_INTERFACE("cz.mosra.Map2X.Core.AbstractProjection/0.1")
 
     public:
-        /** @copydoc Map2X::PluginManager::Plugin::Plugin */
+        /** @copydoc PluginManager::Plugin::Plugin */
         inline AbstractProjection(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
             Plugin(manager, plugin) {}
 
         /**
          * @brief Get raster map coordinates from WGS84 coordinates
-         * @param worldSize Size of whole world map
          * @param coords    WGS84 coordinates
          * @return Raster map coordinates
          */
@@ -48,7 +47,6 @@ class AbstractProjection: public PluginManager::Plugin {
 
         /**
          * @brief Get WGS84 coordinates from raster map coordinates
-         * @param worldSize Size of whole world map
          * @param coords    Raster map coordinates
          * @return WGS84 coordinates
          */
