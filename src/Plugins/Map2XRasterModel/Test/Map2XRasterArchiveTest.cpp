@@ -28,11 +28,34 @@ using namespace std;
 
 namespace Map2X { namespace Plugins { namespace Test {
 
-void Map2XRasterArchiveTest::reader() {
+void Map2XRasterArchiveTest::reader2() {
     Map2XRasterArchiveReader r(RASTERARCHIVE_TEST_DIR + string("version2.map"));
 
     QVERIFY(r.isValid());
     QVERIFY(r.version() == 2);
+    QVERIFY(r.total() == (unsigned int) 16);
+    QVERIFY(r.begin() == (unsigned int) 5);
+    QVERIFY(r.end() == (unsigned int) 8);
+
+    /* Tiles out of range */
+    QVERIFY(r.get(4) == "");
+    QVERIFY(r.get(8) == "");
+
+    /* Normal tiles */
+    QVERIFY(r.get(5) == "5555");
+
+    /* Empty tile */
+    QVERIFY(r.get(6) == "");
+
+    /* Last tile */
+    QVERIFY(r.get(7) == "7777");
+}
+
+void Map2XRasterArchiveTest::reader3() {
+    Map2XRasterArchiveReader r(RASTERARCHIVE_TEST_DIR + string("version3.map"));
+
+    QVERIFY(r.isValid());
+    QVERIFY(r.version() == 3);
     QVERIFY(r.total() == (unsigned int) 16);
     QVERIFY(r.begin() == (unsigned int) 5);
     QVERIFY(r.end() == (unsigned int) 8);

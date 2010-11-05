@@ -23,7 +23,8 @@ class Map2XRasterArchiveTest: public QObject {
     Q_OBJECT
 
     private slots:
-        void reader();
+        void reader2();
+        void reader3();
 };
 
 }}}

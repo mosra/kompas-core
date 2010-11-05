@@ -26,20 +26,11 @@ namespace Map2X { namespace Plugins {
 /**
  * @brief Reader for tile archives
  *
- * Supports tile archive version 2. See also @ref Map2XRasterArchiveFormat.
- * @todo Archive version 3
+ * Supports tile archive version 2 and 3. See also @ref Map2XRasterArchive.
  * @todo Support for files > 4GB
  * @todo Creating from istream
  */
 class Map2XRasterArchiveReader {
-    private:
-        int _version;
-        unsigned int _total,
-            _begin,
-            _end;
-        bool _isValid;
-        std::ifstream file;
-
     public:
         /**
          * @brief Whether the loaded archive is valid
@@ -86,6 +77,17 @@ class Map2XRasterArchiveReader {
          * yes, returns its data.
          */
         std::string get(unsigned int tileNumber);
+
+    private:
+        int _version;
+        unsigned int _total,
+            _begin,
+            _end,
+            positions;
+        bool _isValid;
+        std::ifstream file;
+
+        unsigned int (*endianator)(unsigned int);
 };
 
 }}
