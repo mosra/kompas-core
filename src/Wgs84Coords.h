@@ -151,17 +151,17 @@ class Wgs84Coords {
          */
         static double distance(const Wgs84Coords& a, const Wgs84Coords& b, double precision = 0.1);
 
+        /** @brief Equality operator */
+        bool operator==(const Wgs84Coords& other) const;
+
+        /** @brief Non-equality operator */
+        inline bool operator!=(const Wgs84Coords& other) const {
+            return !operator==(other);
+        }
+
     private:
         std::vector<std::string> parseFormatters(const std::string& format) const;
 };
-
-/** @brief Comparing operator */
-bool operator==(const Wgs84Coords& a, const Wgs84Coords& b);
-
-/** @brief Comparing operator */
-inline bool operator!=(const Wgs84Coords& a, const Wgs84Coords& b) {
-    return !operator==(a, b);
-}
 
 }
 

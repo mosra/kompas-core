@@ -252,13 +252,13 @@ vector<string> Wgs84Coords::parseFormatters(const std::string& format) const {
     return formatters;
 }
 
-bool operator==(const Map2X::Core::Wgs84Coords& a, const Map2X::Core::Wgs84Coords& b) {
-    if(!a.isValid() || !b.isValid()) {
-        if(!a.isValid() && !b.isValid()) return true;
+bool Wgs84Coords::operator==(const Wgs84Coords& other) const {
+    if(!isValid() || !other.isValid()) {
+        if(!isValid() && !other.isValid()) return true;
         return false;
     }
 
-    if(abs(a.latitude() - b.latitude()) < EPSILON && abs(a.longtitude() - b.longtitude()) < EPSILON)
+    if(abs(latitude() - other.latitude()) < EPSILON && abs(longtitude() - other.longtitude()) < EPSILON)
         return true;
 
     return false;
