@@ -18,7 +18,7 @@
 #include <QtTest/QTest>
 
 #include "Utility/Directory.h"
-#include "Map2XRasterModelTestConfigure.h"
+#include "testConfigure.h"
 
 QTEST_APPLESS_MAIN(Map2X::Plugins::Test::Map2XRasterModelTest)
 

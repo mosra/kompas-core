@@ -24,7 +24,7 @@
 #include "Map2XRasterModel/Map2XRasterArchiveReader.h"
 #include "Map2XRasterModel/Map2XRasterArchiveMaker.h"
 
-#include "Map2XRasterArchiveTestConfigure.h"
+#include "testConfigure.h"
 
 QTEST_APPLESS_MAIN(Map2X::Plugins::Test::Map2XRasterArchiveTest)
 
