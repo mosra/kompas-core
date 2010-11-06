@@ -22,9 +22,19 @@ namespace Map2X { namespace Plugins { namespace Test {
 class Map2XRasterArchiveTest: public QObject {
     Q_OBJECT
 
+    public:
+        Map2XRasterArchiveTest(QObject* parent = 0);
+
     private slots:
         void reader2();
         void reader3();
+
+        void maker2();
+        void maker();
+        void makerEmpty();
+        void makerUnderrun();
+        void makerOverflow();
+        void makerSizeLimit();
 };
 
 }}}
