@@ -30,6 +30,9 @@ class Map2XRasterModelTest: public QObject {
 
         void create();
 
+        void recognizeFile_data();
+        void recognizeFile();
+
     private:
         Map2XRasterModel model;
 };

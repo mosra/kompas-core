@@ -39,7 +39,8 @@ class Map2XRasterModel: public Core::AbstractRasterModel {
             AbstractRasterModel(manager, plugin), _zoomStep(0), currentPackageZoom(0), currentlyCreatedPackage(0) {}
         inline virtual ~Map2XRasterModel() { closePackages(); }
 
-        inline virtual int features() const { return MultiplePackages|WriteableFormat|SequentialFormat; }
+        inline virtual int features() const { return MultiplePackages|WriteableFormat|SequentialFormat|SelfRecognizable; }
+        virtual SupportLevel recognizeFile(const std::string& filename, std::istream& file) const;
         inline virtual Core::TileSize tileSize() const { return _tileSize; }
 
         virtual std::string attribute(Attribute type, int package) const;

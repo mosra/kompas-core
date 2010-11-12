@@ -128,4 +128,33 @@ void Map2XRasterModelTest::create() {
     QVERIFY(relief2.readAll() == relief2Expected.readAll());
 }
 
+void Map2XRasterModelTest::recognizeFile_data() {
+    QTest::addColumn<QString>("filename");
+    QTest::addColumn<QString>("file");
+    QTest::addColumn<int>("state");
+
+    QTest::newRow("badFilename")
+        << "map.shp" << ""
+        << (int) AbstractRasterModel::NotSupported;
+    QTest::newRow("badVersion")
+        << "map.conf" << "version=2"
+        << (int) AbstractRasterModel::NotSupported;
+    QTest::newRow("genericModel")
+        << "map.conf" << "version=3\nmodel=Map2XRasterModel"
+        << (int) AbstractRasterModel::FullySupported;
+    QTest::newRow("subclassedModel")
+        << "map.conf" << "version=3\nmodel=OpenStreetMapRasterModel"
+        << (int) AbstractRasterModel::PartiallySupported;
+}
+
+void Map2XRasterModelTest::recognizeFile() {
+    QFETCH(QString, filename);
+    QFETCH(QString, file);
+    QFETCH(int, state);
+
+    istringstream i(file.toStdString());
+
+    QVERIFY(model.recognizeFile(filename.toStdString(), i) == state);
+}
+
 }}}

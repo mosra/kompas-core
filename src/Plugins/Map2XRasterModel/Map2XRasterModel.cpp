@@ -30,6 +30,31 @@ PLUGIN_REGISTER_STATIC(Map2XRasterModel,
 
 namespace Map2X { namespace Plugins {
 
+AbstractRasterModel::SupportLevel Map2XRasterModel::recognizeFile(const std::string& filename, istream& file) const {
+    if(Directory::filename(filename) != "map.conf") return NotSupported;
+
+    Configuration conf(file, Configuration::ReadOnly);
+
+    /* Check configuration file version */
+    if(conf.value<int>("version") != 3) return NotSupported;
+
+    /* Generic model fully supportes packages created with generic model and
+        partially supports everything else */
+    if(name().empty() || name() == "Map2XRasterModel") {
+        if(conf.value<string>("model") == "Map2XRasterModel")
+            return FullySupported;
+
+        else return PartiallySupported;
+
+    /* If this is not generic model, it (fully) supports only packages created
+        with the same model */
+    } else if(name() == conf.value<string>("model"))
+        return FullySupported;
+
+    /* Not anything else */
+    else return NotSupported;
+}
+
 string Map2XRasterModel::attribute(Attribute type, int package) const {
     if(package < 0 || (size_t) package >= packages.size()) return "";
 

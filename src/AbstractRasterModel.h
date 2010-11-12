@@ -94,7 +94,13 @@ class AbstractRasterModel: public PluginManager::Plugin {
              * the tiles can be saved in arbitrary order.
              * @see tileToPackage()
              */
-            SequentialFormat        = 0x20
+            SequentialFormat        = 0x20,
+
+            /**
+             * The model can recognize its own formats from given filename.
+             * @see SupportLevel, recognizeFile()
+             */
+            SelfRecognizable        = 0x40
         };
 
         /** @brief Map attribute types */
@@ -102,6 +108,13 @@ class AbstractRasterModel: public PluginManager::Plugin {
             Name,           /**< @brief Map name */
             Description,    /**< @brief Map description */
             Packager        /**< @brief Map packager */
+        };
+
+        /** @brief Support level of given file */
+        enum SupportLevel {
+            NotSupported,           /**< @brief The model cannot open given file */
+            PartiallySupported,     /**< @brief The model can open the file, but doesn't support all its features */
+            FullySupported          /**< @brief The model supports all file features */
         };
 
         /** @{ @name Utilites */
@@ -127,6 +140,25 @@ class AbstractRasterModel: public PluginManager::Plugin {
          * @return OR-ed values from AbstractRasterModel::Feature
          */
         inline virtual int features() const { return 0; }
+
+        /**
+         * @brief Recognize given file
+         * @param filename      Filename with full path
+         * @param file          Read access to the file
+         * @return If file type cannot be distinguished or file format is
+         *      unsupported, returns NotSupported, if the file can be opened,
+         *      but some features can be missing (such as projection), returns
+         *      PartiallySupported. If whole specification of the format is
+         *      supported, returns FullySupported. Default implementation
+         *      returns NotSupported.
+         *
+         * Checks whether given file can be opened with the model.
+         * Reimplementations should return FullySupported only if everything
+         * possible is supported, so the application can choose best matching
+         * plugin automatically (plugin with full support will be chosen if it
+         * exists, otherwise fallback to plugins with partial support).
+         */
+        inline virtual SupportLevel recognizeFile(const std::string& filename, std::istream& file) const { return NotSupported; }
 
         /**
          * @brief Map projection
