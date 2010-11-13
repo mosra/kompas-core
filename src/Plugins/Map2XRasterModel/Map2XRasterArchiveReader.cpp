@@ -99,16 +99,15 @@ string Map2XRasterArchiveReader::get(unsigned int tileNumber) {
     file.read(buffer, 4);
     size = endianator(*reinterpret_cast<unsigned int*>(buffer))-position;
 
-    /* Prepare buffer for tile size (including null terminator) */
+    /* Prepare buffer for tile size */
     delete[] buffer;
-    buffer = new char[size+1];
-    buffer[size] = '\0';
+    buffer = new char[size];
 
     /* Seek to tile position and get the data */
     file.seekg(position);
     file.read(buffer, size);
 
-    string ret(buffer);
+    string ret(buffer, size);
     delete[] buffer;
     return ret;
 

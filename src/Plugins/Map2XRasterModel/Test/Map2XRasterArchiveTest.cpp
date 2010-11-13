@@ -47,8 +47,8 @@ void Map2XRasterArchiveTest::reader2() {
     /* Empty tile */
     QVERIFY(r.get(6) == "");
 
-    /* Last tile */
-    QVERIFY(r.get(7) == "7777");
+    /* Tile with null byte */
+    QVERIFY(r.get(7) == "7" + string("\0", 1) + "77");
 }
 
 void Map2XRasterArchiveTest::reader3() {
@@ -70,8 +70,8 @@ void Map2XRasterArchiveTest::reader3() {
     /* Empty tile */
     QVERIFY(r.get(6) == "");
 
-    /* Last tile */
-    QVERIFY(r.get(7) == "7777");
+    /* Tile with null byte */
+    QVERIFY(r.get(7) == "7" + string("\0", 1) + "77");
 }
 
 }}}
