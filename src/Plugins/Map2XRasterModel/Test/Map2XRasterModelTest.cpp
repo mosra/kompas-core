@@ -110,19 +110,19 @@ void Map2XRasterModelTest::create() {
     QVERIFY(conf.readAll() == confExpected.readAll());
 
     QFile base2(QString::fromStdString(Directory::join(RASTERMODEL_WRITE_TEST_DIR, "base/2.map")));
-    QFile base2Expected(QString::fromStdString(Directory::join(RASTERMODEL_TEST_DIR, "base/2.map")));
+    QFile base2Expected(QString::fromStdString(Directory::join(RASTERMODEL_TEST_DIR, "small/base/2.map")));
     base2.open(QFile::ReadOnly);
     base2Expected.open(QFile::ReadOnly);
     QVERIFY(base2.readAll() == base2Expected.readAll());
 
     QFile base3(QString::fromStdString(Directory::join(RASTERMODEL_WRITE_TEST_DIR, "base/3.map")));
-    QFile base3Expected(QString::fromStdString(Directory::join(RASTERMODEL_TEST_DIR, "base/3.map")));
+    QFile base3Expected(QString::fromStdString(Directory::join(RASTERMODEL_TEST_DIR, "small/base/3.map")));
     base3.open(QFile::ReadOnly);
     base3Expected.open(QFile::ReadOnly);
     QVERIFY(base3.readAll() == base3Expected.readAll());
 
     QFile relief2(QString::fromStdString(Directory::join(RASTERMODEL_WRITE_TEST_DIR, "relief/2.map")));
-    QFile relief2Expected(QString::fromStdString(Directory::join(RASTERMODEL_TEST_DIR, "relief/2.map")));
+    QFile relief2Expected(QString::fromStdString(Directory::join(RASTERMODEL_TEST_DIR, "small/relief/2.map")));
     relief2.open(QFile::ReadOnly);
     relief2Expected.open(QFile::ReadOnly);
     QVERIFY(relief2.readAll() == relief2Expected.readAll());
