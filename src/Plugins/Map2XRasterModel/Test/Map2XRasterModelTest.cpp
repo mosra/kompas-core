@@ -33,9 +33,9 @@ namespace Map2X { namespace Plugins { namespace Test {
 void Map2XRasterModelTest::metadata() {
     QVERIFY(model.addPackage(Directory::join(RASTERMODEL_TEST_DIR, "small/map.conf")) == 0);
 
-    QVERIFY(model.attribute(AbstractRasterModel::Name, 0) == "Map2X testing package");
-    QVERIFY(model.attribute(AbstractRasterModel::Description, 0) == "Buggy and sparse");
-    QVERIFY(model.attribute(AbstractRasterModel::Packager, 0) == "mosra");
+    QVERIFY(model.packageAttribute(0, AbstractRasterModel::Name) == "Map2X testing package");
+    QVERIFY(model.packageAttribute(0, AbstractRasterModel::Description) == "Buggy and sparse");
+    QVERIFY(model.packageAttribute(0, AbstractRasterModel::Packager) == "mosra");
 
     QVERIFY(model.area() == TileArea(6, 7, 2, 2));
     QVERIFY(model.zoomStep() == 2);

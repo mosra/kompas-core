@@ -103,8 +103,8 @@ class AbstractRasterModel: public PluginManager::Plugin {
             SelfRecognizable        = 0x40
         };
 
-        /** @brief Map attribute types */
-        enum Attribute {
+        /** @brief Package attribute types */
+        enum PackageAttribute {
             Name,           /**< @brief Map name */
             Description,    /**< @brief Map description */
             Packager        /**< @brief Map packager */
@@ -186,14 +186,6 @@ class AbstractRasterModel: public PluginManager::Plugin {
         /** @{ @name Map parameters */
 
         /**
-         * @brief User defined map attributes
-         * @param type      Map attribute type
-         * @param package   Package ID (returned by addPackage)
-         * @return Attribute value. Default implementation returns empty string.
-         */
-        inline virtual std::string attribute(Attribute type, int package) const { return ""; }
-
-        /**
          * @brief Zoom levels
          * @return List of zooms ordered in ascending order (lowest zoom first).
          *
@@ -262,6 +254,17 @@ class AbstractRasterModel: public PluginManager::Plugin {
          * @see tileFromPackage(), AbstractRasterModel::MultiplePackages
          */
         virtual int addPackage(const std::string& filename) = 0;
+
+        /** @brief Count of loaded packages */
+        virtual int packageCount() const = 0;
+
+        /**
+         * @brief User defined map attributes
+         * @param package   Package ID (returned by addPackage)
+         * @param type      Map attribute type
+         * @return Attribute value. Default implementation returns empty string.
+         */
+        inline virtual std::string packageAttribute(int package, PackageAttribute type) const { return ""; }
 
         /**
          * @brief Enable/disable online maps
@@ -346,7 +349,7 @@ class AbstractRasterModel: public PluginManager::Plugin {
          *      supported in the format, or saving was not successful,
          *      returns false. Default implementation returns false.
          */
-        inline virtual bool setPackageAttribute(Attribute type, const std::string& data) { return false; }
+        inline virtual bool setPackageAttribute(PackageAttribute type, const std::string& data) { return false; }
 
         /**
          * @brief Save tile to package

@@ -55,7 +55,7 @@ AbstractRasterModel::SupportLevel Map2XRasterModel::recognizeFile(const std::str
     else return NotSupported;
 }
 
-string Map2XRasterModel::attribute(Attribute type, int package) const {
+string Map2XRasterModel::packageAttribute(int package, PackageAttribute type) const {
     if(package < 0 || (size_t) package >= packages.size()) return "";
 
     string key;
@@ -281,7 +281,7 @@ bool Map2XRasterModel::initializePackage(const string& filename, TileSize tileSi
     return true;
 }
 
-bool Map2XRasterModel::setPackageAttribute(AbstractRasterModel::Attribute type, const std::string& data) {
+bool Map2XRasterModel::setPackageAttribute(Map2XRasterModel::PackageAttribute type, const std::string& data) {
     if(!currentlyCreatedPackage) return false;
 
     string attribute;
