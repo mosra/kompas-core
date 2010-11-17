@@ -9,6 +9,5 @@ map2x_add_static_plugin(Map2XCore_Plugins
 
 if(BUILD_TESTS)
     enable_testing()
-    add_library(Map2XRasterModelTestLib ${Map2XCore_Plugins_Map2XRasterModel_SRCS})
     add_subdirectory(Test)
 endif()
