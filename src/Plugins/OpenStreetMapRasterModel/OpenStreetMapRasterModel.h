@@ -29,7 +29,7 @@ namespace Kompas { namespace Plugins {
  *
  * Based on: http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
  */
-class OpenStreetMapRasterModel: public KompasRasterModel {
+class CORE_EXPORT OpenStreetMapRasterModel: public KompasRasterModel {
     public:
         /** @copydoc Plugins::KompasRasterModel::KompasRasterModel */
         OpenStreetMapRasterModel(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = "");

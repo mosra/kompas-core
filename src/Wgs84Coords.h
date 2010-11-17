@@ -36,7 +36,7 @@ namespace Kompas { namespace Core {
  * invalid. Coordinates can be converted to string representation with user
  * defined decimal precision of seconds and string format.
  */
-class Wgs84Coords {
+class CORE_EXPORT Wgs84Coords {
     private:
         double _lat, _lon;
         bool _isValid;
@@ -179,7 +179,7 @@ class Wgs84Coords {
 namespace Utility {
 
 /** @copydoc Utility::ConfigurationValue */
-template<> struct ConfigurationValue<Core::Wgs84Coords> {
+template<> struct CORE_EXPORT ConfigurationValue<Core::Wgs84Coords> {
     /**
      * @copydoc Utility::ConfigurationValue::fromString()
      * Expects two values separated with space. If the configuration string

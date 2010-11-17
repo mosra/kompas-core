@@ -15,6 +15,10 @@ set(Kompas_Core_SRCS
 add_library(KompasCore SHARED ${Kompas_Core_SRCS})
 target_link_libraries(KompasCore KompasUtility KompasPluginManager ${KompasCore_Plugins})
 
+if(WIN32)
+    set_target_properties(KompasCore PROPERTIES COMPILE_FLAGS -DCORE_EXPORTING)
+endif()
+
 install(TARGETS KompasCore DESTINATION ${KOMPAS_LIBRARY_INSTALL_DIR})
 
 if(BUILD_TESTS)

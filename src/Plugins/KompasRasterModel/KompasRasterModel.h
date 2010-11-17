@@ -32,7 +32,7 @@ namespace Kompas { namespace Plugins {
  * Built-in format for storing offline maps.
  * @todo Document subclassing
  */
-class KompasRasterModel: public Core::AbstractRasterModel {
+class CORE_EXPORT KompasRasterModel: public Core::AbstractRasterModel {
     public:
         /** @copydoc Core::AbstractRasterModel::AbstractRasterModel */
         inline KompasRasterModel(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):

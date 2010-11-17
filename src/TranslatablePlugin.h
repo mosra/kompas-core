@@ -35,7 +35,7 @@ namespace Kompas { namespace Core {
  * dynamic language, so after calling Translator::setLocale() the translations
  * are updated to new language.
  */
-class TranslatablePlugin: public PluginManager::Plugin {
+class CORE_EXPORT TranslatablePlugin: public PluginManager::Plugin {
     public:
         /** @copydoc PluginManager::Plugin::Plugin */
         TranslatablePlugin(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""): Plugin(manager, plugin) {

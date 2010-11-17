@@ -46,7 +46,7 @@ typedef Area<unsigned int, unsigned int> TileArea;  /**< @brief Tile area */
  *      (compression with pngnq, etc.)
  * @todo Document order of getting tile data
  */
-class AbstractRasterModel: public TranslatablePlugin {
+class CORE_EXPORT AbstractRasterModel: public TranslatablePlugin {
     PLUGIN_INTERFACE("cz.mosra.Kompas.Core.AbstractRasterModel/0.1")
 
     public:

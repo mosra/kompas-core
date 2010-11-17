@@ -49,7 +49,7 @@ Longtitude is reprojected to Y coordinate and converted to range
 @f]
 Coordinate calculation based on http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
  */
-class MercatorProjection: public Core::AbstractProjection {
+class CORE_EXPORT MercatorProjection: public Core::AbstractProjection {
     public:
         /** @copydoc Core::AbstractProjection::AbstractProjection */
         inline MercatorProjection(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
