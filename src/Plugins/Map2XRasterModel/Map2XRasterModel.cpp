@@ -228,8 +228,10 @@ Map2XRasterModel::Package* Map2XRasterModel::parsePackage(const Configuration* c
     p->overlays = conf->values<string>("overlay");
 
     /* The package should have non-empty area, at least one zoom level and layer */
-    if(p->area == TileArea() || p->zoomLevels.empty() || p->layers.empty())
+    if(p->area == TileArea() || p->zoomLevels.empty() || p->layers.empty()) {
+        delete p;
         return 0;
+    }
 
     /* Sort zoom levels so lowest level is at index 0 */
     sort(p->zoomLevels.begin(), p->zoomLevels.end());
