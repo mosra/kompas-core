@@ -116,7 +116,7 @@ class Map2XRasterModel: public Core::AbstractRasterModel {
 
     private:
         struct CurrentlyCreatedPackage {
-            CurrentlyCreatedPackage(const std::string& filename): conf(filename, Utility::Configuration::Truncate) {}
+            CurrentlyCreatedPackage(const std::string& filename): conf(filename, Utility::Configuration::Truncate), minZoom(0), zoomStep(0) {}
             Utility::Configuration conf;
             std::string path;
             std::map<std::string, Map2XRasterArchiveMaker*> archives;
