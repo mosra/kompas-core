@@ -243,7 +243,7 @@ Map2XRasterModel::Package* Map2XRasterModel::parsePackage(const Configuration* c
     return p;
 }
 
-bool Map2XRasterModel::initializePackage(const string& filename, TileSize tileSize, vector<Zoom> zoomLevels, double zoomStep, TileArea area, vector<string> layers, vector<string> overlays) {
+bool Map2XRasterModel::initializePackage(const string& filename, const TileSize& tileSize, const vector<Zoom>& zoomLevels, double zoomStep, const TileArea& area, const vector<string>& layers, const vector<string>& overlays) {
     if(currentlyCreatedPackage != 0) return false;
 
     std::string path = Directory::path(filename);
@@ -255,7 +255,8 @@ bool Map2XRasterModel::initializePackage(const string& filename, TileSize tileSi
     if(zoomLevels.empty() || !area.w || !area.h || layers.empty()) return false;
 
     /* Sort zoom level array */
-    sort(zoomLevels.begin(), zoomLevels.end());
+    vector<Zoom> zoomLevelsSorted = zoomLevels;
+    sort(zoomLevelsSorted.begin(), zoomLevelsSorted.end());
 
     /* Fill in configuration file */
     currentlyCreatedPackage = new CurrentlyCreatedPackage(filename);
@@ -265,7 +266,7 @@ bool Map2XRasterModel::initializePackage(const string& filename, TileSize tileSi
     currentlyCreatedPackage->conf.setValue("zoomStep", zoomStep);
     currentlyCreatedPackage->conf.setValue("area", area);
 
-    for(vector<Zoom>::const_iterator it = zoomLevels.begin(); it != zoomLevels.end(); ++it)
+    for(vector<Zoom>::const_iterator it = zoomLevelsSorted.begin(); it != zoomLevelsSorted.end(); ++it)
         currentlyCreatedPackage->conf.addValue("zoom", *it);
 
     for(vector<string>::const_iterator it = layers.begin(); it != layers.end(); ++it)
@@ -277,7 +278,7 @@ bool Map2XRasterModel::initializePackage(const string& filename, TileSize tileSi
     /* Save frequently used values */
     currentlyCreatedPackage->path = path;
     currentlyCreatedPackage->area = area;
-    currentlyCreatedPackage->minZoom = zoomLevels[0];
+    currentlyCreatedPackage->minZoom = zoomLevelsSorted[0];
     currentlyCreatedPackage->zoomStep = zoomStep;
 
     return true;

@@ -124,7 +124,7 @@ class AbstractRasterModel: public PluginManager::Plugin {
          * @param area      %Area size in pixels
          * @return Tile count
          */
-        inline Coords<unsigned int> tilesInArea(Coords<unsigned int> area) const {
+        inline Coords<unsigned int> tilesInArea(const Coords<unsigned int>& area) const {
             return Coords<unsigned int>((area.x-2)/tileSize().x + 2,
                                         (area.y-2)/tileSize().y + 2);
         }
@@ -338,7 +338,7 @@ class AbstractRasterModel: public PluginManager::Plugin {
          * Creates new package which can then be filled with tileToPackage().
          * @see finalizePackage(), AbstractRasterModel::WriteableFormat
          */
-        inline virtual bool initializePackage(const std::string& filename, TileSize tileSize, std::vector<Zoom> zoomLevels, double zoomStep, TileArea area, std::vector<std::string> layers, std::vector<std::string> overlays) { return false; }
+        inline virtual bool initializePackage(const std::string& filename, const TileSize& tileSize, const std::vector<Zoom>& zoomLevels, double zoomStep, const TileArea& area, const std::vector<std::string>& layers, const std::vector<std::string>& overlays) { return false; }
 
         /**
          * @brief Set package attribute

@@ -58,11 +58,11 @@ class Map2XRasterModel: public Core::AbstractRasterModel {
         virtual int addPackage(const std::string& filename);
         inline virtual int packageCount() const { return packages.size(); }
         virtual std::string packageAttribute(int package, PackageAttribute type) const;
-        virtual std::string tileFromPackage(const std::string& layer, Core::Zoom z, const Map2X::Core::TileCoords& coords);
+        virtual std::string tileFromPackage(const std::string& layer, Core::Zoom z, const Core::TileCoords& coords);
 
-        virtual bool initializePackage(const std::string& filename, Core::TileSize tileSize, std::vector<Core::Zoom> zoomLevels, double zoomStep, Core::TileArea area, std::vector<std::string> layers, std::vector<std::string> overlays);
+        virtual bool initializePackage(const std::string& filename, const Core::TileSize& tileSize, const std::vector<Core::Zoom>& zoomLevels, double zoomStep, const Core::TileArea& area, const std::vector< std::string>& layers, const std::vector<std::string>& overlays);
         virtual bool setPackageAttribute(PackageAttribute type, const std::string& data);
-        virtual bool tileToPackage(const std::string& layer, Core::Zoom z, const Map2X::Core::TileCoords& coords, const std::string& data);
+        virtual bool tileToPackage(const std::string& layer, Core::Zoom z, const Core::TileCoords& coords, const std::string& data);
         virtual bool finalizePackage();
 
     protected:
