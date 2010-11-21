@@ -30,6 +30,15 @@ PLUGIN_REGISTER_STATIC(Map2XRasterModel,
 
 namespace Map2X { namespace Plugins {
 
+Map2XRasterModel::~Map2XRasterModel() {
+    /* Close all opened packages */
+    closePackages();
+
+    /* If an package creation was in progress, delete the object */
+    if(currentlyCreatedPackage)
+        delete currentlyCreatedPackage;
+}
+
 AbstractRasterModel::SupportLevel Map2XRasterModel::recognizeFile(const std::string& filename, istream& file) const {
     if(Directory::filename(filename) != "map.conf") return NotSupported;
 

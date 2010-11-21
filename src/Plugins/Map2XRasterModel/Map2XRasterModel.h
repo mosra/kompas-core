@@ -37,7 +37,7 @@ class Map2XRasterModel: public Core::AbstractRasterModel {
         /** @copydoc Core::AbstractRasterModel::AbstractRasterModel */
         inline Map2XRasterModel(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
             AbstractRasterModel(manager, plugin), _zoomStep(0), currentPackageZoom(0), currentlyCreatedPackage(0) {}
-        inline virtual ~Map2XRasterModel() { closePackages(); }
+        virtual ~Map2XRasterModel();
 
         inline virtual int features() const { return MultiplePackages|WriteableFormat|SequentialFormat|SelfRecognizable; }
         virtual SupportLevel recognizeFile(const std::string& filename, std::istream& file) const;
