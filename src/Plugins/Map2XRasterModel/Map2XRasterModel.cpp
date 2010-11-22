@@ -270,7 +270,8 @@ bool Map2XRasterModel::initializePackage(const string& filename, const TileSize&
     /* Fill in configuration file */
     currentlyCreatedPackage = new CurrentlyCreatedPackage(filename);
     currentlyCreatedPackage->conf.setValue("version", 3);
-    currentlyCreatedPackage->conf.setValue<string>("model", "Map2XRasterModel");
+    /** @todo Test model name in subclasses */
+    currentlyCreatedPackage->conf.setValue<string>("model", name().empty() ? "Map2XRasterModel" : name());
     currentlyCreatedPackage->conf.setValue("tileSize", tileSize);
     currentlyCreatedPackage->conf.setValue("zoomStep", zoomStep);
     currentlyCreatedPackage->conf.setValue("area", area);
