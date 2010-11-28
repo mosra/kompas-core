@@ -186,6 +186,16 @@ class AbstractRasterModel: public PluginManager::Plugin {
         /** @{ @name Map parameters */
 
         /**
+         * @brief Whether the map is usable
+         *
+         * Map is usable when it has at least one layer, one zoom level and
+         * non-empty area.
+         */
+        inline bool isUsable() const {
+            return !layers().empty() && !zoomLevels().empty() && area() != TileArea();
+        }
+
+        /**
          * @brief Zoom levels
          * @return List of zooms ordered in ascending order (lowest zoom first).
          *
