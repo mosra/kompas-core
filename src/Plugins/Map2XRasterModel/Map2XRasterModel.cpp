@@ -15,7 +15,6 @@
 
 #include "Map2XRasterModel.h"
 
-#include <cmath>
 #include <algorithm>
 
 #include "Utility/Directory.h"
@@ -101,7 +100,7 @@ int Map2XRasterModel::addPackage(const string& filename) {
         /* If package minimal zoom is lower than current minimal zoom,
             divide current area */
         if(p->zoomLevels[0] < _zoomLevels[0]) {
-            unsigned int divisor = pow(zoomStep(), _zoomLevels[0]-p->zoomLevels[0]);
+            unsigned int divisor = pow2(_zoomLevels[0]-p->zoomLevels[0]);
             TileArea newArea;
 
             /* Expand to largest possible, don't crop anything */
@@ -116,7 +115,7 @@ int Map2XRasterModel::addPackage(const string& filename) {
         /* If package minimal zoom is greater than current minimal zoom,
             divide package area */
         } else if(p->zoomLevels[0] > _zoomLevels[0]) {
-            unsigned int divisor = pow(zoomStep(), p->zoomLevels[0]-_zoomLevels[0]);
+            unsigned int divisor = pow2(p->zoomLevels[0]-_zoomLevels[0]);
 
             /* Expand to largest possible, don't crop anything */
             packageArea.x = p->area.x/divisor;
@@ -174,7 +173,7 @@ string Map2XRasterModel::tileFromPackage(const string& layer, Zoom z, const Tile
         if(foundZoom == (*package)->zoomLevels.end()) continue;
 
         /* Multiply tile area for current zoom level */
-        TileArea area = (*package)->area*pow(zoomStep(), z-(*package)->zoomLevels[0]);
+        TileArea area = (*package)->area*pow2(z-(*package)->zoomLevels[0]);
 
         /* If the coordinates are not in current package area, go to next */
         if(coords.x < area.x || coords.x >= area.x+area.w ||
@@ -217,10 +216,6 @@ Map2XRasterModel::Package* Map2XRasterModel::parsePackage(const Configuration* c
     if(tileSize() != TileSize() && tileSize() != conf->value<TileSize>("tileSize"))
         return 0;
 
-    /* If zoom step is already set, check if the package has the same */
-    if(zoomStep() != 0 && zoomStep() != conf->value<double>("zoomStep"))
-        return 0;
-
     Package* p = new Package;
     p->version = 3;
     p->filename = conf->filename();
@@ -241,14 +236,13 @@ Map2XRasterModel::Package* Map2XRasterModel::parsePackage(const Configuration* c
     /* Sort zoom levels so lowest level is at index 0 */
     sort(p->zoomLevels.begin(), p->zoomLevels.end());
 
-    /* Everything should be OK now. Set tile size and zoom step, if they are not set yet. */
+    /* Everything should be OK now. Set tile size if is not set yet. */
     if(tileSize() == TileSize()) _tileSize = conf->value<TileSize>("tileSize");
-    if(zoomStep() == 0) _zoomStep = conf->value<double>("zoomStep");
 
     return p;
 }
 
-bool Map2XRasterModel::initializePackage(const string& filename, const TileSize& tileSize, const vector<Zoom>& zoomLevels, double zoomStep, const TileArea& area, const vector<string>& layers, const vector<string>& overlays) {
+bool Map2XRasterModel::initializePackage(const string& filename, const TileSize& tileSize, const vector<Zoom>& zoomLevels, const TileArea& area, const vector<string>& layers, const vector<string>& overlays) {
     if(currentlyCreatedPackage != 0) return false;
 
     std::string path = Directory::path(filename);
@@ -269,7 +263,6 @@ bool Map2XRasterModel::initializePackage(const string& filename, const TileSize&
     /** @todo Test model name in subclasses */
     currentlyCreatedPackage->conf.setValue<string>("model", name().empty() ? "Map2XRasterModel" : name());
     currentlyCreatedPackage->conf.setValue("tileSize", tileSize);
-    currentlyCreatedPackage->conf.setValue("zoomStep", zoomStep);
     currentlyCreatedPackage->conf.setValue("area", area);
 
     for(vector<Zoom>::const_iterator it = zoomLevelsSorted.begin(); it != zoomLevelsSorted.end(); ++it)
@@ -285,7 +278,6 @@ bool Map2XRasterModel::initializePackage(const string& filename, const TileSize&
     currentlyCreatedPackage->path = path;
     currentlyCreatedPackage->area = area;
     currentlyCreatedPackage->minZoom = zoomLevelsSorted[0];
-    currentlyCreatedPackage->zoomStep = zoomStep;
 
     return true;
 }
@@ -313,7 +305,7 @@ bool Map2XRasterModel::tileToPackage(const string& layer, Zoom z, const TileCoor
     prefix << layer << '/' << z;
 
     /* Compute total count of tiles in current zoom level */
-    TileArea area = currentlyCreatedPackage->area*pow(currentlyCreatedPackage->zoomStep, z-currentlyCreatedPackage->minZoom);
+    TileArea area = currentlyCreatedPackage->area*pow2(z-currentlyCreatedPackage->minZoom);
 
     /* Try to find archive with that prefix, otherwise create new */
     map<string, Map2XRasterArchiveMaker*>::iterator found = currentlyCreatedPackage->archives.find(prefix.str());

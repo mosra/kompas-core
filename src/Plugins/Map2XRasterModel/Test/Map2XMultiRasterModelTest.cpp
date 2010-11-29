@@ -40,15 +40,13 @@ void Map2XMultiRasterModelTest::initialization() {
     /* With lowest zoom level > current */
     QVERIFY(model.addPackage(Directory::join(RASTERMODEL_TEST_DIR, "map.conf.smallZoom")) == 2);
 
-    /* Different zoomStep / tileSize */
+    /* Different tileSize */
     QVERIFY(model.addPackage(Directory::join(RASTERMODEL_TEST_DIR, "map.conf.different1")) == -1);
-    QVERIFY(model.addPackage(Directory::join(RASTERMODEL_TEST_DIR, "map.conf.different2")) == -1);
 
     model.setOnline(false);
 }
 
 void Map2XMultiRasterModelTest::expansion() {
- //   qDebug() << model.area().x << model.area().y << model.area().w << model.area().h;
     QVERIFY(model.area() == TileArea(2, 1, 3, 4));
 
     vector<Zoom> z;

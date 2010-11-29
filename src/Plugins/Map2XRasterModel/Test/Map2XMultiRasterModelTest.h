@@ -27,7 +27,6 @@ class Map2XMultiRasterModel: public Map2XRasterModel {
             Map2XRasterModel(manager, plugin) {}
 
         inline virtual int features() const { return Map2XRasterModel::features()|MultiplePackages; }
-        inline virtual double zoomStep() const { return 2; }
         inline virtual Core::TileSize tileSize() const { return Core::TileSize(256, 256); }
 };
 

@@ -204,20 +204,11 @@ class AbstractRasterModel: public PluginManager::Plugin {
         virtual std::vector<Zoom> zoomLevels() const = 0;
 
         /**
-         * @brief Zoom step
-         *
-         * How many times will the map enlarge in each direction when zooming
-         * in. Default value is 2.
-         * @todo Go to hell with that (unneccessary floating point arithmetrics).
-         */
-        virtual inline double zoomStep() const { return 2; }
-
-        /**
          * @brief Map area for lowest zoom
          *
          * Position and size of map area which is available for the lowest
-         * available zoom. Map area at greater zoom values can be computed using
-         * zoomStep().
+         * available zoom. Map area at greater zoom values can be computed with
+         * pow2().
          */
         virtual TileArea area() const = 0;
 
@@ -338,7 +329,6 @@ class AbstractRasterModel: public PluginManager::Plugin {
          * @param filename      Package filename
          * @param tileSize      Tile size
          * @param zoomLevels    Zoom levels
-         * @param zoomStep      Zoom step
          * @param area          Tile area for lowest zoom
          * @param layers        Map layers
          * @param overlays      Map overlays
@@ -348,7 +338,7 @@ class AbstractRasterModel: public PluginManager::Plugin {
          * Creates new package which can then be filled with tileToPackage().
          * @see finalizePackage(), AbstractRasterModel::WriteableFormat
          */
-        inline virtual bool initializePackage(const std::string& filename, const TileSize& tileSize, const std::vector<Zoom>& zoomLevels, double zoomStep, const TileArea& area, const std::vector<std::string>& layers, const std::vector<std::string>& overlays) { return false; }
+        inline virtual bool initializePackage(const std::string& filename, const TileSize& tileSize, const std::vector<Zoom>& zoomLevels, const TileArea& area, const std::vector<std::string>& layers, const std::vector<std::string>& overlays) { return false; }
 
         /**
          * @brief Set package attribute

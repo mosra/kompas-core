@@ -38,7 +38,6 @@ void Map2XRasterModelTest::metadata() {
     QVERIFY(model.packageAttribute(0, AbstractRasterModel::Packager) == "mosra");
 
     QVERIFY(model.area() == TileArea(6, 7, 2, 2));
-    QVERIFY(model.zoomStep() == 2);
     QVERIFY(model.tileSize() == TileSize(256, 256));
 
     vector<Zoom> z;
@@ -76,7 +75,7 @@ void Map2XRasterModelTest::create() {
     vector<string> overlays;
     overlays.push_back("relief");
 
-    QVERIFY(model.initializePackage(Directory::join(RASTERMODEL_WRITE_TEST_DIR, "map.conf"), TileSize(256, 256), zoomLevels, 2, TileArea(6, 7, 2, 2), layers, overlays));
+    QVERIFY(model.initializePackage(Directory::join(RASTERMODEL_WRITE_TEST_DIR, "map.conf"), TileSize(256, 256), zoomLevels, TileArea(6, 7, 2, 2), layers, overlays));
     QVERIFY(model.setPackageAttribute(AbstractRasterModel::Name, "Map2X testing package"));
     QVERIFY(model.setPackageAttribute(AbstractRasterModel::Description, "Buggy and sparse"));
     QVERIFY(model.setPackageAttribute(AbstractRasterModel::Packager, "mosra"));

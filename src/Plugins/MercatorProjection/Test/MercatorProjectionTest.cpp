@@ -16,7 +16,6 @@
 
 #include "MercatorProjectionTest.h"
 
-#include <cmath>
 #include <QtTest/QTest>
 #include <QtCore/QDebug>
 
