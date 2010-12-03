@@ -23,6 +23,8 @@ class AreaTest: public QObject {
     Q_OBJECT
 
     private slots:
+        void operators();
+
         void fromString_data();
         void fromString();
 

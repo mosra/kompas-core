@@ -31,6 +31,16 @@ using namespace Map2X::Utility;
 
 namespace Map2X { namespace Core { namespace Test {
 
+void AbsoluteAreaTest::operators() {
+    QVERIFY(UAbsoluteArea(1,2,3,4) == UAbsoluteArea(1,2,3,4));
+
+    QVERIFY(UAbsoluteArea(1,2,3,4)*2 == UAbsoluteArea(2,4,6,8));
+    QVERIFY(UAbsoluteArea(2,4,6,8)/2 == UAbsoluteArea(1,2,3,4));
+
+    QVERIFY(UAbsoluteArea(1,2,3,4)*Coords<unsigned int>(2,5) == UAbsoluteArea(2,10,6,20));
+    QVERIFY(UAbsoluteArea(2,10,6,20)/Coords<unsigned int>(2,5) == UAbsoluteArea(1,2,3,4));
+}
+
 void AbsoluteAreaTest::fromString_data() {
     QTest::addColumn<QString>("input");
     QTest::addColumn<UAbsoluteArea>("expected");

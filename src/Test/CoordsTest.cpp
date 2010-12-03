@@ -31,6 +31,10 @@ using namespace Map2X::Utility;
 
 namespace Map2X { namespace Core { namespace Test {
 
+void CoordsTest::operators() {
+    QVERIFY(UCoords(1,2) == UCoords(1,2));
+}
+
 void CoordsTest::fromString_data() {
     QTest::addColumn<QString>("input");
     QTest::addColumn<UCoords>("expected");

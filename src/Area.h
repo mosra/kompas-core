@@ -20,6 +20,7 @@
  */
 
 #include "Utility/ConfigurationGroup.h"
+#include "Coords.h"
 
 namespace Map2X { namespace Core {
 
@@ -55,6 +56,14 @@ template <class PositionType, class SizeType> struct Area {
             h*multiplier
         );
     }
+    template<class T> Area<PositionType, SizeType> operator*(const Coords<T>& multiplier) const {
+        return Area<PositionType, SizeType>(
+            x*multiplier.x,
+            y*multiplier.y,
+            w*multiplier.x,
+            h*multiplier.y
+        );
+    }
 
     /**
      * @brief Division operator
@@ -66,6 +75,14 @@ template <class PositionType, class SizeType> struct Area {
             y/divisor,
             w/divisor,
             h/divisor
+        );
+    }
+    template<class T> Area<PositionType, SizeType> operator/(const Coords<T>& divisor) const {
+        return Area<PositionType, SizeType>(
+            x/divisor.x,
+            y/divisor.y,
+            w/divisor.x,
+            h/divisor.y
         );
     }
 
