@@ -79,7 +79,6 @@ double Wgs84Coords::dmsToDecimal(const std::string& dms) {
 }
 
 Wgs84Coords::Wgs84Coords(double __lat, double __lon) {
-    /** @todo -180 and 180 is the same, which will be converted to other? */
     if(__lon >= -180.0 && __lon <= 180.0 &&
        __lat >= -90.0 && __lat <= 90.0) {
         _lon = __lon;
@@ -91,6 +90,9 @@ Wgs84Coords::Wgs84Coords(double __lat, double __lon) {
         _lat = 0;
         _isValid = false;
     }
+
+    /* Convert to (-180, 180] */
+    if(_lon == -180) _lon = 180;
 }
 
 Wgs84Coords::Wgs84Coords(const std::string& coords, const std::string& _format): _lat(0), _lon(0), _isValid(false) {

@@ -124,6 +124,9 @@ void Wgs84CoordsTest::compare() {
     /* Two another */
     QVERIFY(Wgs84Coords(23.23, 5.5) != Wgs84Coords(10.005, 11.0));
 
+    /* Boundaries */
+    QVERIFY(Wgs84Coords(0, 180) == Wgs84Coords(0, -180));
+
     /* Two invalid */
     QVERIFY(Wgs84Coords() == Wgs84Coords());
 
