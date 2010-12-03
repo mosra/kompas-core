@@ -85,82 +85,78 @@ int Map2XRasterModel::addPackage(const string& filename) {
     Package* p = parsePackage(&conf);
     if(!p) return -1;
 
-    /* If online is not enabled, update model parameters */
-    if(!online()) {
+    /* If this is first opened package, set everything to this package */
+    if(packages.empty()) {
+        _area = p->area;
+        _layers = p->layers;
+        _overlays = p->overlays;
+        _zoomLevels = p->zoomLevels;
 
-        /* If this is first opened package, set everything to this package */
-        if(packages.empty()) {
-            _area = p->area;
-            _layers = p->layers;
-            _overlays = p->overlays;
-            _zoomLevels = p->zoomLevels;
+    /* Else merge with current */
+    } else {
 
-        /* Else merge with current */
-        } else {
+        /* Package area in current minimal zoom */
+        TileArea packageArea;
 
-            /* Package area in current minimal zoom */
-            TileArea packageArea;
+        /* If package minimal zoom is lower than current minimal zoom,
+            divide current area */
+        if(p->zoomLevels[0] < _zoomLevels[0]) {
+            unsigned int divisor = pow(zoomStep(), _zoomLevels[0]-p->zoomLevels[0]);
+            TileArea newArea;
 
-            /* If package minimal zoom is lower than current minimal zoom,
-               divide current area */
-            if(p->zoomLevels[0] < _zoomLevels[0]) {
-                unsigned int divisor = pow(zoomStep(), _zoomLevels[0]-p->zoomLevels[0]);
-                TileArea newArea;
+            /* Expand to largest possible, don't crop anything */
+            newArea.x = _area.x/divisor;
+            newArea.y = _area.y/divisor;
+            newArea.w = (_area.x+_area.w)/divisor-newArea.x + ((_area.x+_area.w)%divisor == 0 ? 0 : 1);
+            newArea.h = (_area.y+_area.h)/divisor-newArea.y + ((_area.y+_area.h)%divisor == 0 ? 0 : 1);
 
-                /* Expand to largest possible, don't crop anything */
-                newArea.x = _area.x/divisor;
-                newArea.y = _area.y/divisor;
-                newArea.w = (_area.x+_area.w)/divisor-newArea.x + ((_area.x+_area.w)%divisor == 0 ? 0 : 1);
-                newArea.h = (_area.y+_area.h)/divisor-newArea.y + ((_area.y+_area.h)%divisor == 0 ? 0 : 1);
+            _area = newArea;
+            packageArea = p->area;
 
-                _area = newArea;
-                packageArea = p->area;
+        /* If package minimal zoom is greater than current minimal zoom,
+            divide package area */
+        } else if(p->zoomLevels[0] > _zoomLevels[0]) {
+            unsigned int divisor = pow(zoomStep(), p->zoomLevels[0]-_zoomLevels[0]);
 
-            /* If package minimal zoom is greater than current minimal zoom,
-                divide package area */
-            } else if(p->zoomLevels[0] > _zoomLevels[0]) {
-                unsigned int divisor = pow(zoomStep(), p->zoomLevels[0]-_zoomLevels[0]);
+            /* Expand to largest possible, don't crop anything */
+            packageArea.x = p->area.x/divisor;
+            packageArea.y = p->area.y/divisor;
+            packageArea.w = (p->area.x+p->area.w)/divisor-packageArea.x + ((p->area.x+p->area.w)%divisor == 0 ? 0 : 1);
+            packageArea.h = (p->area.y+p->area.h)/divisor-packageArea.y + ((p->area.y+p->area.h)%divisor == 0 ? 0 : 1);
 
-                /* Expand to largest possible, don't crop anything */
-                packageArea.x = p->area.x/divisor;
-                packageArea.y = p->area.y/divisor;
-                packageArea.w = (p->area.x+p->area.w)/divisor-packageArea.x + ((p->area.x+p->area.w)%divisor == 0 ? 0 : 1);
-                packageArea.h = (p->area.y+p->area.h)/divisor-packageArea.y + ((p->area.y+p->area.h)%divisor == 0 ? 0 : 1);
+        /* If they are same, nothing to do */
+        } else packageArea = p->area;
 
-            /* If they are same, nothing to do */
-            } else packageArea = p->area;
+        /* Both areas are for the same zoom (and thus comparable), now
+            expand map parameters to new package */
 
-            /* Both areas are for the same zoom (and thus comparable), now
-               expand map parameters to new package */
-
-            if(packageArea.x < _area.x) {
-                _area.w = (_area.x+_area.w)-packageArea.x;
-                _area.x = packageArea.x;
-            }
-            if(packageArea.y < _area.y) {
-                _area.h = (_area.y+_area.h)-packageArea.y;
-                _area.y = packageArea.y;
-            }
-            if(packageArea.x+packageArea.w > _area.x+_area.w)
-                _area.w = packageArea.x+packageArea.w-_area.x;
-            if(packageArea.y+packageArea.h > _area.y+_area.h)
-                _area.h = packageArea.y+packageArea.h-_area.y;
-
-            /* Merge layers, overlays and zoom levels */
-
-            vector<string> l;
-            set_union(p->layers.begin(), p->layers.end(), _layers.begin(), _layers.end(), inserter(l, l.begin()));
-            swap(_layers, l);
-
-            vector<string> o;
-            set_union(p->overlays.begin(), p->overlays.end(), _overlays.begin(), _overlays.end(), inserter(o, o.begin()));
-            swap(_overlays, o);
-
-            /* set_union sorts it, too */
-            vector<Zoom> z;
-            set_union(p->zoomLevels.begin(), p->zoomLevels.end(), _zoomLevels.begin(), _zoomLevels.end(), inserter(z, z.begin()));
-            swap(_zoomLevels, z);
+        if(packageArea.x < _area.x) {
+            _area.w = (_area.x+_area.w)-packageArea.x;
+            _area.x = packageArea.x;
         }
+        if(packageArea.y < _area.y) {
+            _area.h = (_area.y+_area.h)-packageArea.y;
+            _area.y = packageArea.y;
+        }
+        if(packageArea.x+packageArea.w > _area.x+_area.w)
+            _area.w = packageArea.x+packageArea.w-_area.x;
+        if(packageArea.y+packageArea.h > _area.y+_area.h)
+            _area.h = packageArea.y+packageArea.h-_area.y;
+
+        /* Merge layers, overlays and zoom levels */
+
+        vector<string> l;
+        set_union(p->layers.begin(), p->layers.end(), _layers.begin(), _layers.end(), inserter(l, l.begin()));
+        swap(_layers, l);
+
+        vector<string> o;
+        set_union(p->overlays.begin(), p->overlays.end(), _overlays.begin(), _overlays.end(), inserter(o, o.begin()));
+        swap(_overlays, o);
+
+        /* set_union sorts it, too */
+        vector<Zoom> z;
+        set_union(p->zoomLevels.begin(), p->zoomLevels.end(), _zoomLevels.begin(), _zoomLevels.end(), inserter(z, z.begin()));
+        swap(_zoomLevels, z);
     }
 
     packages.push_back(p);

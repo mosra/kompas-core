@@ -29,6 +29,9 @@ using namespace Map2X::Utility;
 namespace Map2X { namespace Plugins { namespace Test {
 
 void Map2XMultiRasterModelTest::initialization() {
+    /* Offline map parameters should be updated even when the online is enabled */
+    model.setOnline(true);
+
     QVERIFY(model.addPackage(Directory::join(RASTERMODEL_TEST_DIR, "small/map.conf")) == 0);
 
     /* With lowest zoom level < current */
@@ -40,6 +43,8 @@ void Map2XMultiRasterModelTest::initialization() {
     /* Different zoomStep / tileSize */
     QVERIFY(model.addPackage(Directory::join(RASTERMODEL_TEST_DIR, "map.conf.different1")) == -1);
     QVERIFY(model.addPackage(Directory::join(RASTERMODEL_TEST_DIR, "map.conf.different2")) == -1);
+
+    model.setOnline(false);
 }
 
 void Map2XMultiRasterModelTest::expansion() {
