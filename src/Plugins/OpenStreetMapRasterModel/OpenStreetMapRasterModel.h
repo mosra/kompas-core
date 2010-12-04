@@ -35,7 +35,7 @@ class OpenStreetMapRasterModel: public Map2XRasterModel {
         OpenStreetMapRasterModel(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = "");
 
         inline virtual int features() const {
-            return Map2XRasterModel::features()|LoadableFromUrl|NonConvertableFormat;
+            return Map2XRasterModel::features()|LoadableFromUrl|NonConvertableFormat|ConvertableCoords;
         }
         inline virtual const Core::AbstractProjection* projection() const
             { return &_projection; }

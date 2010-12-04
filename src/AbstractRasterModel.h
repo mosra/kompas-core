@@ -64,6 +64,8 @@ class AbstractRasterModel: public PluginManager::Plugin {
 
             /**
              * Coordinates can be converted to and from WGS84.
+             * @note ConvertableCoords feature doesn't always mean that
+             * projection() returns valid AbstractProjection object!
              * @see projection()
              */
             ConvertableCoords       = 0x02,
