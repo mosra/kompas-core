@@ -1,0 +1,9 @@
+version=3
+
+model=KompasRasterModel
+tileSize=256 256
+
+area=18 6 1 1
+zoom=3
+
+layer=base

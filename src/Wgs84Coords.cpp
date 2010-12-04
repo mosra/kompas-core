@@ -2,13 +2,13 @@
     Copyright © 2007, 2008, 2009, 2010 Vladimír Vondruš <mosra@centrum.cz>
     Copyright © 2010 Jan Dupal <dupal.j@seznam.cz>
 
-    This file is part of Map2X.
+    This file is part of Kompas.
 
-    Map2X is free software: you can redistribute it and/or modify
+    Kompas is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License version 3
     only, as published by the Free Software Foundation.
 
-    Map2X is distributed in the hope that it will be useful,
+    Kompas is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU Lesser General Public License version 3 for more details.
@@ -24,7 +24,7 @@
 
 using namespace std;
 
-namespace Map2X { namespace Core {
+namespace Kompas { namespace Core {
 
 const string Wgs84Coords::format = "\n \n\n°\n'\n\"\nN\nS\nE\nW";
 
@@ -235,21 +235,19 @@ void Wgs84Coords::angleToString(int precision, bool skipTrailingZeros, vector<st
     int degrees, minutes;
     double seconds;
 
-    if(precision == -2) {
+    if(precision <= -2) {
         dDegrees = abs(angle);
         degrees = round(dDegrees);
         minutes = seconds = 0;
-    }
 
-    if(precision == -1) {
+    } else if(precision == -1) {
         dDegrees = abs(angle);
         degrees = floor(dDegrees);
         dMinutes = (dDegrees-floor(dDegrees))*60;
         minutes = round(dMinutes);
         seconds = 0;
-    }
 
-    if(precision >= 0) {
+    } else {
         /* Round degrees first to prevent 60" in output */
         int p = pow(10, precision);
         dDegrees = round(abs(angle)*60*60*p)/(60*60*p);

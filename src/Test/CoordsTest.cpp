@@ -1,13 +1,13 @@
 /*
     Copyright © 2007, 2008, 2009, 2010 Vladimír Vondruš <mosra@centrum.cz>
 
-    This file is part of Map2X.
+    This file is part of Kompas.
 
-    Map2X is free software: you can redistribute it and/or modify
+    Kompas is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License version 3
     only, as published by the Free Software Foundation.
 
-    Map2X is distributed in the hope that it will be useful,
+    Kompas is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU Lesser General Public License version 3 for more details.
@@ -20,16 +20,16 @@
 #include "Coords.h"
 #include "Utility/ConfigurationGroup.h"
 
-typedef Map2X::Core::Coords<unsigned int> UCoords;
+typedef Kompas::Core::Coords<unsigned int> UCoords;
 
-QTEST_APPLESS_MAIN(Map2X::Core::Test::CoordsTest)
+QTEST_APPLESS_MAIN(Kompas::Core::Test::CoordsTest)
 Q_DECLARE_METATYPE(UCoords)
 
 using namespace std;
-using namespace Map2X::Core;
-using namespace Map2X::Utility;
+using namespace Kompas::Core;
+using namespace Kompas::Utility;
 
-namespace Map2X { namespace Core { namespace Test {
+namespace Kompas { namespace Core { namespace Test {
 
 void CoordsTest::operators() {
     QVERIFY(UCoords(1,2) == UCoords(1,2));

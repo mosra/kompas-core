@@ -1,41 +1,41 @@
-#ifndef Map2X_Plugins_OpenStreetMapRasterModel_h
-#define Map2X_Plugins_OpenStreetMapRasterModel_h
+#ifndef Kompas_Plugins_OpenStreetMapRasterModel_h
+#define Kompas_Plugins_OpenStreetMapRasterModel_h
 /*
     Copyright © 2007, 2008, 2009, 2010 Vladimír Vondruš <mosra@centrum.cz>
 
-    This file is part of Map2X.
+    This file is part of Kompas.
 
-    Map2X is free software: you can redistribute it and/or modify
+    Kompas is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License version 3
     only, as published by the Free Software Foundation.
 
-    Map2X is distributed in the hope that it will be useful,
+    Kompas is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU Lesser General Public License version 3 for more details.
 */
 
 /** @file
- * @brief Class Map2X::Plugins::OpenStreetMapRasterModel
+ * @brief Class Kompas::Plugins::OpenStreetMapRasterModel
  */
 
-#include "Map2XRasterModel/Map2XRasterModel.h"
+#include "KompasRasterModel/KompasRasterModel.h"
 #include "MercatorProjection/MercatorProjection.h"
 
-namespace Map2X { namespace Plugins {
+namespace Kompas { namespace Plugins {
 
 /**
  * @brief OpenStreetMap raster model
  *
  * Based on: http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
  */
-class OpenStreetMapRasterModel: public Map2XRasterModel {
+class OpenStreetMapRasterModel: public KompasRasterModel {
     public:
-        /** @copydoc Plugins::Map2XRasterModel::Map2XRasterModel */
+        /** @copydoc Plugins::KompasRasterModel::KompasRasterModel */
         OpenStreetMapRasterModel(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = "");
 
         inline virtual int features() const {
-            return Map2XRasterModel::features()|LoadableFromUrl|NonConvertableFormat|ConvertableCoords;
+            return KompasRasterModel::features()|LoadableFromUrl|NonConvertableFormat|ConvertableCoords;
         }
         inline virtual const Core::AbstractProjection* projection() const
             { return &_projection; }
@@ -45,16 +45,16 @@ class OpenStreetMapRasterModel: public Map2XRasterModel {
             { return "© OpenStreetMap and contributors, CC-BY-SA."; }
 
         inline virtual std::vector<Core::Zoom> zoomLevels() const {
-            return online() ? zoomLevelsOnline : Map2XRasterModel::zoomLevels();
+            return online() ? zoomLevelsOnline : KompasRasterModel::zoomLevels();
         }
         inline virtual Core::TileArea area() const {
-            return online() ? areaOnline : Map2XRasterModel::area();
+            return online() ? areaOnline : KompasRasterModel::area();
         }
         virtual std::vector<std::string> layers() const {
-            return online() ? layersOnline : Map2XRasterModel::layers();
+            return online() ? layersOnline : KompasRasterModel::layers();
         }
 
-        virtual std::string tileUrl(const std::string& layer, Core::Zoom z, const Map2X::Core::TileCoords& coords) const;
+        virtual std::string tileUrl(const std::string& layer, Core::Zoom z, const Kompas::Core::TileCoords& coords) const;
 
     private:
         MercatorProjection _projection;

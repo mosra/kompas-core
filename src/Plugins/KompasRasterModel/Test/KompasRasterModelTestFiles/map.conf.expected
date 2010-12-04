@@ -1,0 +1,11 @@
+version=3
+model=KompasRasterModel
+tileSize="256 256"
+area="6 7 2 2"
+zoom=2
+zoom=3
+layer=base
+overlay=relief
+name="Kompas testing package"
+description="Buggy and sparse"
+packager=mosra

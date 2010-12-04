@@ -1,10 +1,10 @@
 # Author: mosra <mosra@centrum.cz>
-pkgname=map2x-core
+pkgname=kompas-core
 pkgver=dev
 pkgrel=1
-pkgdesc="Core library for Map2X navigation system"
+pkgdesc="Core library for Kompas navigation system"
 arch=('i686' 'x86_64')
-url="http://mosra.cz/blog/map2x.php"
+url="http://mosra.cz/blog/kompas.php"
 license=('LGPLv3')
 makedepends=('cmake')
 optdepends=('qt')

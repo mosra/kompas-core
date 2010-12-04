@@ -1,6 +1,6 @@
 /** @page RoadMap Road Map
 
-@section Core_v0_1 Map2X Core 0.1
+@section Core_v0_1 Kompas Core 0.1
 Done:
 - plugin management
 - loading and saving configuration files
@@ -12,7 +12,7 @@ To-Do:
 - cache for downloaded tiles
 - image filter plugins (?)
 
-@section Core_v0_2 Map2X Core 0.2
+@section Core_v0_2 Kompas Core 0.2
 To-Do:
 - support for vector maps, POI (which format support via static plugin?)
 - UTM projection support

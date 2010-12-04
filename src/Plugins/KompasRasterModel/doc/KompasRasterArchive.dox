@@ -1,0 +1,178 @@
+/** @page KompasRasterArchive %Kompas raster archive format
+<p>Raster archive is designed for saving tile data with space efficiency and
+fast access, so the archive is not modifiable after creation (adding/replacing
+tiles is not possible without rebuilding whole archive from scratch). Key
+features:</p>
+<ul>
+<li>Minimal additional storage space - every tile occupies only four bytes more
+than its size, archive header has only 20 bytes.</li>
+<li>Works on both Little-Endian and Big-Endian systems</li>
+<li>Archive can be divided to smaller parts to overcome filesystem and storage
+limits</li>
+<li>Archive can be "sparse" - some tiles could be missing</li>
+</ul>
+@section KompasRasterArchiveV3 Specification of version 3
+<p>The package has one @c map.conf file, which contains metadata and describes
+available layers, overlays and zoom levels. For every layer there is one
+subdirectory, which contains tile archives. First tile archive for a zoom level
+@c z is named @c z.map, next archives for the same level are named @c z-#.map
+where @c # goes from 1 up.</p>
+@subsection KompasRasterArchiveV3_conf Configuration file example
+<pre>
+# Format version
+version=3
+
+# Model with which the archive was created, tile size and zoom step
+model=KompasRasterModel
+tileSize=256 256
+zoomStep=2
+
+# Metadata
+name="Name of the package"
+description="Package description"
+packager="Packager name"
+
+# Available zoom levels
+zoom=0
+zoom=1
+zoom=2
+
+# Map area for lowest available zoom
+area=0 0 1 1
+
+# Available layers
+layer=base
+layer=photo
+
+# Available overlays
+overlay=relief
+overlay=cycle
+</pre>
+@subsection KompasRasterArchiveV3_archive Archive structure
+<p>The archive is divided into three main parts: header, which defines count
+of tiles in the archive, the data itself and array of positions
+of each tile at the end of file.</p>
+<p>File structure:</p>
+<table>
+<tr>
+<th>Byte</th>
+<th>Value (type)</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>0 - 2</td>
+<td><tt>0x4d 0x41 0x50</tt></td>
+<td>File signature (characters <tt>MAP</tt>)</td>
+</tr>
+<tr>
+<td>3</td>
+<td><tt>0x03</tt></td>
+<td>Version number (currently 3)</td>
+</tr>
+<tr>
+<td>4 - 7</td>
+<td>unsigned integer</td>
+<td>Total count of tiles</td>
+</tr>
+<tr>
+<td>8 - 11</td>
+<td>unsigned integer</td>
+<td>Number of first tile in this archive (counted from 0)</td>
+</tr>
+<tr>
+<td>12 - 15</td>
+<td>unsigned integer</td>
+<td>Number of (one item after) last tile in this archive</td>
+</tr>
+<tr>
+<td>20 - (x-1)</td>
+<td>data</td>
+<td>Tile data</td>
+</tr>
+<tr>
+<td>x - (x+4n)</td>
+<td>unsigned integers</td>
+<td>Array of tile positions ('n' is tile count)</td>
+</tr>
+<tr>
+<td>(x+4n) - (x+4n+3)</td>
+<td>unsigned integer</td>
+<td>(One position after) last tile. Also beginning of array of tile positions.</td>
+</tr>
+</table>
+<p>Notes:</p>
+<ul>
+<li>All numeric values are stored as @b Little-Endian. </li>
+<li>Count of tiles in actual file is computed easily by subtracting number of
+first tile from number of (one item after) last tile in the archive.</li>
+<li>Begin and end position of tile data is taken from two adjacent
+numbers in the array of positions. This is also the reason why the array
+contains position after last tile - data extracting algorithm just simply takes
+two numbers for every tile, even for the last (which ends at beginning of array
+of positions).</li>
+<li>If two adjacent tile positions are the same, it means that particular tile
+is missing.</li>
+</ul>
+@section KompasRasterArchiveV2 Specification of version 2 (deprecated, read-only)
+<p>Archive format version 2 was used since %Kompas version 0.0.5 and currently is
+supported read-only. Creating new archives of version 2 is not supported.
+Version 2 had one major disadvantage: the header contained array of tile
+positions and thus exact number of tiles in the archive must have been known
+for reserving the space for header before adding any tile data.</p>
+<p>File hierarchy and naming is the same as in version 3, but package
+configuration file @c map.conf had different syntax for every raster model
+(and is described separately in particular model's documentation).</p>
+@subsection KompasRasterArchiveV3_archive Archive structure
+<p>The archive is divided into two main parts: header, which defines tile data
+positions in the file, and the data itself. Header structure:</p>
+<table>
+<tr>
+<th>Byte</th>
+<th>Value (type)</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>0 - 2</td>
+<td><tt>0x4d 0x41 0x50</tt></td>
+<td>File signature (characters <tt>MAP</tt>)</td>
+</tr>
+<tr>
+<td>3</td>
+<td><tt>0x02</tt></td>
+<td>Version number (2)</td>
+</tr>
+<tr>
+<td>4 - 7</td>
+<td>unsigned integer</td>
+<td>Total count of tiles</td>
+</tr>
+<tr>
+<td>8 - 11</td>
+<td>unsigned integer</td>
+<td>Number of first tile in this archive (counted from 0)</td>
+</tr>
+<tr>
+<td>12 - 15</td>
+<td>unsigned integer</td>
+<td>Number of (one item after) last tile in this archive</td>
+</tr>
+<tr>
+<td>16 - (15+4n)</td>
+<td>unsigned integer</td>
+<td>Positions of particular tiles in the file ('n' is tile count)</td>
+</tr>
+<tr>
+<td>(16+4n) - (19+4n)</td>
+<td>unsigned integer</td>
+<td>(One position after) end of file</td>
+</tr>
+</table>
+<p>Notes (differences from version 3):</p>
+<ul>
+<li>All numeric values are stored as @b Big-Endian. </li>
+<li>Beginning and end position of tile data is taken from two adjacent
+numbers in the archive. This is also the reason why header contains EOF
+position - data extracting algorithm just simply takes two numbers for every
+tile, even for the last (which ends at EOF).</li>
+</ul>
+ */

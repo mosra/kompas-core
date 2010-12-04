@@ -1,4 +1,4 @@
-map2x_add_static_plugin(Map2XCore_Plugins MercatorProjection
+kompas_add_static_plugin(KompasCore_Plugins MercatorProjection
     MercatorProjection.conf MercatorProjection.cpp)
 
 if(BUILD_TESTS)

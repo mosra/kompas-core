@@ -2,13 +2,13 @@
     Copyright © 2007, 2008, 2009, 2010 Vladimír Vondruš <mosra@centrum.cz>
     Copyright © 2010 Jan Dupal <dupal.j@seznam.cz>
 
-    This file is part of Map2X.
+    This file is part of Kompas.
 
-    Map2X is free software: you can redistribute it and/or modify
+    Kompas is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License version 3
     only, as published by the Free Software Foundation.
 
-    Map2X is distributed in the hope that it will be useful,
+    Kompas is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU Lesser General Public License version 3 for more details.
@@ -20,13 +20,13 @@
 
 #include "constants.h"
 
-using namespace Map2X::Core;
+using namespace Kompas::Core;
 
 PLUGIN_REGISTER_STATIC(MercatorProjection,
-    Map2X::Plugins::MercatorProjection,
-    "cz.mosra.Map2X.Core.AbstractProjection/0.1")
+    Kompas::Plugins::MercatorProjection,
+    "cz.mosra.Kompas.Core.AbstractProjection/0.1")
 
-namespace Map2X { namespace Plugins {
+namespace Kompas { namespace Plugins {
 
 Coords<double> MercatorProjection::fromWgs84(const Wgs84Coords& coords) const {
     /* Transform longtitude range from -180° - +180° to 0 - 1 and shift origin

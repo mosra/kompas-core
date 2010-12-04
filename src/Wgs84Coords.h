@@ -1,29 +1,29 @@
-#ifndef Map2X_Core_Wgs84Coords_h
-#define Map2X_Core_Wgs84Coords_h
+#ifndef Kompas_Core_Wgs84Coords_h
+#define Kompas_Core_Wgs84Coords_h
 /*
     Copyright © 2007, 2008, 2009, 2010 Vladimír Vondruš <mosra@centrum.cz>
     Copyright © 2010 Jan Dupal <dupal.j@seznam.cz>
 
-    This file is part of Map2X.
+    This file is part of Kompas.
 
-    Map2X is free software: you can redistribute it and/or modify
+    Kompas is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License version 3
     only, as published by the Free Software Foundation.
 
-    Map2X is distributed in the hope that it will be useful,
+    Kompas is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU Lesser General Public License version 3 for more details.
 */
 
 /** @file
- * @brief Class Map2X::Core::Wgs84Coords
+ * @brief Class Kompas::Core::Wgs84Coords
  */
 
 #include <string>
 #include "Utility/ConfigurationGroup.h"
 
-namespace Map2X { namespace Core {
+namespace Kompas { namespace Core {
 
 /**
  * @brief WGS84 (GPS) coordinates
