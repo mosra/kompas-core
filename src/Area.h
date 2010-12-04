@@ -87,7 +87,7 @@ template <class PositionType, class SizeType> struct Area {
     }
 
     /** @brief Equality operator */
-    bool operator==(const Area<PositionType, SizeType>& other) {
+    bool operator==(const Area<PositionType, SizeType>& other) const {
         return other.x == x &&
                other.y == y &&
                other.w == w &&
@@ -95,7 +95,7 @@ template <class PositionType, class SizeType> struct Area {
     }
 
     /** @brief Non-equality operator */
-    inline bool operator!=(const Area<PositionType, SizeType>& other) {
+    inline bool operator!=(const Area<PositionType, SizeType>& other) const {
         return !operator==(other);
     }
 };

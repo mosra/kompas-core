@@ -87,7 +87,7 @@ template <class PositionType> struct AbsoluteArea {
     }
 
     /** @brief Equality operator */
-    bool operator==(const AbsoluteArea<PositionType>& other) {
+    bool operator==(const AbsoluteArea<PositionType>& other) const {
         return other.x1 == x1 &&
                other.y1 == y1 &&
                other.x2 == x2 &&
@@ -95,7 +95,7 @@ template <class PositionType> struct AbsoluteArea {
     }
 
     /** @brief Non-equality operator */
-    inline bool operator!=(const AbsoluteArea<PositionType>& other) {
+    inline bool operator!=(const AbsoluteArea<PositionType>& other) const {
         return !operator==(other);
     }
 };

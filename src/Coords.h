@@ -40,12 +40,12 @@ template <class PositionType> struct Coords {
         x(_x), y(_y) {}
 
     /** @brief Equality operator */
-    inline bool operator==(const Coords<PositionType>& other) {
+    inline bool operator==(const Coords<PositionType>& other) const {
         return other.x == x && other.y == y;
     }
 
     /** @brief Non-equality operator */
-    inline bool operator!=(const Coords<PositionType>& other) {
+    inline bool operator!=(const Coords<PositionType>& other) const {
         return !operator==(other);
     }
 };
