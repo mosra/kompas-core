@@ -171,6 +171,14 @@ void Wgs84CoordsTest::fromString_data() {
         << Wgs84Coords(-49.159213056, -15.201326111)
         << string("\n.š. \n.d.\n°\n'\n\"\ns\nj\nv\nz");
 
+    /* Shortened format */
+    QTest::newRow("shortened")
+        << string("49°N 15°12'4.774\"E")
+        << Wgs84Coords(49, 15.201326111) << string();
+    QTest::newRow("shortened2")
+        << string("49°9'33.167\"N 15°12'E")
+        << Wgs84Coords(49.159213056, 15.2) << string();
+
     /* Invalid */
     QTest::newRow("noNumbers")
         << string("N E")
