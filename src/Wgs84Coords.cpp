@@ -150,7 +150,7 @@ Wgs84Coords::Wgs84Coords(const std::string& coords, const std::string& _format):
     _isValid = true;
 }
 
-std::string Wgs84Coords::toString(int precision, const string& _format) const {
+std::string Wgs84Coords::toString(int precision, bool skipTrailingZeros, const string& _format) const {
     /* Parse format string, return empty string on error */
     vector<string> formatters = parseFormatters(_format);
     if(formatters.empty()) return "";
@@ -163,36 +163,12 @@ std::string Wgs84Coords::toString(int precision, const string& _format) const {
     if(_lon >= 0)   ew = 8;
     else            ew = 9;
 
-    double latAbs = abs(_lat);
-    double lonAbs = abs(_lon);
-    double latMinutes = (latAbs-floor(latAbs))*60;
-    double lonMinutes = (lonAbs-floor(lonAbs))*60;
-    double latSeconds = (latMinutes-floor(latMinutes))*60;
-    double lonSeconds = (lonMinutes-floor(lonMinutes))*60;
-
     ostringstream out;
     out.setf(ostringstream::fixed, ostringstream::floatfield);
     out << formatters[0];
 
-    /* Latitude */
-    out << static_cast<int>(latAbs) << formatters[3];
-    if(precision > -2)
-        out << static_cast<int>(latMinutes) << formatters[4];
-    if(precision > -1) {
-        out.precision(precision);
-        out << latSeconds << formatters[5];
-    }
-    out << formatters[ns] << formatters[1];;
-
-    /* Longtitude */
-    out << static_cast<int>(lonAbs) << formatters[3];
-    if(precision > -2)
-        out << static_cast<int>(lonMinutes) << formatters[4];
-    if(precision > -1) {
-        out.precision(precision);
-        out << lonSeconds << formatters[5];
-    }
-    out << formatters[ew] << formatters[2];
+    angleToString(precision, skipTrailingZeros, formatters, out, _lat, ns);
+    angleToString(precision, skipTrailingZeros, formatters, out, _lon, ew);
 
     return out.str();
 }
@@ -252,6 +228,53 @@ vector<string> Wgs84Coords::parseFormatters(const std::string& format) const {
 
     if(formatters.size() != 10) return vector<string>();
     return formatters;
+}
+
+void Wgs84Coords::angleToString(int precision, bool skipTrailingZeros, vector<string>& formatters, ostringstream& out, double angle, int nsew) const {
+    double dDegrees, dMinutes;
+    int degrees, minutes;
+    double seconds;
+
+    if(precision == -2) {
+        dDegrees = abs(angle);
+        degrees = round(dDegrees);
+        minutes = seconds = 0;
+    }
+
+    if(precision == -1) {
+        dDegrees = abs(angle);
+        degrees = floor(dDegrees);
+        dMinutes = (dDegrees-floor(dDegrees))*60;
+        minutes = round(dMinutes);
+        seconds = 0;
+    }
+
+    if(precision >= 0) {
+        /* Round degrees first to prevent 60" in output */
+        int p = pow(10, precision);
+        dDegrees = round(abs(angle)*60*60*p)/(60*60*p);
+
+        degrees = floor(dDegrees);
+        dMinutes = (dDegrees-floor(dDegrees))*60;
+        minutes = floor(dMinutes);
+        seconds = round((dMinutes-floor(dMinutes))*60*p)/p;
+    }
+
+    /* Write degrees */
+    out << degrees << formatters[3];
+
+    /* Write minutes if precision allows them and we aren't skipping trailing zeros */
+    if(precision >= -1 && !(skipTrailingZeros && minutes == 0 && seconds == 0))
+        out << minutes << formatters[4];
+
+    /* Write seconds if precision allows them and we aren't skipping trailing zeros */
+    if(precision >= 0 && !(skipTrailingZeros && seconds == 0)) {
+        out.precision(precision);
+        out << seconds << formatters[5];
+    }
+
+    /* Add N/S and formatter between lat/lon or E/W and formatter after E/W */
+    out << formatters[nsew] << formatters[nsew < 8 ? 1 : 2];
 }
 
 bool Wgs84Coords::operator==(const Wgs84Coords& other) const {

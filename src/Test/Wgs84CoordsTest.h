@@ -26,6 +26,9 @@ class Wgs84CoordsTest: public QObject {
         void construct_data();
         void construct();
 
+        void toString_data();
+        void toString();
+
         void distance_data();
         void distance();
 

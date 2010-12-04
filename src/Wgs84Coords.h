@@ -122,6 +122,7 @@ class Wgs84Coords {
          *      of decimal places. If set to @c -1, seconds are stripped away,
          *      if set to @c -2, only degrees are in output, minutes and seconds
          *      are stripped away.
+         * @param skipTrailingZeros Whether to skip trailing zeros.
          * @param _format       Format of converted string.
          *      See Wgs84Coords::format.
          * @return Converted string. If the format is not valid, returns empty
@@ -129,10 +130,8 @@ class Wgs84Coords {
          *
          * Converts numeric coordinates to text representation (e.g.
          * <tt>49°9'33.167"N 15°12'4.774"E</tt>).
-         * @todo Math-correctly round degrees/minutes on negative precision
-         * @todo Automatic precision (don't display M/S when there are zeros)
          */
-        std::string toString(int precision = 3, const std::string& _format = format) const;
+        std::string toString(int precision = 3, bool skipTrailingZeros = false, const std::string& _format = format) const;
 
         /**
          * @brief Distance between two places
@@ -160,6 +159,8 @@ class Wgs84Coords {
 
     private:
         std::vector<std::string> parseFormatters(const std::string& format) const;
+
+        void angleToString(int precision, bool skipTrailingZeros, std::vector<std::string>& formatters, std::ostringstream& out, double angle, int nsew) const;
 };
 
 }

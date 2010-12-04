@@ -61,6 +61,29 @@ void Wgs84CoordsTest::construct() {
     QCOMPARE(QString::fromStdString(c.toString()), toString);
 }
 
+void Wgs84CoordsTest::toString_data() {
+    QTest::addColumn<Wgs84Coords>("coords");
+    QTest::addColumn<int>("precision");
+    QTest::addColumn<bool>("skipTrailingZeros");
+    QTest::addColumn<QString>("output");
+
+    QTest::newRow("precision0") << Wgs84Coords(0.00014166667, 0.00013611111) << 0 << false << "0°0'1\"N 0°0'0\"E";
+    QTest::newRow("precision-1") << Wgs84Coords(0.0085, 0.0081666667) << -1 << false << "0°1'N 0°0'E";
+    QTest::newRow("precision-2") << Wgs84Coords(0.51, 0.49) << -2 << false << "1°N 0°E";
+
+    QTest::newRow("skipTrailingZeros") << Wgs84Coords(0, 0.75) << 5 << true << "0°N 0°45'E";
+    QTest::newRow("skipTrailingZeros2") << Wgs84Coords(0.5, 0) << 5 << true << "0°30'N 0°E";
+}
+
+void Wgs84CoordsTest::toString() {
+    QFETCH(Wgs84Coords, coords);
+    QFETCH(int, precision);
+    QFETCH(bool, skipTrailingZeros);
+    QFETCH(QString, output);
+
+    QCOMPARE(QString::fromStdString(coords.toString(precision, skipTrailingZeros)), output);
+}
+
 void Wgs84CoordsTest::distance_data() {
     QTest::addColumn<Wgs84Coords>("a");
     QTest::addColumn<Wgs84Coords>("b");
@@ -105,7 +128,7 @@ void Wgs84CoordsTest::stringFormat() {
     string format =
         "Latitude: \n, Longtitude: \n\n deg. \n min. \n sec. \nNorth\nSouth\nEast\nWest";
 
-    QCOMPARE(QString::fromStdString(c.toString(4, format)),
+    QCOMPARE(QString::fromStdString(c.toString(4, false, format)),
              QString("Latitude: 49 deg. 9 min. 33.1672 sec. North, Longtitude: 15 deg. 12 min. 4.7740 sec. East"));
 
     /* Zero and negative precision */
