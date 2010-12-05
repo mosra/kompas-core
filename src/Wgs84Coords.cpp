@@ -219,7 +219,7 @@ double Wgs84Coords::distance(const Wgs84Coords& a, const Wgs84Coords& b, double 
     return s;
 }
 
-vector<string> Wgs84Coords::parseFormatters(const std::string& format) const {
+vector<string> Wgs84Coords::parseFormatters(const std::string& format) {
     vector<string> formatters;
     string tmp;
     istringstream in(format);

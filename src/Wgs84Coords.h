@@ -158,7 +158,7 @@ class Wgs84Coords {
         }
 
     private:
-        std::vector<std::string> parseFormatters(const std::string& format) const;
+        static std::vector<std::string> parseFormatters(const std::string& format);
 
         void angleToString(int precision, bool skipTrailingZeros, std::vector<std::string>& formatters, std::ostringstream& out, double angle, int nsew) const;
 };
