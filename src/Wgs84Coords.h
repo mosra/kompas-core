@@ -72,6 +72,16 @@ class Wgs84Coords {
         static double dmsToDecimal(const std::string& dms);
 
         /**
+         * @brief Convert decimal number to DMS representation
+         * @param decimal       Decimal number
+         * @param precision     Precision. See Wgs84Coords::toString().
+         * @param skipTrailingZeros Whether to skip trailing zeros.
+         * @param _format       Formatting string. See Wgs84Coords::format.
+         * @return DMS string or empty string on error.
+         */
+        static std::string decimalToDms(double decimal, int precision = 3, bool skipTrailingZeros = false, const std::string& _format = format);
+
+        /**
          * @brief Latitude
          *
          * Positive value means north, negative south.
@@ -160,7 +170,7 @@ class Wgs84Coords {
     private:
         static std::vector<std::string> parseFormatters(const std::string& format);
 
-        void angleToString(int precision, bool skipTrailingZeros, std::vector<std::string>& formatters, std::ostringstream& out, double angle, int nsew) const;
+        static void decimalToDms(double decimal, int precision, bool skipTrailingZeros, const std::vector<std::string>& formatters, std::ostringstream& out);
 };
 
 }

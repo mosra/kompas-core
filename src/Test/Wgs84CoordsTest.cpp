@@ -230,4 +230,9 @@ void Wgs84CoordsTest::fromString() {
     QVERIFY(actual == output);
 }
 
+void Wgs84CoordsTest::decimalToDms() {
+    /* Test only one value, as underlying algorithm is tested extensively in toString() */
+    QCOMPARE(QString::fromStdString(Wgs84Coords::decimalToDms(49.159213056)), QString("49°9'33.167\""));
+}
+
 }}}

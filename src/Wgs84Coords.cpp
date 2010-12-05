@@ -78,6 +78,17 @@ double Wgs84Coords::dmsToDecimal(const std::string& dms) {
     return decimal;
 }
 
+string Wgs84Coords::decimalToDms(double decimal, int precision, bool skipTrailingZeros, const string& _format) {
+    vector<string> formatters = parseFormatters(_format);
+    if(formatters.empty()) return "";
+
+    ostringstream out;
+    out.setf(ostringstream::fixed, ostringstream::floatfield);
+    decimalToDms(decimal, precision, skipTrailingZeros, formatters, out);
+
+    return out.str();
+}
+
 Wgs84Coords::Wgs84Coords(double __lat, double __lon) {
     if(__lon >= -180.0 && __lon <= 180.0 &&
        __lat >= -90.0 && __lat <= 90.0) {
@@ -165,10 +176,19 @@ std::string Wgs84Coords::toString(int precision, bool skipTrailingZeros, const s
 
     ostringstream out;
     out.setf(ostringstream::fixed, ostringstream::floatfield);
+
+    /* Add begin formatter */
     out << formatters[0];
 
-    angleToString(precision, skipTrailingZeros, formatters, out, _lat, ns);
-    angleToString(precision, skipTrailingZeros, formatters, out, _lon, ew);
+    decimalToDms(_lat, precision, skipTrailingZeros, formatters, out);
+
+    /* Add N/S and middle formatter */
+    out << formatters[ns] << formatters[1];
+
+    decimalToDms(_lon, precision, skipTrailingZeros, formatters, out);
+
+    /* Add E/W and end formatter */
+    out << formatters[ew] << formatters[2];
 
     return out.str();
 }
@@ -230,7 +250,7 @@ vector<string> Wgs84Coords::parseFormatters(const std::string& format) {
     return formatters;
 }
 
-void Wgs84Coords::angleToString(int precision, bool skipTrailingZeros, vector<string>& formatters, ostringstream& out, double angle, int nsew) const {
+void Wgs84Coords::decimalToDms(double angle, int precision, bool skipTrailingZeros, const vector<string>& formatters, ostringstream& out) {
     double dDegrees, dMinutes;
     int degrees, minutes;
     double seconds;
@@ -270,9 +290,6 @@ void Wgs84Coords::angleToString(int precision, bool skipTrailingZeros, vector<st
         out.precision(precision);
         out << seconds << formatters[5];
     }
-
-    /* Add N/S and formatter between lat/lon or E/W and formatter after E/W */
-    out << formatters[nsew] << formatters[nsew < 8 ? 1 : 2];
 }
 
 bool Wgs84Coords::operator==(const Wgs84Coords& other) const {

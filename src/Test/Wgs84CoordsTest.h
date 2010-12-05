@@ -37,6 +37,8 @@ class Wgs84CoordsTest: public QObject {
 
         void fromString_data();
         void fromString();
+
+        void decimalToDms();
 };
 
 }}}
