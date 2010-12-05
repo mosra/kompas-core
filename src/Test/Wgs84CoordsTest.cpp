@@ -135,7 +135,7 @@ void Wgs84CoordsTest::stringFormat() {
     QCOMPARE(QString::fromStdString(c.toString(0)),
              QString("49°9'33\"N 15°12'5\"E"));
     QCOMPARE(QString::fromStdString(c.toString(-1)),
-             QString("49°9'N 15°12'E"));
+             QString("49°10'N 15°12'E"));
     QCOMPARE(QString::fromStdString(c.toString(-2)),
              QString("49°N 15°E"));
 }
