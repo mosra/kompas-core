@@ -33,6 +33,9 @@ namespace Kompas { namespace Core { namespace Test {
 
 void CoordsTest::operators() {
     QVERIFY(UCoords(1,2) == UCoords(1,2));
+
+    QVERIFY(UCoords(1,2) + UCoords(3,4) == UCoords(4,6));
+    QVERIFY(UCoords(4,6) - UCoords(3,4) == UCoords(1,2));
 }
 
 void CoordsTest::fromString_data() {

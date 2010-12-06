@@ -49,6 +49,16 @@ template <class PositionType> struct Coords {
     inline bool operator!=(const Coords<PositionType>& other) const {
         return !operator==(other);
     }
+
+    /** @brief Adding operator */
+    inline Coords operator+(const Coords<PositionType>& other) const {
+        return Coords<PositionType>(x+other.x, y+other.y);
+    }
+
+    /** @brief Substracting operator */
+    inline Coords operator-(const Coords<PositionType>& other) const {
+        return Coords<PositionType>(x-other.x, y-other.y);
+    }
 };
 
 }
