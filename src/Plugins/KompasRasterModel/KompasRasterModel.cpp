@@ -18,6 +18,7 @@
 #include <algorithm>
 
 #include "Utility/Directory.h"
+#include "Utility/Debug.h"
 
 using namespace std;
 using namespace Kompas::Utility;
@@ -248,7 +249,10 @@ bool KompasRasterModel::initializePackage(const string& filename, const TileSize
     std::string path = Directory::path(filename);
 
     /* Create path, if it doesn't exist */
-    if(!Directory::mkpath(path)) return false;
+    if(!Directory::mkpath(path)) {
+        Error() << "Cannot create package directory" << path;
+        return false;
+    }
 
     /* Check if there is non-zero area, at least one zoom level and one layer */
     if(zoomLevels.empty() || !area.w || !area.h || layers.empty()) return false;
@@ -311,7 +315,10 @@ bool KompasRasterModel::tileToPackage(const string& layer, Zoom z, const TileCoo
     map<string, KompasRasterArchiveMaker*>::iterator found = currentlyCreatedPackage->archives.find(prefix.str());
     if(found == currentlyCreatedPackage->archives.end()) {
         /* Make directory for given layer, if not exists */
-        if(!Directory::mkpath(Directory::join(currentlyCreatedPackage->path, layer))) return false;
+        if(!Directory::mkpath(Directory::join(currentlyCreatedPackage->path, layer))) {
+            Error() << "Cannot create zoom level directory" << Directory::join(currentlyCreatedPackage->path, layer);
+            return false;
+        }
 
         unsigned int total = area.w*area.h;
         KompasRasterArchiveMaker* maker = new KompasRasterArchiveMaker(Directory::join(currentlyCreatedPackage->path, prefix.str()), 3, total);
@@ -320,11 +327,27 @@ bool KompasRasterModel::tileToPackage(const string& layer, Zoom z, const TileCoo
     }
 
     /* Tile came out of order */
-    if((coords.y-area.y)*area.w+(coords.x-area.x) != found->second->tileCount()) return false;
+    if((coords.y-area.y)*area.w+(coords.x-area.x) != found->second->tileCount()) {
+        Error() << "Tile came out of order, expected" << TileCoords(found->second->tileCount()%area.w, found->second->tileCount()/area.w) << "got" << coords-TileCoords(area.x, area.y);
+        return false;
+    }
 
     /* Append tile */
     int ret = found->second->append(data);
     if(ret == KompasRasterArchiveMaker::Ok || ret == KompasRasterArchiveMaker::NextFile) return true;
+
+    Debug d;
+    d << "Cannot append tile to the package:";
+    switch(ret) {
+        case KompasRasterArchiveMaker::VersionError:
+            d << "Unsupported archive version."; break;
+        case KompasRasterArchiveMaker::FileError:
+            d << "Cannot open the file for writing."; break;
+        case KompasRasterArchiveMaker::WriteError:
+            d << "Cannot write to the file."; break;
+        case KompasRasterArchiveMaker::TotalMismatch:
+            d << "Tile count mismatch, file created for" << found->second->tileCount() << "and adding tile " << coords.y*area.w+coords.y; break;
+    }
 
     return false;
 }
