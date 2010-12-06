@@ -137,6 +137,13 @@ template<class PositionType, class SizeType> struct ConfigurationValue<Core::Are
     }
 };
 
+template<class PositionType, class SizeType> Debug& operator<<(Debug debug, const Core::Area<PositionType, SizeType>& value) {
+    std::ostringstream o;
+    o << "Area(" << value.x << ", " << value.y << ", " << value.w << ", " << value.h << ")";
+
+    return debug << o.str();
+}
+
 }}
 
 #endif

@@ -30,6 +30,8 @@ class CoordsTest: public QObject {
 
         void toString_data();
         void toString();
+
+        void debug();
 };
 
 }}}

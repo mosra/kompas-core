@@ -83,4 +83,10 @@ void AreaTest::toString() {
     QCOMPARE(QString::fromStdString(actual), expected);
 }
 
+void AreaTest::debug() {
+    ostringstream o;
+    Debug(&o) << UArea(1, 2, 3, 4);
+    QCOMPARE(QString::fromStdString(o.str()), QString("Area(1, 2, 3, 4)\n"));
+}
+
 }}}

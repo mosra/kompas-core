@@ -25,6 +25,7 @@ Q_DECLARE_METATYPE(Kompas::Core::Wgs84Coords)
 Q_DECLARE_METATYPE(std::string)
 
 using namespace std;
+using namespace Kompas::Utility;
 
 namespace Kompas { namespace Core { namespace Test {
 
@@ -228,6 +229,12 @@ void Wgs84CoordsTest::fromString() {
     }
 
     QVERIFY(actual == output);
+}
+
+void Wgs84CoordsTest::debug() {
+    ostringstream o;
+    Debug(&o) << Wgs84Coords(49.159, -15.201);
+    QCOMPARE(QString::fromStdString(o.str()), QString("Wgs84Coords(49.159, -15.201)\n"));
 }
 
 void Wgs84CoordsTest::decimalToDms() {

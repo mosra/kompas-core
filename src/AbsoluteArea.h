@@ -137,6 +137,13 @@ template<class PositionType> struct ConfigurationValue<Core::AbsoluteArea<Positi
     }
 };
 
+template<class PositionType> Debug& operator<<(Debug debug, const Core::AbsoluteArea<PositionType>& value) {
+    std::ostringstream o;
+    o << "AbsoluteArea(" << value.x1 << ", " << value.y1 << ", " << value.x2 << ", " << value.y2 << ")";
+
+    return debug << o.str();
+}
+
 }}
 
 #endif

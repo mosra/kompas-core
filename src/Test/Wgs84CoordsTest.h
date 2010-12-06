@@ -38,6 +38,8 @@ class Wgs84CoordsTest: public QObject {
         void fromString_data();
         void fromString();
 
+        void debug();
+
         void decimalToDms();
 };
 

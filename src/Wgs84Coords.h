@@ -21,7 +21,9 @@
  */
 
 #include <string>
+
 #include "Utility/ConfigurationGroup.h"
+#include "Utility/Debug.h"
 
 namespace Kompas { namespace Core {
 
@@ -194,6 +196,8 @@ template<> struct ConfigurationValue<Core::Wgs84Coords> {
      */
     static std::string toString(const Core::Wgs84Coords& value, int flags);
 };
+
+Debug& operator<<(Debug debug, const Core::Wgs84Coords& value);
 
 }
 

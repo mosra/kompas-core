@@ -328,6 +328,13 @@ string ConfigurationValue<Core::Wgs84Coords>::toString(const Core::Wgs84Coords& 
     return stream.str();
 }
 
+Debug& operator<<(Debug debug, const Core::Wgs84Coords& value) {
+    std::ostringstream o;
+    o << "Wgs84Coords(" << value.latitude() << ", " << value.longtitude() << ")";
+
+    return debug << o.str();
+}
+
 } // namespace Utility
 #endif
 

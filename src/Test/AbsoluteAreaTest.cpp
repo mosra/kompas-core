@@ -83,4 +83,10 @@ void AbsoluteAreaTest::toString() {
     QCOMPARE(QString::fromStdString(actual), expected);
 }
 
+void AbsoluteAreaTest::debug() {
+    ostringstream o;
+    Debug(&o) << UAbsoluteArea(1, 2, 3, 4);
+    QCOMPARE(QString::fromStdString(o.str()), QString("AbsoluteArea(1, 2, 3, 4)\n"));
+}
+
 }}}

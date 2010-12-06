@@ -20,6 +20,7 @@
  */
 
 #include "Utility/ConfigurationGroup.h"
+#include "Utility/Debug.h"
 
 namespace Kompas { namespace Core {
 
@@ -81,6 +82,13 @@ template<class PositionType> struct ConfigurationValue<Core::Coords<PositionType
         return coords;
     }
 };
+
+template<class PositionType> Debug& operator<<(Debug debug, const Core::Coords<PositionType>& value) {
+    std::ostringstream o;
+    o << "Coords(" << value.x << ", " << value.y << ")";
+
+    return debug << o.str();
+}
 
 }}
 

@@ -77,4 +77,10 @@ void CoordsTest::toString() {
     QCOMPARE(QString::fromStdString(actual), expected);
 }
 
+void CoordsTest::debug() {
+    ostringstream o;
+    Debug(&o) << UCoords(1, 2);
+    QCOMPARE(QString::fromStdString(o.str()), QString("Coords(1, 2)\n"));
+}
+
 }}}
