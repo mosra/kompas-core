@@ -49,11 +49,11 @@ void KompasMultiRasterModelTest::initialization() {
 void KompasMultiRasterModelTest::expansion() {
     QVERIFY(model.area() == TileArea(2, 1, 3, 4));
 
-    vector<Zoom> z;
-    z.push_back(1);
-    z.push_back(2);
-    z.push_back(3);
-    z.push_back(4);
+    set<Zoom> z;
+    z.insert(1);
+    z.insert(2);
+    z.insert(3);
+    z.insert(4);
     QVERIFY(model.zoomLevels() == z);
 
     vector<string> layers;

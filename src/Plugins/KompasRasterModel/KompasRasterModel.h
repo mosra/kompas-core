@@ -43,7 +43,7 @@ class KompasRasterModel: public Core::AbstractRasterModel {
         virtual SupportLevel recognizeFile(const std::string& filename, std::istream& file) const;
         inline virtual Core::TileSize tileSize() const { return _tileSize; }
 
-        inline virtual std::vector<Core::Zoom> zoomLevels() const { return _zoomLevels; }
+        inline virtual std::set<Core::Zoom> zoomLevels() const { return _zoomLevels; }
         inline virtual Core::TileArea area() const { return _area; }
         inline virtual std::vector<std::string> layers() const { return _layers; }
         inline virtual std::vector<std::string> overlays() const { return _overlays; }
@@ -71,7 +71,7 @@ class KompasRasterModel: public Core::AbstractRasterModel {
             std::map<std::string, std::vector<KompasRasterArchiveReader*> > archives;
 
             Core::TileArea area;        /**< @brief Package area */
-            std::vector<Core::Zoom>
+            std::set<Core::Zoom>
                 zoomLevels;             /**< @brief Package zoom levels */
             std::vector<std::string>
                 layers,                 /**< @brief Package layers */
@@ -124,7 +124,7 @@ class KompasRasterModel: public Core::AbstractRasterModel {
         };
 
         Core::TileSize _tileSize;
-        std::vector<Core::Zoom> _zoomLevels;
+        std::set<Core::Zoom> _zoomLevels;
         Core::TileArea _area;
         std::vector<std::string> _layers, _overlays;
         Core::Zoom currentPackageZoom;

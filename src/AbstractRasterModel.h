@@ -21,6 +21,7 @@
 
 #include <string>
 #include <vector>
+#include <set>
 
 #include "Coords.h"
 #include "Area.h"
@@ -203,7 +204,7 @@ class AbstractRasterModel: public PluginManager::Plugin {
          *
          * All zoom levels provided by map.
          */
-        virtual std::vector<Zoom> zoomLevels() const = 0;
+        virtual std::set<Zoom> zoomLevels() const = 0;
 
         /**
          * @brief Map area for lowest zoom

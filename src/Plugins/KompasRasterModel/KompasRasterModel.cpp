@@ -100,8 +100,8 @@ int KompasRasterModel::addPackage(const string& filename) {
 
         /* If package minimal zoom is lower than current minimal zoom,
             divide current area */
-        if(p->zoomLevels[0] < _zoomLevels[0]) {
-            unsigned int divisor = pow2(_zoomLevels[0]-p->zoomLevels[0]);
+        if(*p->zoomLevels.begin() < *_zoomLevels.begin()) {
+            unsigned int divisor = pow2(*_zoomLevels.begin()-*p->zoomLevels.begin());
             TileArea newArea;
 
             /* Expand to largest possible, don't crop anything */
@@ -115,8 +115,8 @@ int KompasRasterModel::addPackage(const string& filename) {
 
         /* If package minimal zoom is greater than current minimal zoom,
             divide package area */
-        } else if(p->zoomLevels[0] > _zoomLevels[0]) {
-            unsigned int divisor = pow2(p->zoomLevels[0]-_zoomLevels[0]);
+        } else if(*p->zoomLevels.begin() > *_zoomLevels.begin()) {
+            unsigned int divisor = pow2(*p->zoomLevels.begin()-*_zoomLevels.begin());
 
             /* Expand to largest possible, don't crop anything */
             packageArea.x = p->area.x/divisor;
@@ -153,10 +153,7 @@ int KompasRasterModel::addPackage(const string& filename) {
         set_union(p->overlays.begin(), p->overlays.end(), _overlays.begin(), _overlays.end(), inserter(o, o.begin()));
         swap(_overlays, o);
 
-        /* set_union sorts it, too */
-        vector<Zoom> z;
-        set_union(p->zoomLevels.begin(), p->zoomLevels.end(), _zoomLevels.begin(), _zoomLevels.end(), inserter(z, z.begin()));
-        swap(_zoomLevels, z);
+        _zoomLevels.insert(p->zoomLevels.begin(), p->zoomLevels.end());
     }
 
     packages.push_back(p);
@@ -170,11 +167,11 @@ string KompasRasterModel::tileFromPackage(const string& layer, Zoom z, const Til
 
     for(vector<Package*>::iterator package = packages.begin(); package != packages.end(); ++package) {
         /* If the zoom level is not in current package, go to next package */
-        vector<Zoom>::const_iterator foundZoom = find((*package)->zoomLevels.begin(), (*package)->zoomLevels.end(), z);
+        set<Zoom>::const_iterator foundZoom = (*package)->zoomLevels.find(z);
         if(foundZoom == (*package)->zoomLevels.end()) continue;
 
         /* Multiply tile area for current zoom level */
-        TileArea area = (*package)->area*pow2(z-(*package)->zoomLevels[0]);
+        TileArea area = (*package)->area*pow2(z-*(*package)->zoomLevels.begin());
 
         /* If the coordinates are not in current package area, go to next */
         if(coords.x < area.x || coords.x >= area.x+area.w ||
@@ -224,7 +221,8 @@ KompasRasterModel::Package* KompasRasterModel::parsePackage(const Configuration*
     p->description = conf->value<string>("description");
     p->packager = conf->value<string>("packager");
     p->area = conf->value<TileArea>("area");
-    p->zoomLevels = conf->values<Zoom>("zoom");
+    vector<Zoom> z = conf->values<Zoom>("zoom");
+    p->zoomLevels.insert(z.begin(), z.end());
     p->layers = conf->values<string>("layer");
     p->overlays = conf->values<string>("overlay");
 
@@ -233,9 +231,6 @@ KompasRasterModel::Package* KompasRasterModel::parsePackage(const Configuration*
         delete p;
         return 0;
     }
-
-    /* Sort zoom levels so lowest level is at index 0 */
-    sort(p->zoomLevels.begin(), p->zoomLevels.end());
 
     /* Everything should be OK now. Set tile size if is not set yet. */
     if(tileSize() == TileSize()) _tileSize = conf->value<TileSize>("tileSize");

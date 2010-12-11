@@ -40,9 +40,9 @@ void KompasRasterModelTest::metadata() {
     QVERIFY(model.area() == TileArea(6, 7, 2, 2));
     QVERIFY(model.tileSize() == TileSize(256, 256));
 
-    vector<Zoom> z;
-    z.push_back(2);
-    z.push_back(3);
+    set<Zoom> z;
+    z.insert(2);
+    z.insert(3);
     QVERIFY(model.zoomLevels() == z);
 
     vector<string> layers;

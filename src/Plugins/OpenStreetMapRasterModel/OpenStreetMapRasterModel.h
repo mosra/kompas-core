@@ -44,7 +44,7 @@ class OpenStreetMapRasterModel: public KompasRasterModel {
         inline virtual std::string copyright() const
             { return "© OpenStreetMap and contributors, CC-BY-SA."; }
 
-        inline virtual std::vector<Core::Zoom> zoomLevels() const {
+        inline virtual std::set<Core::Zoom> zoomLevels() const {
             return online() ? zoomLevelsOnline : KompasRasterModel::zoomLevels();
         }
         inline virtual Core::TileArea area() const {
@@ -59,7 +59,7 @@ class OpenStreetMapRasterModel: public KompasRasterModel {
     private:
         MercatorProjection _projection;
 
-        std::vector<Core::Zoom> zoomLevelsOnline;
+        std::set<Core::Zoom> zoomLevelsOnline;
         Core::TileArea areaOnline;
         std::vector<std::string> layersOnline;
 };
