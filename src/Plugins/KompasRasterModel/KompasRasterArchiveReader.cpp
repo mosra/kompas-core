@@ -16,29 +16,39 @@
 #include "KompasRasterArchiveReader.h"
 
 #include "Utility/Endianness.h"
+#include "Utility/Debug.h"
 
 using namespace std;
-using Kompas::Utility::Endianness;
+using namespace Kompas::Utility;
 
 namespace Kompas { namespace Plugins {
 
 KompasRasterArchiveReader::KompasRasterArchiveReader(const string& _file): _version(0), _total(0), _begin(0), _end(0), _isValid(false) {
     file.open(_file.c_str(), fstream::binary);
-    if(!file.is_open()) return;
+    if(!file.is_open()) {
+        Error() << "Cannot open Kompas archive file" << _file;
+        return;
+    }
 
     /* Four bytes - enough for all integers even for signature MAP with null
         terminator at the end */
     char* buffer = new char[4];
 
-    /* Check file signature */
+    /* Check file signature (\0 is automagically appended at the end) */
     file.get(buffer, 4);
-    if(string(buffer) != "MAP") return;
+    if(string(buffer) != "MAP") {
+        Error() << "Unknown Kompas archive signature" << buffer << "in" << _file;
+        return;
+    }
 
     /* Check file version (only version 2 is currently supported) */
     file.read(buffer, 1);
     _version = buffer[0];
 
-    if(_version != 2 && _version != 3) return;
+    if(_version != 2 && _version != 3) {
+        Error() << "Unsupported Kompas archive version" << _version << "in" << _file;
+        return;
+    }
 
     /* Version 2 is in big endian, version 3 in little endian */
     if(_version == 2)
@@ -58,6 +68,12 @@ KompasRasterArchiveReader::KompasRasterArchiveReader(const string& _file): _vers
     file.read(buffer, 4);
     _end = endianator(*reinterpret_cast<unsigned int*>(buffer));
 
+    /* Check whether begin < end <= total */
+    if(_begin >= _end || _end > _total) {
+        Error() << "Kompas archive range mismatch, total:" << _total << "begin:" << _begin << "end:" << _end << "in" << _file;
+        return;
+    }
+
     /* Version 2 has positions array after header */
     if(_version == 2)
         positions = 16;
@@ -68,12 +84,14 @@ KompasRasterArchiveReader::KompasRasterArchiveReader(const string& _file): _vers
         file.seekg(-4, ios::end);
         file.read(buffer, 4);
         positions = Endianness::littleEndian(*reinterpret_cast<unsigned int*>(buffer));
+
+        if(positions+(_end-_begin+1)*4 != file.tellg()) {
+            Error() << "Kompas archive tile positions array has unexpected size, expected" << (_end-_begin+1)*4 << "found" << static_cast<unsigned int>(file.tellg()) - positions << "in" << _file;
+            return;
+        }
     }
 
     _isValid = true;
-
-    /** @todo Pedantic validity checks: begin < end <= total, whether EOF
-        position leads really to EOF etc? */
 }
 
 KompasRasterArchiveReader::~KompasRasterArchiveReader() {
