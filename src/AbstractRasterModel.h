@@ -41,8 +41,8 @@ typedef Area<unsigned int, unsigned int> TileArea;  /**< @brief Tile area */
  * @brief Abstract model for raster maps
  *
  * @todo Subclassing documentation
- * @todo Saving tiles to cache, Cache* tileCache()
- * @todo Installing a image filter plugin for modifying tileData
+ * @todo @c VERSION-0.2 Saving tiles to cache, Cache* tileCache()
+ * @todo @c VERSION-0.2 Installing a image filter plugin for modifying tileData
  *      (compression with pngnq, etc.)
  * @todo Document order of getting tile data
  */

@@ -93,6 +93,7 @@ template<class PositionType> struct ConfigurationValue<Core::Coords<PositionType
     }
 };
 
+/** @copydoc operator<<(Debug, const T&) */
 template<class PositionType> Debug& operator<<(Debug debug, const Core::Coords<PositionType>& value) {
     std::ostringstream o;
     o << "Coords(" << value.x << ", " << value.y << ")";

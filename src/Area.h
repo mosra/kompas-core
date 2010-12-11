@@ -46,7 +46,7 @@ template <class PositionType, class SizeType> struct Area {
 
     /**
      * @brief Multiplication operator
-     * @return All coordinates multiplied with given number
+     * @return All coordinates multiplied by given number
      */
     template<class T> Area<PositionType, SizeType> operator*(T multiplier) const {
         return Area<PositionType, SizeType>(
@@ -56,6 +56,12 @@ template <class PositionType, class SizeType> struct Area {
             h*multiplier
         );
     }
+
+    /**
+     * @brief Multiplication operator
+     * @return Horizontal coordinates multiplied by x coordinate, vertical
+     *      with y coordinate.
+     */
     template<class T> Area<PositionType, SizeType> operator*(const Coords<T>& multiplier) const {
         return Area<PositionType, SizeType>(
             x*multiplier.x,
@@ -67,7 +73,7 @@ template <class PositionType, class SizeType> struct Area {
 
     /**
      * @brief Division operator
-     * @return All coordinates divided with given number
+     * @return All coordinates divided by given number
      */
     template<class T> Area<PositionType, SizeType> operator/(T divisor) const {
         return Area<PositionType, SizeType>(
@@ -77,6 +83,12 @@ template <class PositionType, class SizeType> struct Area {
             h/divisor
         );
     }
+
+    /**
+     * @brief Division operator
+     * @return Horizontal coordinates divided by x coordinate, vertical
+     *      with y coordinate.
+     */
     template<class T> Area<PositionType, SizeType> operator/(const Coords<T>& divisor) const {
         return Area<PositionType, SizeType>(
             x/divisor.x,
@@ -137,6 +149,7 @@ template<class PositionType, class SizeType> struct ConfigurationValue<Core::Are
     }
 };
 
+/** @copydoc operator<<(Debug, const T&) */
 template<class PositionType, class SizeType> Debug& operator<<(Debug debug, const Core::Area<PositionType, SizeType>& value) {
     std::ostringstream o;
     o << "Area(" << value.x << ", " << value.y << ", " << value.w << ", " << value.h << ")";

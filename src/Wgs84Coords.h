@@ -124,7 +124,6 @@ class Wgs84Coords {
          *
          * Tries to create coordinates from string with given format. If
          * conversion fails, returns invalid coordinates.
-         * @todo Parser error to stderr, try/catch...
          */
         Wgs84Coords(const std::string& coords, const std::string& _format = format);
 
@@ -197,6 +196,7 @@ template<> struct ConfigurationValue<Core::Wgs84Coords> {
     static std::string toString(const Core::Wgs84Coords& value, int flags);
 };
 
+/** @copydoc operator<<(Debug, const T&) */
 Debug& operator<<(Debug debug, const Core::Wgs84Coords& value);
 
 }

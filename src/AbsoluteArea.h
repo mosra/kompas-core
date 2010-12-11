@@ -46,7 +46,7 @@ template <class PositionType> struct AbsoluteArea {
 
     /**
      * @brief Multiplication operator
-     * @return All coordinates multiplied with given number
+     * @return All coordinates multiplied by given number
      */
     template<class T> AbsoluteArea<PositionType> operator*(T multiplier) const {
         return AbsoluteArea<PositionType>(
@@ -56,6 +56,12 @@ template <class PositionType> struct AbsoluteArea {
             y2*multiplier
         );
     }
+
+    /**
+     * @brief Multiplication operator
+     * @return Horizontal coordinates multiplied by x coordinate, vertical
+     *      with y coordinate.
+     */
     template<class T> AbsoluteArea<PositionType> operator*(const Coords<T>& multiplier) const {
         return AbsoluteArea<PositionType>(
             x1*multiplier.x,
@@ -67,7 +73,7 @@ template <class PositionType> struct AbsoluteArea {
 
     /**
      * @brief Division operator
-     * @return All coordinates divided with given number
+     * @return All coordinates divided by given number
      */
     template<class T> AbsoluteArea<PositionType> operator/(T divisor) const {
         return AbsoluteArea<PositionType>(
@@ -77,6 +83,12 @@ template <class PositionType> struct AbsoluteArea {
             y2/divisor
         );
     }
+
+    /**
+     * @brief Division operator
+     * @return Horizontal coordinates divided by x coordinate, vertical
+     *      with y coordinate.
+     */
     template<class T> AbsoluteArea<PositionType> operator/(const Coords<T>& divisor) const {
         return AbsoluteArea<PositionType>(
             x1/divisor.x,
@@ -137,6 +149,7 @@ template<class PositionType> struct ConfigurationValue<Core::AbsoluteArea<Positi
     }
 };
 
+/** @copydoc operator<<(Debug, const T&) */
 template<class PositionType> Debug& operator<<(Debug debug, const Core::AbsoluteArea<PositionType>& value) {
     std::ostringstream o;
     o << "AbsoluteArea(" << value.x1 << ", " << value.y1 << ", " << value.x2 << ", " << value.y2 << ")";

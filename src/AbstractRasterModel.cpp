@@ -29,7 +29,7 @@ bool AbstractRasterModel::setOnline(bool enabled) {
 }
 
 bool AbstractRasterModel::setCache(const string& cacheDir) {
-    /** @todo Implement! */
+    /** @todo @c VERSION-0.2 Implement! */
     return false;
 }
 
