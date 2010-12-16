@@ -26,7 +26,7 @@
 #include "Coords.h"
 #include "Area.h"
 #include "Wgs84Coords.h"
-#include "PluginManager/Plugin.h"
+#include "TranslatablePlugin.h"
 
 namespace Kompas { namespace Core {
 
@@ -46,7 +46,7 @@ typedef Area<unsigned int, unsigned int> TileArea;  /**< @brief Tile area */
  *      (compression with pngnq, etc.)
  * @todo Document order of getting tile data
  */
-class AbstractRasterModel: public PluginManager::Plugin {
+class AbstractRasterModel: public TranslatablePlugin {
     PLUGIN_INTERFACE("cz.mosra.Kompas.Core.AbstractRasterModel/0.1")
 
     public:
@@ -184,7 +184,7 @@ class AbstractRasterModel: public PluginManager::Plugin {
 
         /** @copydoc PluginManager::Plugin::Plugin() */
         AbstractRasterModel(PluginManager::AbstractPluginManager* manager, const std::string& plugin):
-            Plugin(manager, plugin), _online(false) {}
+            TranslatablePlugin(manager, plugin), _online(false) {}
 
         /** @{ @name Map parameters */
 
@@ -235,6 +235,12 @@ class AbstractRasterModel: public PluginManager::Plugin {
         inline virtual std::vector<std::string> overlays() const {
             return std::vector<std::string>();
         }
+
+        /**
+         * @brief Translated layer name
+         * @param layer     Layer or overlay returned by layers() or overlays()
+         */
+        inline const std::string* layerName(const std::string& layer) { return tr(layer); }
 
         /*@}*/
 
