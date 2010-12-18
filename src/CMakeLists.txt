@@ -21,6 +21,16 @@ endif()
 
 install(TARGETS KompasCore DESTINATION ${KOMPAS_LIBRARY_INSTALL_DIR})
 
+# Include also runtime libs for Win32
+if(WIN32)
+    kompas_bundle_dlls(${KOMPAS_LIBRARY_INSTALL_DIR}
+        libgcc_s_sjlj-1.dll
+        libstdc++-6.dll
+        mingwm10.dll
+        PATHS ${DLL_SEARCH_PATH}
+    )
+endif()
+
 if(BUILD_TESTS)
     enable_testing()
     add_subdirectory(Test)
