@@ -35,7 +35,7 @@ class CORE_EXPORT OpenStreetMapRasterModel: public KompasRasterModel {
         OpenStreetMapRasterModel(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = "");
 
         inline virtual int features() const {
-            return KompasRasterModel::features()|LoadableFromUrl|NonConvertableFormat|ConvertableCoords;
+            return KompasRasterModel::features()|MultipleFileFormat|LoadableFromUrl|NonConvertableFormat|ConvertableCoords;
         }
         inline virtual const Core::AbstractProjection* projection() const
             { return &_projection; }

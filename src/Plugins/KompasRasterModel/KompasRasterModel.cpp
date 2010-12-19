@@ -80,7 +80,7 @@ string KompasRasterModel::packageAttribute(int package, PackageAttribute type) c
 int KompasRasterModel::addPackage(const string& filename) {
     /* Don't add another package, if there is already one and multiple packages
        are not supported */
-    if(!packages.empty() && !(features() && MultiplePackages)) return -1;
+    if(!packages.empty() && !(features() & MultiplePackages)) return -1;
 
     Configuration conf(filename);
     if(!conf.isValid()) return -1;

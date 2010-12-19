@@ -41,7 +41,7 @@ class CORE_EXPORT KompasRasterModel: public Core::AbstractRasterModel {
 
         virtual ~KompasRasterModel();
 
-        inline virtual int features() const { return MultiplePackages|WriteableFormat|SequentialFormat|MultipleFileFormat|SelfRecognizable; }
+        inline virtual int features() const { return WriteableFormat|SequentialFormat|MultipleFileFormat|SelfRecognizable; }
         inline virtual std::vector<std::string> fileExtensions() const { return extensions; }
         virtual SupportLevel recognizeFile(const std::string& filename, std::istream& file) const;
         inline virtual Core::TileSize tileSize() const { return _tileSize; }

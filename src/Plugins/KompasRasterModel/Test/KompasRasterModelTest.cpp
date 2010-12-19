@@ -33,6 +33,9 @@ namespace Kompas { namespace Plugins { namespace Test {
 void KompasRasterModelTest::metadata() {
     QVERIFY(model.addPackage(Directory::join(RASTERMODEL_TEST_DIR, "small/map.conf")) == 0);
 
+    /* Opening multiple packages in generic model is not possible */
+    QVERIFY(model.addPackage(Directory::join(RASTERMODEL_TEST_DIR, "small/map.conf")) == -1);
+
     QVERIFY(model.packageAttribute(0, AbstractRasterModel::Filename) == Directory::join(RASTERMODEL_TEST_DIR, "small/map.conf"));
     QVERIFY(model.packageAttribute(0, AbstractRasterModel::Name) == "Kompas testing package");
     QVERIFY(model.packageAttribute(0, AbstractRasterModel::Description) == "Buggy and sparse");
