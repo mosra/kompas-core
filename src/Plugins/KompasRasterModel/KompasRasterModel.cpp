@@ -83,6 +83,7 @@ int KompasRasterModel::addPackage(const string& filename) {
     if(!packages.empty() && !(features() && MultiplePackages)) return -1;
 
     Configuration conf(filename);
+    if(!conf.isValid()) return -1;
     Package* p = parsePackage(&conf);
     if(!p) return -1;
 
