@@ -100,10 +100,16 @@ class CORE_EXPORT AbstractRasterModel: public TranslatablePlugin {
             SequentialFormat        = 0x20,
 
             /**
+             * One map is composed from multiple files. Used when saving new
+             * package, destination filename is required to be in clean folder.
+             */
+            MultipleFileFormat      = 0x40,
+
+            /**
              * The model can recognize its own formats from given filename.
              * @see SupportLevel, recognizeFile()
              */
-            SelfRecognizable        = 0x40
+            SelfRecognizable        = 0x80
         };
 
         /** @brief Package attribute types */

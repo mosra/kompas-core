@@ -39,7 +39,7 @@ class CORE_EXPORT KompasRasterModel: public Core::AbstractRasterModel {
             AbstractRasterModel(manager, plugin), currentPackageZoom(0), currentlyCreatedPackage(0) {}
         virtual ~KompasRasterModel();
 
-        inline virtual int features() const { return MultiplePackages|WriteableFormat|SequentialFormat|SelfRecognizable; }
+        inline virtual int features() const { return MultiplePackages|WriteableFormat|SequentialFormat|MultipleFileFormat|SelfRecognizable; }
         virtual SupportLevel recognizeFile(const std::string& filename, std::istream& file) const;
         inline virtual Core::TileSize tileSize() const { return _tileSize; }
 
