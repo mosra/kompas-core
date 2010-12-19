@@ -69,6 +69,7 @@ string KompasRasterModel::packageAttribute(int package, PackageAttribute type) c
 
     string key;
     switch(type) {
+        case Filename:      return packages[package]->filename;
         case Name:          return packages[package]->name;
         case Description:   return packages[package]->description;
         case Packager:      return packages[package]->packager;

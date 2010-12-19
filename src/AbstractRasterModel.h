@@ -108,6 +108,7 @@ class CORE_EXPORT AbstractRasterModel: public TranslatablePlugin {
 
         /** @brief Package attribute types */
         enum PackageAttribute {
+            Filename,       /**< @brief Package filename */
             Name,           /**< @brief Map name */
             Description,    /**< @brief Map description */
             Packager        /**< @brief Map packager */
