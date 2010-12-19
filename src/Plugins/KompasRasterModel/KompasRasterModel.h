@@ -35,11 +35,14 @@ namespace Kompas { namespace Plugins {
 class CORE_EXPORT KompasRasterModel: public Core::AbstractRasterModel {
     public:
         /** @copydoc Core::AbstractRasterModel::AbstractRasterModel */
-        inline KompasRasterModel(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
-            AbstractRasterModel(manager, plugin), currentPackageZoom(0), currentlyCreatedPackage(0) {}
+        inline KompasRasterModel(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""): AbstractRasterModel(manager, plugin), currentPackageZoom(0), currentlyCreatedPackage(0) {
+            extensions.push_back("*.conf");
+        }
+
         virtual ~KompasRasterModel();
 
         inline virtual int features() const { return MultiplePackages|WriteableFormat|SequentialFormat|MultipleFileFormat|SelfRecognizable; }
+        inline virtual std::vector<std::string> fileExtensions() const { return extensions; }
         virtual SupportLevel recognizeFile(const std::string& filename, std::istream& file) const;
         inline virtual Core::TileSize tileSize() const { return _tileSize; }
 
@@ -124,6 +127,7 @@ class CORE_EXPORT KompasRasterModel: public Core::AbstractRasterModel {
             Core::Zoom minZoom;
         };
 
+        std::vector<std::string> extensions;
         Core::TileSize _tileSize;
         std::set<Core::Zoom> _zoomLevels;
         Core::TileArea _area;

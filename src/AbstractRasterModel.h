@@ -152,6 +152,17 @@ class CORE_EXPORT AbstractRasterModel: public TranslatablePlugin {
         inline virtual int features() const { return 0; }
 
         /**
+         * @brief Possible file extensions
+         * @return Vector of possible file extensions (with wildcards). Default
+         *      implementation returns empty vector.
+         *
+         * Returns list of possible file extensions, which can be used for
+         * directory listing filtering. This is just a helper, proper checking
+         * if the file can be opened should be done in recognizeFile().
+         */
+        inline virtual std::vector<std::string> fileExtensions() const { return std::vector<std::string>(); }
+
+        /**
          * @brief Recognize given file
          * @param filename      Filename with full path
          * @param file          Read access to the file
