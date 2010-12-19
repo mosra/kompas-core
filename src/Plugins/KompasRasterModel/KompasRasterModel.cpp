@@ -40,7 +40,7 @@ KompasRasterModel::~KompasRasterModel() {
 }
 
 AbstractRasterModel::SupportLevel KompasRasterModel::recognizeFile(const std::string& filename, istream& file) const {
-    if(Directory::filename(filename) != "map.conf") return NotSupported;
+    if(filename.substr(filename.size()-5) != ".conf") return NotSupported;
 
     Configuration conf(file, Configuration::ReadOnly);
 
