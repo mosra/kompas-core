@@ -376,7 +376,8 @@ string KompasRasterModel::tileFromArchive(const string& path, const string& laye
             ostringstream filename;
             filename << z;
             if(archiveId > 0) filename << '-' << archiveId;
-            filename << ".map";
+            if(packageVersion < 3) filename << ".map";
+            else filename << ".kps";
 
             /* If the archive is invalid, exit */
             archives->push_back(new KompasRasterArchiveReader(Directory::join(Directory::join(path, layer), filename.str())));
@@ -396,7 +397,7 @@ string KompasRasterModel::tileFromArchive(const string& path, const string& laye
         return archive->get(tileId);
 
     /* The tile is not in current archive, search for it in the next archive */
-    return tileFromArchive(path, layer, z, archives, ++archiveId, packageVersion, tileId);
+    return KompasRasterModel::tileFromArchive(path, layer, z, archives, ++archiveId, packageVersion, tileId);
 }
 
 void KompasRasterModel::closeArchives() {

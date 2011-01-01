@@ -104,8 +104,8 @@ class CORE_EXPORT KompasRasterModel: public Core::AbstractRasterModel {
          * @param archives          Pointer to vector of archives for given map layer
          * @param archiveId         ID of archive where the tile should be
          * @param packageVersion    Package version (from Package::version).
-         *      Not used in this function, but can be used in subclasses for
-         *      distincing package versions.
+         *      If the version is lower than 3, opens @c *.map extension instead
+         *      of @c *.kps extension.
          * @param tileId            Tile ID
          * @return Tile data or empty string if archive with given ID is not
          *      valid.

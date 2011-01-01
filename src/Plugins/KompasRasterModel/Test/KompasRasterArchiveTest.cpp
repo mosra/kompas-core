@@ -39,7 +39,7 @@ KompasRasterArchiveTest::KompasRasterArchiveTest(QObject* parent): QObject(paren
 }
 
 void KompasRasterArchiveTest::reader2() {
-    KompasRasterArchiveReader r(Directory::join(RASTERARCHIVE_TEST_DIR, "version2.map"));
+    KompasRasterArchiveReader r(Directory::join(RASTERARCHIVE_TEST_DIR, "version2.kps"));
 
     QVERIFY(r.isValid());
     QVERIFY(r.version() == 2);
@@ -62,7 +62,7 @@ void KompasRasterArchiveTest::reader2() {
 }
 
 void KompasRasterArchiveTest::reader3() {
-    KompasRasterArchiveReader r(Directory::join(RASTERARCHIVE_TEST_DIR, "version3.map"));
+    KompasRasterArchiveReader r(Directory::join(RASTERARCHIVE_TEST_DIR, "version3.kps"));
 
     QVERIFY(r.isValid());
     QVERIFY(r.version() == 3);
@@ -85,16 +85,16 @@ void KompasRasterArchiveTest::reader3() {
 }
 
 void KompasRasterArchiveTest::maker2() {
-    QFile::remove(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "make2.map")));
+    QFile::remove(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "make2.kps")));
 
     KompasRasterArchiveMaker m(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "make2"), 2, 10);
     QVERIFY(m.finish() == KompasRasterArchiveMaker::VersionError);
 
-    QVERIFY(!QFile::exists(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "make2.map"))));
+    QVERIFY(!QFile::exists(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "make2.kps"))));
 }
 
 void KompasRasterArchiveTest::maker() {
-    QFile::remove(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "make.map")));
+    QFile::remove(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "make.kps")));
 
     KompasRasterArchiveMaker m(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "make"), 3, 3);
     QCOMPARE(m.currentFileNumber(), -1);
@@ -111,7 +111,7 @@ void KompasRasterArchiveTest::maker() {
     QCOMPARE(m.currentFileSize(), 0u);
     QCOMPARE(m.currentFileTileCount(), 0u);
 
-    QFile f(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "make.map")));
+    QFile f(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "make.kps")));
     f.open(QFile::ReadOnly);
     QCOMPARE(f.readAll(), QByteArray(
         "MAP\x03"           "\x03\x00\x00\x00"  "\x00\x00\x00\x00"
@@ -121,16 +121,16 @@ void KompasRasterArchiveTest::maker() {
 }
 
 void KompasRasterArchiveTest::makerEmpty() {
-    QFile::remove(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "makeEmpty.map")));
+    QFile::remove(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "makeEmpty.kps")));
 
     KompasRasterArchiveMaker m(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "makeEmpty"), 3, 10);
     QVERIFY(m.finish() == KompasRasterArchiveMaker::TotalMismatch);
 
-    QVERIFY(!QFile::exists(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "makeEmpty.map"))));
+    QVERIFY(!QFile::exists(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "makeEmpty.kps"))));
 }
 
 void KompasRasterArchiveTest::makerUnderrun() {
-    QFile::remove(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "makeUnderrun.map")));
+    QFile::remove(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "makeUnderrun.kps")));
 
     KompasRasterArchiveMaker m(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "makeUnderrun"), 3, 10);
     QVERIFY(m.append("1111") == KompasRasterArchiveMaker::NextFile);
@@ -140,7 +140,7 @@ void KompasRasterArchiveTest::makerUnderrun() {
     QVERIFY(m.append("2222") == KompasRasterArchiveMaker::WriteError);
     QVERIFY(m.finish() == KompasRasterArchiveMaker::WriteError);
 
-    QFile f(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "makeUnderrun.map")));
+    QFile f(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "makeUnderrun.kps")));
     f.open(QFile::ReadOnly);
     QCOMPARE(f.readAll(), QByteArray(
         "MAP\x03"           "\x0a\x00\x00\x00"  "\x00\x00\x00\x00"
@@ -149,14 +149,14 @@ void KompasRasterArchiveTest::makerUnderrun() {
 }
 
 void KompasRasterArchiveTest::makerOverflow() {
-    QFile::remove(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "makeOverflow.map")));
+    QFile::remove(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "makeOverflow.kps")));
 
     KompasRasterArchiveMaker m(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "makeOverflow"), 3, 1);
     QVERIFY(m.append("1111") == KompasRasterArchiveMaker::NextFile);
     QVERIFY(m.append("2222") == KompasRasterArchiveMaker::TotalMismatch);
     QVERIFY(m.finish() == KompasRasterArchiveMaker::Ok);
 
-    QFile f(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "makeOverflow.map")));
+    QFile f(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "makeOverflow.kps")));
     f.open(QFile::ReadOnly);
     QCOMPARE(f.readAll(), QByteArray(
         "MAP\x03"           "\x01\x00\x00\x00"  "\x00\x00\x00\x00"
@@ -165,8 +165,8 @@ void KompasRasterArchiveTest::makerOverflow() {
 }
 
 void KompasRasterArchiveTest::makerSizeLimit() {
-    QFile::remove(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "makeSizeLimit.map")));
-    QFile::remove(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "makeSizeLimit-1.map")));
+    QFile::remove(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "makeSizeLimit.kps")));
+    QFile::remove(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "makeSizeLimit-1.kps")));
 
     KompasRasterArchiveMaker m(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "makeSizeLimit"), 3, 3, 36);
     QVERIFY(m.append("1111") == KompasRasterArchiveMaker::NextFile);
@@ -174,14 +174,14 @@ void KompasRasterArchiveTest::makerSizeLimit() {
     QVERIFY(m.append("3333") == KompasRasterArchiveMaker::NextFile);
     QVERIFY(m.finish() == KompasRasterArchiveMaker::Ok);
 
-    QFile f(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "makeSizeLimit.map")));
+    QFile f(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "makeSizeLimit.kps")));
     f.open(QFile::ReadOnly);
     QCOMPARE(f.readAll(), QByteArray(
         "MAP\x03"           "\x03\x00\x00\x00"  "\x00\x00\x00\x00"
         "\x02\x00\x00\x00"  "1111"              "2222"
         "\x10\x00\x00\x00"  "\x14\x00\x00\x00"  "\x18\x00\x00\x00", 36));
 
-    QFile f1(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "makeSizeLimit-1.map")));
+    QFile f1(QString::fromStdString(Directory::join(RASTERARCHIVE_WRITE_TEST_DIR, "makeSizeLimit-1.kps")));
     f1.open(QFile::ReadOnly);
     QCOMPARE(f1.readAll(), QByteArray(
         "MAP\x03"           "\x03\x00\x00\x00"  "\x02\x00\x00\x00"
