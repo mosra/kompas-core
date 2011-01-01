@@ -45,6 +45,7 @@ typedef Area<unsigned int, unsigned int> TileArea;  /**< @brief Tile area */
  * @todo @c VERSION-0.2 Installing a image filter plugin for modifying tileData
  *      (compression with pngnq, etc.)
  * @todo Document order of getting tile data
+ * @todo @c VERSION-0.2 Singlezoom, singlelayer feature models
  */
 class CORE_EXPORT AbstractRasterModel: public TranslatablePlugin {
     PLUGIN_INTERFACE("cz.mosra.Kompas.Core.AbstractRasterModel/0.1")
@@ -195,7 +196,7 @@ class CORE_EXPORT AbstractRasterModel: public TranslatablePlugin {
 
         /**
          * @brief Map copyright
-         * @todo Depending on coordinates and map layer (to "properly" support Google)
+         * @todo @c VERSION-0.2 Depending on coordinates and map layer (to "properly" support Google)
          */
         inline virtual std::string copyright() const { return ""; }
 
