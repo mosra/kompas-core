@@ -124,7 +124,8 @@ class CORE_EXPORT AbstractRasterModel: public TranslatablePlugin {
         enum SupportLevel {
             NotSupported,           /**< @brief The model cannot open given file */
             PartiallySupported,     /**< @brief The model can open the file, but doesn't support all its features */
-            FullySupported          /**< @brief The model supports all file features */
+            FullySupported,         /**< @brief The model supports all file features */
+            DeprecatedSupport       /**< @brief The model can open the file, but the support is deprecated */
         };
 
         /** @{ @name Utilites */
