@@ -49,7 +49,7 @@ AbstractRasterModel::SupportLevel KompasRasterModel::recognizeFile(const std::st
 
     /* Generic model fully supportes packages created with generic model and
         partially supports everything else */
-    if(name().empty() || name() == "KompasRasterModel") {
+    if(plugin().empty() || plugin() == "KompasRasterModel") {
         if(conf.value<string>("model") == "KompasRasterModel")
             return FullySupported;
 
@@ -57,7 +57,7 @@ AbstractRasterModel::SupportLevel KompasRasterModel::recognizeFile(const std::st
 
     /* If this is not generic model, it (fully) supports only packages created
         with the same model */
-    } else if(name() == conf.value<string>("model"))
+    } else if(plugin() == conf.value<string>("model"))
         return FullySupported;
 
     /* Not anything else */
@@ -209,7 +209,7 @@ KompasRasterModel::Package* KompasRasterModel::parsePackage(const Configuration*
 
     /* Allow opening everything in generic model and only packages with the
         same name in subclassed plugins */
-    if(!name().empty() && name() != "KompasRasterModel" && name() != conf->value<string>("model"))
+    if(!plugin().empty() && plugin() != "KompasRasterModel" && plugin() != conf->value<string>("model"))
         return 0;
 
     /* If tile size is already set, check if the package has the same */
@@ -262,7 +262,7 @@ bool KompasRasterModel::initializePackage(const string& filename, const TileSize
     currentlyCreatedPackage = new CurrentlyCreatedPackage(filename);
     currentlyCreatedPackage->conf.setValue("version", 3);
     /** @todo Test model name in subclasses */
-    currentlyCreatedPackage->conf.setValue<string>("model", name().empty() ? "KompasRasterModel" : name());
+    currentlyCreatedPackage->conf.setValue<string>("model", plugin().empty() ? "KompasRasterModel" : plugin());
     currentlyCreatedPackage->conf.setValue("tileSize", tileSize);
     currentlyCreatedPackage->conf.setValue("area", area);
 
