@@ -1,7 +1,7 @@
 #ifndef Kompas_Core_Wgs84Coords_h
 #define Kompas_Core_Wgs84Coords_h
 /*
-    Copyright © 2007, 2008, 2009, 2010 Vladimír Vondruš <mosra@centrum.cz>
+    Copyright © 2007, 2008, 2009, 2010, 2011 Vladimír Vondruš <mosra@centrum.cz>
     Copyright © 2010 Jan Dupal <dupal.j@seznam.cz>
 
     This file is part of Kompas.
