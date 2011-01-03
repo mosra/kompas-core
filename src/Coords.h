@@ -55,9 +55,47 @@ template <class PositionType> struct Coords {
         return Coords<PositionType>(x+other.x, y+other.y);
     }
 
+    /** @brief Add and assign operator */
+    inline Coords& operator+=(const Coords<PositionType>& other) {
+        x += other.x;
+        y += other.y;
+        return *this;
+    }
+
     /** @brief Substracting operator */
     inline Coords operator-(const Coords<PositionType>& other) const {
         return Coords<PositionType>(x-other.x, y-other.y);
+    }
+
+    /** @brief Substract and assign operator */
+    inline Coords& operator-=(const Coords<PositionType>& other) {
+        x -= other.x;
+        y -= other.y;
+        return *this;
+    }
+
+    /** @brief Multiplication operator */
+    inline Coords operator*(PositionType number) const {
+        return Coords<PositionType>(x*number, y*number);
+    }
+
+    /** @brief Multiply and assign operator */
+    inline Coords& operator*=(PositionType number) {
+        x *= number;
+        y *= number;
+        return *this;
+    }
+
+    /** @brief Division operator */
+    inline Coords operator/(PositionType number) const {
+        return Coords<PositionType>(x/number, y/number);
+    }
+
+    /** @brief Divide and assign operator */
+    inline Coords& operator/=(PositionType number) {
+        x /= number;
+        y /= number;
+        return *this;
     }
 };
 

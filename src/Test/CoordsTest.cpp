@@ -36,6 +36,24 @@ void CoordsTest::operators() {
 
     QVERIFY(UCoords(1,2) + UCoords(3,4) == UCoords(4,6));
     QVERIFY(UCoords(4,6) - UCoords(3,4) == UCoords(1,2));
+    QVERIFY(UCoords(1,2)*2 == UCoords(2,4));
+    QVERIFY(UCoords(2,4)/2 == UCoords(1,2));
+
+    UCoords a(1,2);
+    a += UCoords(3,4);
+    QVERIFY(a == UCoords(4,6));
+
+    UCoords b(4,6);
+    b -= UCoords(1,2);
+    QVERIFY(b == UCoords(3,4));
+
+    UCoords c(1,2);
+    c *= 2;
+    QVERIFY(c == UCoords(2,4));
+
+    UCoords d(2,4);
+    d /= 2;
+    QVERIFY(d == UCoords(1,2));
 }
 
 void CoordsTest::fromString_data() {
