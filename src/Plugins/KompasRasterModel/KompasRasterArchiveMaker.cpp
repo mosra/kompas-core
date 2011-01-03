@@ -41,7 +41,7 @@ KompasRasterArchiveMaker::State KompasRasterArchiveMaker::append(const std::stri
         filename << filePrefix;
         if(currentNumber != 0) filename << "-" << currentNumber;
         filename << ".kps";
-        file.open(filename.str().c_str());
+        file.open(filename.str().c_str(), ofstream::out|ofstream::trunc|ofstream::binary);
 
         if(!file.good()) return FileError;
 
