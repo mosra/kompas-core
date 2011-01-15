@@ -15,6 +15,7 @@
 
 #include "OpenStreetMapRasterModel.h"
 
+#include <cstdlib>
 #include <sstream>
 
 using namespace std;
@@ -40,13 +41,16 @@ OpenStreetMapRasterModel::OpenStreetMapRasterModel(PluginManager::AbstractPlugin
 string OpenStreetMapRasterModel::tileUrl(const std::string& layer, Zoom z, const TileCoords& coords) const {
     if(z > 18) return "";
 
+    char server = 'a' + rand()%3;
+
     ostringstream url;
+    url << "http://" << server;
     if(layer == "mapnik")
-        url << "http://tile.openstreetmap.org/";
+        url << ".tile.openstreetmap.org/";
     else if(layer == "osmarender")
-        url << "http://tah.openstreetmap.org/Tiles/tile/";
+        url << ".tah.openstreetmap.org/Tiles/tile/";
     else if(layer == "cycle")
-        url << "http://andy.sandbox.cloudmade.com/tiles/cycle/";
+        url << ".tile.opencyclemap.org/cycle/";
     else return "";
 
     url << z << "/" << coords.x << "/" << coords.y << ".png";
