@@ -1,6 +1,6 @@
 # Author: mosra <mosra@centrum.cz>
 pkgname=kompas-core
-pkgver=0.1
+pkgver=0.1.1
 pkgrel=1
 pkgdesc="Core library for Kompas navigation software"
 arch=('i686' 'x86_64')
@@ -9,7 +9,7 @@ license=('LGPLv3')
 makedepends=('cmake')
 conflicts=('kompas-core-git')
 source=("https://github.com/mosra/${pkgname}/tarball/v${pkgver}/${pkgname}-${pkgver}.tar.gz")
-md5sums=('e61dadf6a23b619976dff78903858092')
+md5sums=('51b23614960687d025eb1e025d99dd64')
 
 build() {
     mkdir -p "${srcdir}/build"
