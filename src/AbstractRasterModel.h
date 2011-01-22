@@ -171,9 +171,10 @@ std::vector<std::string> overlays() const;
 As said above, the layers and overlays can have translated names. This is done
 internally with Translator class. To make translate names, all you have to do is
 add a new section(s) to your plugin configuration file, similarly like when
-translating plugin metadata. For example, if you have your layers and overlays
-named @c base, @c satellite and @c labels and you want to have English and
-Czech translation, add this to your plugin configuration %file:
+translating @ref PluginMetadata "plugin metadata". For example, if you have
+your layers and overlays named @c base, @c satellite and @c labels and you want
+to have English and Czech translation, add this to your plugin configuration
+%file:
 <pre>[translation]
 base=Base map
 satellite=Satellite view
