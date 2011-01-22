@@ -2,7 +2,7 @@
 #
 # This module defines:
 #
-# KOMPAS_CORE_FOUND          - True if Kompas Core library is found
+# KOMPASCORE_FOUND           - True if Kompas Core library is found
 #
 # KOMPAS_CORE_INCLUDE_DIR    - Include dir for Kompas Core
 # KOMPAS_PLUGINS_INCLUDE_DIR - Include dir for Kompas plugins
@@ -20,12 +20,10 @@
 # KOMPAS_PLUGINS_PROJECTION_INSTALL_DIR  - Projection plugins installation directory
 #
 
-include(KompasMacros)
-
 if (KOMPAS_CORE_INCLUDE_DIR AND KOMPAS_PLUGINS_INCLUDE_DIR AND KOMPAS_CORE_LIBRARY AND KOMPAS_RC_EXECUTABLE)
 
     # Already in cache
-    set(KOMPAS_CORE_FOUND TRUE)
+    set(KOMPASCORE_FOUND TRUE)
 
 else()
     # Libraries
@@ -45,7 +43,7 @@ else()
     )
 
     include(FindPackageHandleStandardArgs)
-    find_package_handle_standard_args("Kompas Core" DEFAULT_MSG
+    find_package_handle_standard_args("KompasCore" DEFAULT_MSG
         KOMPAS_CORE_INCLUDE_DIR
         KOMPAS_PLUGINS_INCLUDE_DIR
         KOMPAS_CORE_LIBRARY
@@ -54,23 +52,27 @@ else()
 
 endif()
 
-# Installation dirs
-if(WIN32)
-    set_parent_scope(KOMPAS_BINARY_INSTALL_DIR .)
-    set_parent_scope(KOMPAS_LIBRARY_INSTALL_DIR .)
-    set_parent_scope(KOMPAS_CMAKE_MODULE_INSTALL_DIR Modules)
-    set_parent_scope(KOMPAS_INCLUDE_INSTALL_DIR include/Kompas)
-    set_parent_scope(KOMPAS_DATA_INSTALL_DIR )
-else()
-    set_parent_scope(KOMPAS_BINARY_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/bin)
-    set_parent_scope(KOMPAS_LIBRARY_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/lib)
-    set_parent_scope(KOMPAS_CMAKE_MODULE_INSTALL_DIR ${CMAKE_ROOT}/Modules)
-    set_parent_scope(KOMPAS_INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/include/Kompas)
-    set_parent_scope(KOMPAS_DATA_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/kompas)
-endif()
+if(KOMPASCORE_FOUND)
+    include(KompasMacros)
 
-set_parent_scope(KOMPAS_CORE_INCLUDE_INSTALL_DIR ${KOMPAS_INCLUDE_INSTALL_DIR}/Core)
-set_parent_scope(KOMPAS_PLUGINS_INCLUDE_INSTALL_DIR ${KOMPAS_INCLUDE_INSTALL_DIR}/Plugins)
-set_parent_scope(KOMPAS_PLUGINS_INSTALL_DIR ${KOMPAS_DATA_INSTALL_DIR}/plugins)
-set_parent_scope(KOMPAS_PLUGINS_PROJECTION_INSTALL_DIR ${KOMPAS_PLUGINS_INSTALL_DIR}/projections)
-set_parent_scope(KOMPAS_PLUGINS_RASTERMODEL_INSTALL_DIR ${KOMPAS_PLUGINS_INSTALL_DIR}/rasterModels)
+    # Installation dirs
+    if(WIN32)
+        set_parent_scope(KOMPAS_BINARY_INSTALL_DIR .)
+        set_parent_scope(KOMPAS_LIBRARY_INSTALL_DIR .)
+        set_parent_scope(KOMPAS_CMAKE_MODULE_INSTALL_DIR Modules)
+        set_parent_scope(KOMPAS_INCLUDE_INSTALL_DIR include/Kompas)
+        set_parent_scope(KOMPAS_DATA_INSTALL_DIR )
+    else()
+        set_parent_scope(KOMPAS_BINARY_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/bin)
+        set_parent_scope(KOMPAS_LIBRARY_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/lib)
+        set_parent_scope(KOMPAS_CMAKE_MODULE_INSTALL_DIR ${CMAKE_ROOT}/Modules)
+        set_parent_scope(KOMPAS_INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/include/Kompas)
+        set_parent_scope(KOMPAS_DATA_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/kompas)
+    endif()
+
+    set_parent_scope(KOMPAS_CORE_INCLUDE_INSTALL_DIR ${KOMPAS_INCLUDE_INSTALL_DIR}/Core)
+    set_parent_scope(KOMPAS_PLUGINS_INCLUDE_INSTALL_DIR ${KOMPAS_INCLUDE_INSTALL_DIR}/Plugins)
+    set_parent_scope(KOMPAS_PLUGINS_INSTALL_DIR ${KOMPAS_DATA_INSTALL_DIR}/plugins)
+    set_parent_scope(KOMPAS_PLUGINS_PROJECTION_INSTALL_DIR ${KOMPAS_PLUGINS_INSTALL_DIR}/projections)
+    set_parent_scope(KOMPAS_PLUGINS_RASTERMODEL_INSTALL_DIR ${KOMPAS_PLUGINS_INSTALL_DIR}/rasterModels)
+endif()
