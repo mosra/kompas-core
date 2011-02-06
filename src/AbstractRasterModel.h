@@ -304,7 +304,7 @@ bool finalizePackage();
     (compression with pngnq, etc.)
 */
 class CORE_EXPORT AbstractRasterModel: public TranslatablePlugin {
-    PLUGIN_INTERFACE("cz.mosra.Kompas.Core.AbstractRasterModel/0.1")
+    PLUGIN_INTERFACE("cz.mosra.Kompas.Core.AbstractRasterModel/0.2")
 
     public:
         /**
@@ -458,6 +458,14 @@ class CORE_EXPORT AbstractRasterModel: public TranslatablePlugin {
          * exists, otherwise fallback to plugins with partial support).
          */
         inline virtual SupportLevel recognizeFile(const std::string& filename, std::istream& file) const { return NotSupported; }
+
+        /**
+         * @brief Celestial body
+         *
+         * Default implementation returns empty string which means that this
+         * particular RasterModel is not associated with any planet.
+         */
+        inline virtual std::string celestialBody() const { return ""; }
 
         /**
          * @brief Map projection

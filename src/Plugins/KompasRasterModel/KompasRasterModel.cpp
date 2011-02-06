@@ -26,7 +26,7 @@ using namespace Kompas::Core;
 
 PLUGIN_REGISTER_STATIC(KompasRasterModel,
                        Kompas::Plugins::KompasRasterModel,
-                       "cz.mosra.Kompas.Core.AbstractRasterModel/0.1")
+                       "cz.mosra.Kompas.Core.AbstractRasterModel/0.2")
 
 namespace Kompas { namespace Plugins {
 
