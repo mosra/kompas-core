@@ -1,3 +1,4 @@
+add_subdirectory(EarthCelestialBody)
 add_subdirectory(KompasRasterModel)
 add_subdirectory(OpenStreetMapRasterModel)
 add_subdirectory(MercatorProjection)

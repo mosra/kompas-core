@@ -8,6 +8,7 @@ add_subdirectory(Utility)
 
 set(Kompas_Core_SRCS
     Wgs84Coords.cpp
+    AbstractCelestialBody.cpp
     AbstractRasterModel.cpp
     Plugins/registerStatic.cpp
 )

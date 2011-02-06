@@ -2,6 +2,7 @@
 #include "Utility/utilities.h"
 
 int registerCoreStaticPlugins() {
+    PLUGIN_IMPORT(EarthCelestialBody)
     PLUGIN_IMPORT(KompasRasterModel)
     PLUGIN_IMPORT(OpenStreetMapRasterModel)
     PLUGIN_IMPORT(MercatorProjection)

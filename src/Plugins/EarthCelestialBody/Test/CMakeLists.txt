@@ -1,0 +1,3 @@
+enable_testing()
+
+kompas_add_test(EarthCelestialBodyTest EarthCelestialBodyTest.h EarthCelestialBodyTest.cpp KompasCore)

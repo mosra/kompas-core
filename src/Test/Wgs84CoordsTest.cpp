@@ -1,6 +1,5 @@
 /*
     Copyright © 2007, 2008, 2009, 2010, 2011 Vladimír Vondruš <mosra@centrum.cz>
-    Copyright © 2010 Jan Dupal <dupal.j@seznam.cz>
 
     This file is part of Kompas.
 
@@ -83,44 +82,6 @@ void Wgs84CoordsTest::toString() {
     QFETCH(QString, output);
 
     QCOMPARE(QString::fromStdString(coords.toString(precision, skipTrailingZeros)), output);
-}
-
-void Wgs84CoordsTest::distance_data() {
-    QTest::addColumn<Wgs84Coords>("a");
-    QTest::addColumn<Wgs84Coords>("b");
-    QTest::addColumn<double>("distance");
-
-    Wgs84Coords greenwich(0.0,0.0);
-    Wgs84Coords prague(50.08333, 14.46667);
-    Wgs84Coords ny(40.7142691, -74.0059729);
-    Wgs84Coords sydney(-33.88333, 151.2167);
-
-    QTest::newRow("Greenwich-Greenwich")
-        << greenwich << greenwich << 0.0;
-    QTest::newRow("Greenwich-NY")
-        << greenwich << ny << 8667450.978;
-    QTest::newRow("Greenwich-Sydney")
-        << greenwich << sydney << 15209514.325;
-    QTest::newRow("Greenwich-Prague")
-        << greenwich << prague << 5718439.631;
-    QTest::newRow("NY-Sydney")
-        << ny << sydney << 15988059.978; // online is 977
-    QTest::newRow("Prague-NY")
-        << prague << ny << 6591583.293;
-    QTest::newRow("Prague-Sydney")
-        << prague << sydney << 16079006.106; // online is 107
-}
-
-void Wgs84CoordsTest::distance() {
-    QFETCH(Wgs84Coords, a);
-    QFETCH(Wgs84Coords, b);
-    QFETCH(double, distance);
-
-    double distance1 = Wgs84Coords::distance(a, b, 0.001);
-    double distance2 = Wgs84Coords::distance(b, a, 0.001);
-
-    QCOMPARE(distance, distance1);
-    QCOMPARE(distance, distance2);
 }
 
 void Wgs84CoordsTest::stringFormat() {

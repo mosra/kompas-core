@@ -2,7 +2,6 @@
 #define Kompas_Core_Wgs84Coords_h
 /*
     Copyright © 2007, 2008, 2009, 2010, 2011 Vladimír Vondruš <mosra@centrum.cz>
-    Copyright © 2010 Jan Dupal <dupal.j@seznam.cz>
 
     This file is part of Kompas.
 
@@ -143,22 +142,6 @@ class CORE_EXPORT Wgs84Coords {
          * <tt>49°9'33.167"N 15°12'4.774"E</tt>).
          */
         std::string toString(int precision = 3, bool skipTrailingZeros = false, const std::string& _format = format) const;
-
-        /**
-         * @brief Distance between two places
-         * @param a             First place
-         * @param b             Second place
-         * @param precision     Round to given precision (in meters). Default
-         *      is one decimeter.
-         * @return Distance in meters. When places are nearly antipodial, the
-         * function might fail to compute the distance. In that case returns -1.
-         *
-         * Computes distance between two given coordinates on WGS84 geoid.
-         * Based on Vincenty Inverse Solution of Geodesics on the Ellipsoid ©
-         * Chris Veness 2002-2010,
-         * http://www.movable-type.co.uk/scripts/latlong-vincenty.html .
-         */
-        static double distance(const Wgs84Coords& a, const Wgs84Coords& b, double precision = 0.1);
 
         /** @brief Equality operator */
         bool operator==(const Wgs84Coords& other) const;

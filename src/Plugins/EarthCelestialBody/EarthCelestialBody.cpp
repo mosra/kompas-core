@@ -1,5 +1,3 @@
-#ifndef Kompas_Core_Test_Wgs84CoordsTest_h
-#define Kompas_Core_Test_Wgs84CoordsTest_h
 /*
     Copyright © 2007, 2008, 2009, 2010, 2011 Vladimír Vondruš <mosra@centrum.cz>
 
@@ -15,31 +13,8 @@
     GNU Lesser General Public License version 3 for more details.
 */
 
-#include <QtCore/QObject>
+#include "EarthCelestialBody.h"
 
-namespace Kompas { namespace Core { namespace Test {
-
-class Wgs84CoordsTest: public QObject {
-    Q_OBJECT
-
-    private slots:
-        void construct_data();
-        void construct();
-
-        void toString_data();
-        void toString();
-
-        void stringFormat();
-        void compare();
-
-        void fromString_data();
-        void fromString();
-
-        void debug();
-
-        void decimalToDms();
-};
-
-}}}
-
-#endif
+PLUGIN_REGISTER_STATIC(EarthCelestialBody,
+                       Kompas::Plugins::EarthCelestialBody,
+                       "cz.mosra.Kompas.Core.AbstractCelestialBody/0.2")

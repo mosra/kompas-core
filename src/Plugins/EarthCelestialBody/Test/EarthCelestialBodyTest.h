@@ -1,7 +1,8 @@
-#ifndef Kompas_Core_Test_Wgs84CoordsTest_h
-#define Kompas_Core_Test_Wgs84CoordsTest_h
+#ifndef Kompas_Core_Test_EarthCelestialBodyTest_h
+#define Kompas_Core_Test_EarthCelestialBodyTest_h
 /*
     Copyright © 2007, 2008, 2009, 2010, 2011 Vladimír Vondruš <mosra@centrum.cz>
+    Copyright © 2010 Jan Dupal <dupal.j@seznam.cz>
 
     This file is part of Kompas.
 
@@ -19,25 +20,12 @@
 
 namespace Kompas { namespace Core { namespace Test {
 
-class Wgs84CoordsTest: public QObject {
+class EarthCelestialBodyTest: public QObject {
     Q_OBJECT
 
     private slots:
-        void construct_data();
-        void construct();
-
-        void toString_data();
-        void toString();
-
-        void stringFormat();
-        void compare();
-
-        void fromString_data();
-        void fromString();
-
-        void debug();
-
-        void decimalToDms();
+        void distance_data();
+        void distance();
 };
 
 }}}
