@@ -7,7 +7,7 @@ add_subdirectory(Plugins)
 add_subdirectory(Utility)
 
 set(Kompas_Core_SRCS
-    Wgs84Coords.cpp
+    LatLonCoords.cpp
     AbstractCelestialBody.cpp
     AbstractRasterModel.cpp
     Plugins/registerStatic.cpp

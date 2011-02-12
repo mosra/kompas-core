@@ -27,7 +27,7 @@ namespace Kompas { namespace Plugins {
 @brief Mercator projection
 
 Customizable shift and stretch.
-@section MercatorProjection_fromWgs84 Converting from WGS84 coordinates
+@section MercatorProjection_fromLatLon Converting from lat/lon coordinates
 X coordinate is latitude, converted from range @f$ [ - \pi ; \pi ] @f$ to
 @f$ [ 0 ; 1 ] @f$. Y coordinate is reprojected from longitude and converted to
 range @f$ [ 0; 1 ] @f$ like this:
@@ -37,7 +37,7 @@ range @f$ [ 0; 1 ] @f$ like this:
     \right) \cdot {1 \over 2}
 @f]
 Last step is to apply shift and stretch.
-@section MercatorProjection_toWgs84 Converting to WGS84 coordinates
+@section MercatorProjection_toLatLon Converting to lat/lon coordinates
 First is removed shift and stretch from both coordinates. Latitude is X
 coordinate, converted from range @f$ [ 0 ; 1 ] @f$ to @f$ [ - \pi ; \pi ] @f$.
 Longtitude is reprojected to Y coordinate and converted to range
@@ -55,8 +55,8 @@ class CORE_EXPORT MercatorProjection: public Core::AbstractProjection {
         inline MercatorProjection(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
             AbstractProjection(manager, plugin), stretch(Core::Coords<double>(1, 1)), shift(Core::Coords<double>(0, 0)) {}
 
-        virtual Core::Coords<double> fromWgs84(const Core::Wgs84Coords& coords) const;
-        virtual Core::Wgs84Coords toWgs84(const Core::Coords<double>& coords) const;
+        virtual Core::Coords<double> fromLatLon(const Core::LatLonCoords& coords) const;
+        virtual Core::LatLonCoords toLatLon(const Core::Coords<double>& coords) const;
 
         /**
          * @brief Set map stretch

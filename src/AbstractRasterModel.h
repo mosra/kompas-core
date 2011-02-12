@@ -25,7 +25,7 @@
 
 #include "Coords.h"
 #include "Area.h"
-#include "Wgs84Coords.h"
+#include "LatLonCoords.h"
 #include "TranslatablePlugin.h"
 
 namespace Kompas { namespace Core {
@@ -321,7 +321,7 @@ class CORE_EXPORT AbstractRasterModel: public TranslatablePlugin {
             LoadableFromUrl         = 0x01,
 
             /**
-             * Coordinates can be converted to and from WGS84.
+             * Coordinates can be converted to and from lat/lon.
              * @note ConvertableCoords feature doesn't always mean that
              * projection() returns valid AbstractProjection object!
              * @see projection()

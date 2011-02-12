@@ -1,5 +1,5 @@
-#ifndef Kompas_Core_Test_Wgs84CoordsTest_h
-#define Kompas_Core_Test_Wgs84CoordsTest_h
+#ifndef Kompas_Core_Test_LatLonCoordsTest_h
+#define Kompas_Core_Test_LatLonCoordsTest_h
 /*
     Copyright © 2007, 2008, 2009, 2010, 2011 Vladimír Vondruš <mosra@centrum.cz>
 
@@ -19,7 +19,7 @@
 
 namespace Kompas { namespace Core { namespace Test {
 
-class Wgs84CoordsTest: public QObject {
+class LatLonCoordsTest: public QObject {
     Q_OBJECT
 
     private slots:

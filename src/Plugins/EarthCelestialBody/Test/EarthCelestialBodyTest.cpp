@@ -22,7 +22,7 @@
 #include "EarthCelestialBody/EarthCelestialBody.h"
 
 QTEST_APPLESS_MAIN(Kompas::Core::Test::EarthCelestialBodyTest)
-Q_DECLARE_METATYPE(Kompas::Core::Wgs84Coords)
+Q_DECLARE_METATYPE(Kompas::Core::LatLonCoords)
 
 using namespace Kompas::Plugins;
 using namespace std;
@@ -30,14 +30,14 @@ using namespace std;
 namespace Kompas { namespace Core { namespace Test {
 
 void EarthCelestialBodyTest::distance_data() {
-    QTest::addColumn<Wgs84Coords>("a");
-    QTest::addColumn<Wgs84Coords>("b");
+    QTest::addColumn<LatLonCoords>("a");
+    QTest::addColumn<LatLonCoords>("b");
     QTest::addColumn<double>("distance");
 
-    Wgs84Coords greenwich(0.0,0.0);
-    Wgs84Coords prague(50.08333, 14.46667);
-    Wgs84Coords ny(40.7142691, -74.0059729);
-    Wgs84Coords sydney(-33.88333, 151.2167);
+    LatLonCoords greenwich(0.0,0.0);
+    LatLonCoords prague(50.08333, 14.46667);
+    LatLonCoords ny(40.7142691, -74.0059729);
+    LatLonCoords sydney(-33.88333, 151.2167);
 
     QTest::newRow("Greenwich-Greenwich")
         << greenwich << greenwich << 0.0;
@@ -56,8 +56,8 @@ void EarthCelestialBodyTest::distance_data() {
 }
 
 void EarthCelestialBodyTest::distance() {
-    QFETCH(Wgs84Coords, a);
-    QFETCH(Wgs84Coords, b);
+    QFETCH(LatLonCoords, a);
+    QFETCH(LatLonCoords, b);
     QFETCH(double, distance);
 
     EarthCelestialBody body;

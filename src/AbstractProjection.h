@@ -21,17 +21,17 @@
 
 #include "PluginManager/Plugin.h"
 #include "Coords.h"
-#include "Wgs84Coords.h"
+#include "LatLonCoords.h"
 
 namespace Kompas { namespace Core {
 
 /**
  * @brief Abstract class for different map projections
  *
- * Provides converting to and from WGS84 coordinates.
+ * Provides converting to and from lat/lon coordinates.
  */
 class AbstractProjection: public PluginManager::Plugin {
-    PLUGIN_INTERFACE("cz.mosra.Kompas.Core.AbstractProjection/0.1")
+    PLUGIN_INTERFACE("cz.mosra.Kompas.Core.AbstractProjection/0.2")
 
     public:
         /** @copydoc PluginManager::Plugin::Plugin */
@@ -39,18 +39,18 @@ class AbstractProjection: public PluginManager::Plugin {
             Plugin(manager, plugin) {}
 
         /**
-         * @brief Get raster map coordinates from WGS84 coordinates
-         * @param coords    WGS84 coordinates
+         * @brief Get raster map coordinates from lat/lon coordinates
+         * @param coords    Lat/lon coordinates
          * @return Raster map coordinates
          */
-        virtual Coords<double> fromWgs84(const Wgs84Coords& coords) const = 0;
+        virtual Coords<double> fromLatLon(const LatLonCoords& coords) const = 0;
 
         /**
-         * @brief Get WGS84 coordinates from raster map coordinates
+         * @brief Get lat/lon coordinates from raster map coordinates
          * @param coords    Raster map coordinates
-         * @return WGS84 coordinates
+         * @return Lat/lon coordinates
          */
-        virtual Wgs84Coords toWgs84(const Coords<double>& coords) const = 0;
+        virtual LatLonCoords toLatLon(const Coords<double>& coords) const = 0;
 };
 
 }}

@@ -21,7 +21,7 @@
  */
 
 #include "PluginManager/Plugin.h"
-#include "Wgs84Coords.h"
+#include "LatLonCoords.h"
 
 namespace Kompas { namespace Core {
 
@@ -76,7 +76,7 @@ class CORE_EXPORT AbstractCelestialBody: public PluginManager::Plugin {
          * of Geodesics on the Ellipsoid © Chris Veness 2002-2010,
          * http://www.movable-type.co.uk/scripts/latlong-vincenty.html .
          */
-        virtual double distance(const Wgs84Coords& a, const Wgs84Coords& b);
+        virtual double distance(const LatLonCoords& a, const LatLonCoords& b);
 };
 
 }}

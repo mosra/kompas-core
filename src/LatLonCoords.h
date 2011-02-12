@@ -1,5 +1,5 @@
-#ifndef Kompas_Core_Wgs84Coords_h
-#define Kompas_Core_Wgs84Coords_h
+#ifndef Kompas_Core_LatLonCoords_h
+#define Kompas_Core_LatLonCoords_h
 /*
     Copyright © 2007, 2008, 2009, 2010, 2011 Vladimír Vondruš <mosra@centrum.cz>
 
@@ -16,7 +16,7 @@
 */
 
 /** @file
- * @brief Class Kompas::Core::Wgs84Coords
+ * @brief Class Kompas::Core::LatLonCoords
  */
 
 #include <string>
@@ -27,7 +27,7 @@
 namespace Kompas { namespace Core {
 
 /**
- * @brief WGS84 (GPS) coordinates
+ * @brief Lat/lon (GPS) coordinates
  *
  * Class for storing latitude and longitude coordinates (in degrees).
  * Only valid coordinates are stored. If a valid coordinates were not passed,
@@ -35,7 +35,7 @@ namespace Kompas { namespace Core {
  * invalid. Coordinates can be converted to string representation with user
  * defined decimal precision of seconds and string format.
  */
-class CORE_EXPORT Wgs84Coords {
+class CORE_EXPORT LatLonCoords {
     private:
         double _lat, _lon;
         bool _isValid;
@@ -58,7 +58,7 @@ class CORE_EXPORT Wgs84Coords {
          * -# Sign for east - @c 'E'
          * -# Sign for west - @c 'W'
          *
-         * See also Wgs84Coords::toString().
+         * See also LatLonCoords::toString().
          */
         static const std::string format;
 
@@ -75,9 +75,9 @@ class CORE_EXPORT Wgs84Coords {
         /**
          * @brief Convert decimal number to DMS representation
          * @param decimal       Decimal number
-         * @param precision     Precision. See Wgs84Coords::toString().
+         * @param precision     Precision. See LatLonCoords::toString().
          * @param skipTrailingZeros Whether to skip trailing zeros.
-         * @param _format       Formatting string. See Wgs84Coords::format.
+         * @param _format       Formatting string. See LatLonCoords::format.
          * @return DMS string or empty string on error.
          */
         static std::string decimalToDms(double decimal, int precision = 3, bool skipTrailingZeros = false, const std::string& _format = format);
@@ -104,7 +104,7 @@ class CORE_EXPORT Wgs84Coords {
          *
          * Produces invalid coordinates.
          */
-        inline Wgs84Coords(): _lat(0), _lon(0), _isValid(false) {}
+        inline LatLonCoords(): _lat(0), _lon(0), _isValid(false) {}
 
         /**
          * @brief Constructor
@@ -114,17 +114,17 @@ class CORE_EXPORT Wgs84Coords {
          * Checks whether the values are in valid range, if not, produces
          * invalid coordinates.
          */
-        Wgs84Coords(double __lat, double __lon);
+        LatLonCoords(double __lat, double __lon);
 
         /**
          * @brief Create coordinates from string
          * @param coords    Coordinates as string
-         * @param _format   Format of input string. See Wgs84Coords::format.
+         * @param _format   Format of input string. See LatLonCoords::format.
          *
          * Tries to create coordinates from string with given format. If
          * conversion fails, returns invalid coordinates.
          */
-        Wgs84Coords(const std::string& coords, const std::string& _format = format);
+        LatLonCoords(const std::string& coords, const std::string& _format = format);
 
         /**
          * @brief Convert coordinates to string
@@ -134,7 +134,7 @@ class CORE_EXPORT Wgs84Coords {
          *      are stripped away.
          * @param skipTrailingZeros Whether to skip trailing zeros.
          * @param _format       Format of converted string.
-         *      See Wgs84Coords::format.
+         *      See LatLonCoords::format.
          * @return Converted string. If the format is not valid, returns empty
          *      string. If the coords are not valid, returns position 0°N 0°E.
          *
@@ -144,10 +144,10 @@ class CORE_EXPORT Wgs84Coords {
         std::string toString(int precision = 3, bool skipTrailingZeros = false, const std::string& _format = format) const;
 
         /** @brief Equality operator */
-        bool operator==(const Wgs84Coords& other) const;
+        bool operator==(const LatLonCoords& other) const;
 
         /** @brief Non-equality operator */
-        inline bool operator!=(const Wgs84Coords& other) const {
+        inline bool operator!=(const LatLonCoords& other) const {
             return !operator==(other);
         }
 
@@ -162,25 +162,25 @@ class CORE_EXPORT Wgs84Coords {
 namespace Utility {
 
 /** @copydoc Utility::ConfigurationValue */
-template<> struct CORE_EXPORT ConfigurationValue<Core::Wgs84Coords> {
+template<> struct CORE_EXPORT ConfigurationValue<Core::LatLonCoords> {
     /**
      * @copydoc Utility::ConfigurationValue::fromString()
      * Expects two values separated with space. If the configuration string
      * doesn't contain both numeric coordinates, invalid coordinates are
      * returned.
      */
-    static Core::Wgs84Coords fromString(const std::string& stringValue, int flags);
+    static Core::LatLonCoords fromString(const std::string& stringValue, int flags);
 
     /**
      * @copydoc Utility::ConfigurationValue::toString()
      * Returns two values separated with space. Invalid coordinates are
      * converted to single zero character.
      */
-    static std::string toString(const Core::Wgs84Coords& value, int flags);
+    static std::string toString(const Core::LatLonCoords& value, int flags);
 };
 
 /** @copydoc operator<<(Debug, const T&) */
-Debug& operator<<(Debug debug, const Core::Wgs84Coords& value);
+Debug& operator<<(Debug debug, const Core::LatLonCoords& value);
 
 }
 

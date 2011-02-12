@@ -24,7 +24,7 @@ using namespace std;
 
 namespace Kompas { namespace Core {
 
-double AbstractCelestialBody::distance(const Wgs84Coords& a, const Wgs84Coords& b) {
+double AbstractCelestialBody::distance(const LatLonCoords& a, const LatLonCoords& b) {
     double _a = equatorialRadius(), _b = polarRadius(), f = flattening();
     double L = (a.longitude()-b.longitude())*PI/180;
     double U1 = atan((1-f) * tan(a.latitude()*PI/180));

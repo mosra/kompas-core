@@ -19,9 +19,9 @@
 #include <QtTest/QTest>
 #include <QtCore/QDebug>
 
-#include "Wgs84Coords.h"
+#include "LatLonCoords.h"
 
-Q_DECLARE_METATYPE(Kompas::Core::Wgs84Coords)
+Q_DECLARE_METATYPE(Kompas::Core::LatLonCoords)
 QTEST_APPLESS_MAIN(Kompas::Plugins::Test::MercatorProjectionTest)
 
 using namespace Kompas::Core;
@@ -29,21 +29,21 @@ using namespace Kompas::Core;
 namespace Kompas { namespace Plugins { namespace Test {
 
 void MercatorProjectionTest::coords_data() {
-    QTest::addColumn<Wgs84Coords>("coords");
+    QTest::addColumn<LatLonCoords>("coords");
 
     QTest::newRow("Greenwich")
-        << Wgs84Coords(0.0, 0.0);
+        << LatLonCoords(0.0, 0.0);
     QTest::newRow("Prague")
-        << Wgs84Coords(50.08333, 14.46667);
+        << LatLonCoords(50.08333, 14.46667);
     QTest::newRow("New York")
-        << Wgs84Coords(40.7142691, -74.0059729);
+        << LatLonCoords(40.7142691, -74.0059729);
     QTest::newRow("Sydney")
-        << Wgs84Coords(-33.88333, 151.2167);
+        << LatLonCoords(-33.88333, 151.2167);
 }
 
 void MercatorProjectionTest::coords() {
-    QFETCH(Wgs84Coords, coords);
-    QVERIFY(projection.toWgs84(projection.fromWgs84(coords)) == coords);
+    QFETCH(LatLonCoords, coords);
+    QVERIFY(projection.toLatLon(projection.fromLatLon(coords)) == coords);
 }
 
 }}}

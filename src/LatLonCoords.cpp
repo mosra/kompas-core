@@ -13,7 +13,7 @@
     GNU Lesser General Public License version 3 for more details.
 */
 
-#include "Wgs84Coords.h"
+#include "LatLonCoords.h"
 
 #include <vector>
 #include <sstream>
@@ -25,9 +25,9 @@ using namespace std;
 
 namespace Kompas { namespace Core {
 
-const string Wgs84Coords::format = "\n \n\n°\n'\n\"\nN\nS\nE\nW";
+const string LatLonCoords::format = "\n \n\n°\n'\n\"\nN\nS\nE\nW";
 
-double Wgs84Coords::dmsToDecimal(const std::string& dms) {
+double LatLonCoords::dmsToDecimal(const std::string& dms) {
     /* Invariant: 'begin' points to end of last non-numeric character sequence in
         actually parsed part of string, 'numbers' stores all found numeric
         sequences. */
@@ -77,7 +77,7 @@ double Wgs84Coords::dmsToDecimal(const std::string& dms) {
     return decimal;
 }
 
-string Wgs84Coords::decimalToDms(double decimal, int precision, bool skipTrailingZeros, const string& _format) {
+string LatLonCoords::decimalToDms(double decimal, int precision, bool skipTrailingZeros, const string& _format) {
     vector<string> formatters = parseFormatters(_format);
     if(formatters.empty()) return "";
 
@@ -88,7 +88,7 @@ string Wgs84Coords::decimalToDms(double decimal, int precision, bool skipTrailin
     return out.str();
 }
 
-Wgs84Coords::Wgs84Coords(double __lat, double __lon) {
+LatLonCoords::LatLonCoords(double __lat, double __lon) {
     if(__lon >= -180.0 && __lon <= 180.0 &&
        __lat >= -90.0 && __lat <= 90.0) {
         _lon = __lon;
@@ -105,7 +105,7 @@ Wgs84Coords::Wgs84Coords(double __lat, double __lon) {
     if(_lon == -180) _lon = 180;
 }
 
-Wgs84Coords::Wgs84Coords(const std::string& coords, const std::string& _format): _lat(0), _lon(0), _isValid(false) {
+LatLonCoords::LatLonCoords(const std::string& coords, const std::string& _format): _lat(0), _lon(0), _isValid(false) {
     vector<string> formatters = parseFormatters(_format);
     if(formatters.empty()) return;
 
@@ -160,7 +160,7 @@ Wgs84Coords::Wgs84Coords(const std::string& coords, const std::string& _format):
     _isValid = true;
 }
 
-std::string Wgs84Coords::toString(int precision, bool skipTrailingZeros, const string& _format) const {
+std::string LatLonCoords::toString(int precision, bool skipTrailingZeros, const string& _format) const {
     /* Parse format string, return empty string on error */
     vector<string> formatters = parseFormatters(_format);
     if(formatters.empty()) return "";
@@ -192,7 +192,7 @@ std::string Wgs84Coords::toString(int precision, bool skipTrailingZeros, const s
     return out.str();
 }
 
-vector<string> Wgs84Coords::parseFormatters(const std::string& format) {
+vector<string> LatLonCoords::parseFormatters(const std::string& format) {
     vector<string> formatters;
     string tmp;
     istringstream in(format);
@@ -203,7 +203,7 @@ vector<string> Wgs84Coords::parseFormatters(const std::string& format) {
     return formatters;
 }
 
-void Wgs84Coords::decimalToDms(double angle, int precision, bool skipTrailingZeros, const vector<string>& formatters, ostringstream& out) {
+void LatLonCoords::decimalToDms(double angle, int precision, bool skipTrailingZeros, const vector<string>& formatters, ostringstream& out) {
     double dDegrees, dMinutes;
     int degrees, minutes;
     double seconds;
@@ -245,7 +245,7 @@ void Wgs84Coords::decimalToDms(double angle, int precision, bool skipTrailingZer
     }
 }
 
-bool Wgs84Coords::operator==(const Wgs84Coords& other) const {
+bool LatLonCoords::operator==(const LatLonCoords& other) const {
     if(!isValid() || !other.isValid()) {
         if(!isValid() && !other.isValid()) return true;
         return false;
@@ -262,16 +262,16 @@ bool Wgs84Coords::operator==(const Wgs84Coords& other) const {
 #ifndef DOXYGEN_GENERATING_OUTPUT
 namespace Utility {
 
-Core::Wgs84Coords ConfigurationValue<Core::Wgs84Coords>::fromString(const string& stringValue, int flags) {
+Core::LatLonCoords ConfigurationValue<Core::LatLonCoords>::fromString(const string& stringValue, int flags) {
     double lat, lon;
     istringstream stream(stringValue);
     stream >> lat >> lon;
 
-    if(stream.fail()) return Core::Wgs84Coords();
-    return Core::Wgs84Coords(lat, lon);
+    if(stream.fail()) return Core::LatLonCoords();
+    return Core::LatLonCoords(lat, lon);
 }
 
-string ConfigurationValue<Core::Wgs84Coords>::toString(const Core::Wgs84Coords& value, int flags) {
+string ConfigurationValue<Core::LatLonCoords>::toString(const Core::LatLonCoords& value, int flags) {
     if(!value.isValid()) return "0";
 
     ostringstream stream;
@@ -281,9 +281,9 @@ string ConfigurationValue<Core::Wgs84Coords>::toString(const Core::Wgs84Coords& 
     return stream.str();
 }
 
-Debug& operator<<(Debug debug, const Core::Wgs84Coords& value) {
+Debug& operator<<(Debug debug, const Core::LatLonCoords& value) {
     std::ostringstream o;
-    o << "Wgs84Coords(" << value.latitude() << ", " << value.longitude() << ")";
+    o << "LatLonCoords(" << value.latitude() << ", " << value.longitude() << ")";
 
     return debug << o.str();
 }

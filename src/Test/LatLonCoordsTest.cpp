@@ -13,14 +13,14 @@
     GNU Lesser General Public License version 3 for more details.
 */
 
-#include "Wgs84CoordsTest.h"
+#include "LatLonCoordsTest.h"
 
 #include <QtTest/QTest>
 
-#include "Wgs84Coords.h"
+#include "LatLonCoords.h"
 
-QTEST_APPLESS_MAIN(Kompas::Core::Test::Wgs84CoordsTest)
-Q_DECLARE_METATYPE(Kompas::Core::Wgs84Coords)
+QTEST_APPLESS_MAIN(Kompas::Core::Test::LatLonCoordsTest)
+Q_DECLARE_METATYPE(Kompas::Core::LatLonCoords)
 Q_DECLARE_METATYPE(std::string)
 
 using namespace std;
@@ -28,7 +28,7 @@ using namespace Kompas::Utility;
 
 namespace Kompas { namespace Core { namespace Test {
 
-void Wgs84CoordsTest::construct_data() {
+void LatLonCoordsTest::construct_data() {
     QTest::addColumn<double>("lat");
     QTest::addColumn<double>("lon");
     QTest::addColumn<bool>("expectedValid");
@@ -41,13 +41,13 @@ void Wgs84CoordsTest::construct_data() {
     QTest::newRow("negativeLon") << 15.0 << -150.0 << true << "15°0'0.000\"N 150°0'0.000\"W";
 }
 
-void Wgs84CoordsTest::construct() {
+void LatLonCoordsTest::construct() {
     QFETCH(double, lat);
     QFETCH(double, lon);
     QFETCH(bool, expectedValid);
     QFETCH(QString, toString);
 
-    Wgs84Coords c(lat, lon);
+    LatLonCoords c(lat, lon);
     QVERIFY(c.isValid() == expectedValid);
 
     if(expectedValid) {
@@ -61,22 +61,22 @@ void Wgs84CoordsTest::construct() {
     QCOMPARE(QString::fromStdString(c.toString()), toString);
 }
 
-void Wgs84CoordsTest::toString_data() {
-    QTest::addColumn<Wgs84Coords>("coords");
+void LatLonCoordsTest::toString_data() {
+    QTest::addColumn<LatLonCoords>("coords");
     QTest::addColumn<int>("precision");
     QTest::addColumn<bool>("skipTrailingZeros");
     QTest::addColumn<QString>("output");
 
-    QTest::newRow("precision0") << Wgs84Coords(0.00014166667, 0.00013611111) << 0 << false << "0°0'1\"N 0°0'0\"E";
-    QTest::newRow("precision-1") << Wgs84Coords(0.0085, 0.0081666667) << -1 << false << "0°1'N 0°0'E";
-    QTest::newRow("precision-2") << Wgs84Coords(0.51, 0.49) << -2 << false << "1°N 0°E";
+    QTest::newRow("precision0") << LatLonCoords(0.00014166667, 0.00013611111) << 0 << false << "0°0'1\"N 0°0'0\"E";
+    QTest::newRow("precision-1") << LatLonCoords(0.0085, 0.0081666667) << -1 << false << "0°1'N 0°0'E";
+    QTest::newRow("precision-2") << LatLonCoords(0.51, 0.49) << -2 << false << "1°N 0°E";
 
-    QTest::newRow("skipTrailingZeros") << Wgs84Coords(0, 0.75) << 5 << true << "0°N 0°45'E";
-    QTest::newRow("skipTrailingZeros2") << Wgs84Coords(0.5, 0) << 5 << true << "0°30'N 0°E";
+    QTest::newRow("skipTrailingZeros") << LatLonCoords(0, 0.75) << 5 << true << "0°N 0°45'E";
+    QTest::newRow("skipTrailingZeros2") << LatLonCoords(0.5, 0) << 5 << true << "0°30'N 0°E";
 }
 
-void Wgs84CoordsTest::toString() {
-    QFETCH(Wgs84Coords, coords);
+void LatLonCoordsTest::toString() {
+    QFETCH(LatLonCoords, coords);
     QFETCH(int, precision);
     QFETCH(bool, skipTrailingZeros);
     QFETCH(QString, output);
@@ -84,8 +84,8 @@ void Wgs84CoordsTest::toString() {
     QCOMPARE(QString::fromStdString(coords.toString(precision, skipTrailingZeros)), output);
 }
 
-void Wgs84CoordsTest::stringFormat() {
-    Wgs84Coords c(49.1592131, 15.2013261);
+void LatLonCoordsTest::stringFormat() {
+    LatLonCoords c(49.1592131, 15.2013261);
 
     string format =
         "Latitude: \n, Longtitude: \n\n deg. \n min. \n sec. \nNorth\nSouth\nEast\nWest";
@@ -102,88 +102,88 @@ void Wgs84CoordsTest::stringFormat() {
              QString("49°N 15°E"));
 }
 
-void Wgs84CoordsTest::compare() {
+void LatLonCoordsTest::compare() {
     /* Two similar */
-    QVERIFY(Wgs84Coords(15.7652, -120.2542) == Wgs84Coords(15.7652, -120.2542));
+    QVERIFY(LatLonCoords(15.7652, -120.2542) == LatLonCoords(15.7652, -120.2542));
 
     /* Two another */
-    QVERIFY(Wgs84Coords(23.23, 5.5) != Wgs84Coords(10.005, 11.0));
+    QVERIFY(LatLonCoords(23.23, 5.5) != LatLonCoords(10.005, 11.0));
 
     /* Boundaries */
-    QVERIFY(Wgs84Coords(0, 180) == Wgs84Coords(0, -180));
+    QVERIFY(LatLonCoords(0, 180) == LatLonCoords(0, -180));
 
     /* Two invalid */
-    QVERIFY(Wgs84Coords() == Wgs84Coords());
+    QVERIFY(LatLonCoords() == LatLonCoords());
 
     /* Invalid and valid with the same value */
-    QVERIFY(Wgs84Coords() != Wgs84Coords(0, 0));
+    QVERIFY(LatLonCoords() != LatLonCoords(0, 0));
 
     /* Tolerance */
-    QVERIFY(Wgs84Coords(15.6999999901, 136.0000000099) == Wgs84Coords(15.7, 136.0));
-    QVERIFY(Wgs84Coords(15.6999999901, 136.0000000099) != Wgs84Coords(15.70000001, 135.99999999));
+    QVERIFY(LatLonCoords(15.6999999901, 136.0000000099) == LatLonCoords(15.7, 136.0));
+    QVERIFY(LatLonCoords(15.6999999901, 136.0000000099) != LatLonCoords(15.70000001, 135.99999999));
 }
 
-void Wgs84CoordsTest::fromString_data() {
+void LatLonCoordsTest::fromString_data() {
     QTest::addColumn<string>("input");
-    QTest::addColumn<Wgs84Coords>("output");
+    QTest::addColumn<LatLonCoords>("output");
     QTest::addColumn<string>("format");
 
     /* Valid */
     QTest::newRow("fullPrecision")
         << string("49°9'33.167\"N 15°12'4.774\"E")
-        << Wgs84Coords(49.159213056, 15.201326111) << string();
+        << LatLonCoords(49.159213056, 15.201326111) << string();
     QTest::newRow("onlyNumbers")
         << string("49 9 33.167 S 15 12 4.774 W")
-        << Wgs84Coords(-49.159213056, -15.201326111) << string();
+        << LatLonCoords(-49.159213056, -15.201326111) << string();
     QTest::newRow("doubleValue")
         << string("49.1592131 N 15°12'4.774\"W")
-        << Wgs84Coords(49.1592131, -15.201326111) << string();
+        << LatLonCoords(49.1592131, -15.201326111) << string();
     QTest::newRow("smallPrecision")
         << string("49 S 15 E")
-        << Wgs84Coords(-49.0, 15.0) << string();
+        << LatLonCoords(-49.0, 15.0) << string();
     QTest::newRow("configurationValue")
         << string("49.1592131 15.2013261")
-        << Wgs84Coords(49.1592131, 15.2013261) << string();
+        << LatLonCoords(49.1592131, 15.2013261) << string();
 
     /* Period hell */
     QTest::newRow("periodHell")
         << string("... .1337. 49 0 .0102 N 25. .033 E")
-        << Wgs84Coords(49.000002833, 25.00055) << string();
+        << LatLonCoords(49.000002833, 25.00055) << string();
 
     /* Different format */
     QTest::newRow("czFormat")
         << string("49°9'33.167\" j.š. 15°12'4.774\" z.d.")
-        << Wgs84Coords(-49.159213056, -15.201326111)
+        << LatLonCoords(-49.159213056, -15.201326111)
         << string("\n.š. \n.d.\n°\n'\n\"\ns\nj\nv\nz");
 
     /* Shortened format */
     QTest::newRow("shortened")
         << string("49°N 15°12'4.774\"E")
-        << Wgs84Coords(49, 15.201326111) << string();
+        << LatLonCoords(49, 15.201326111) << string();
     QTest::newRow("shortened2")
         << string("49°9'33.167\"N 15°12'E")
-        << Wgs84Coords(49.159213056, 15.2) << string();
+        << LatLonCoords(49.159213056, 15.2) << string();
 
     /* Invalid */
     QTest::newRow("noNumbers")
         << string("N E")
-        << Wgs84Coords() << string();
+        << LatLonCoords() << string();
     QTest::newRow("wrongNSEW")
         << string("49°9'33.167\"S 15°12'4.774\"V")
-        << Wgs84Coords() << string();
+        << LatLonCoords() << string();
     QTest::newRow("switchedNSEW")
         << string("15°12'4.774\"E 49°9'33.167\"N")
-        << Wgs84Coords() << string();
+        << LatLonCoords() << string();
 }
 
-void Wgs84CoordsTest::fromString() {
+void LatLonCoordsTest::fromString() {
     QFETCH(string, input);
-    QFETCH(Wgs84Coords, output);
+    QFETCH(LatLonCoords, output);
     QFETCH(string, format);
 
-    if(format.empty()) format = Wgs84Coords::format;
+    if(format.empty()) format = LatLonCoords::format;
 
-    Wgs84Coords actual(input, format);
+    LatLonCoords actual(input, format);
     if(!actual.isValid()) {
         QVERIFY(actual.latitude() == 0);
         QVERIFY(actual.longitude() == 0);
@@ -192,15 +192,15 @@ void Wgs84CoordsTest::fromString() {
     QVERIFY(actual == output);
 }
 
-void Wgs84CoordsTest::debug() {
+void LatLonCoordsTest::debug() {
     ostringstream o;
-    Debug(&o) << Wgs84Coords(49.159, -15.201);
-    QCOMPARE(QString::fromStdString(o.str()), QString("Wgs84Coords(49.159, -15.201)\n"));
+    Debug(&o) << LatLonCoords(49.159, -15.201);
+    QCOMPARE(QString::fromStdString(o.str()), QString("LatLonCoords(49.159, -15.201)\n"));
 }
 
-void Wgs84CoordsTest::decimalToDms() {
+void LatLonCoordsTest::decimalToDms() {
     /* Test only one value, as underlying algorithm is tested extensively in toString() */
-    QCOMPARE(QString::fromStdString(Wgs84Coords::decimalToDms(49.159213056)), QString("49°9'33.167\""));
+    QCOMPARE(QString::fromStdString(LatLonCoords::decimalToDms(49.159213056)), QString("49°9'33.167\""));
 }
 
 }}}
