@@ -52,10 +52,10 @@ void Wgs84CoordsTest::construct() {
 
     if(expectedValid) {
         QVERIFY(c.latitude() == lat);
-        QVERIFY(c.longtitude() == lon);
+        QVERIFY(c.longitude() == lon);
     } else {
         QVERIFY(c.latitude() == 0);
-        QVERIFY(c.longtitude() == 0);
+        QVERIFY(c.longitude() == 0);
     }
 
     QCOMPARE(QString::fromStdString(c.toString()), toString);
@@ -186,7 +186,7 @@ void Wgs84CoordsTest::fromString() {
     Wgs84Coords actual(input, format);
     if(!actual.isValid()) {
         QVERIFY(actual.latitude() == 0);
-        QVERIFY(actual.longtitude() == 0);
+        QVERIFY(actual.longitude() == 0);
     }
 
     QVERIFY(actual == output);

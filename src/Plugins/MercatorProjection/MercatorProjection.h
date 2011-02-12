@@ -29,7 +29,7 @@ namespace Kompas { namespace Plugins {
 Customizable shift and stretch.
 @section MercatorProjection_fromWgs84 Converting from WGS84 coordinates
 X coordinate is latitude, converted from range @f$ [ - \pi ; \pi ] @f$ to
-@f$ [ 0 ; 1 ] @f$. Y coordinate is reprojected from longtitude and converted to
+@f$ [ 0 ; 1 ] @f$. Y coordinate is reprojected from longitude and converted to
 range @f$ [ 0; 1 ] @f$ like this:
 @f[
     y = \left(
@@ -43,7 +43,7 @@ coordinate, converted from range @f$ [ 0 ; 1 ] @f$ to @f$ [ - \pi ; \pi ] @f$.
 Longtitude is reprojected to Y coordinate and converted to range
 @f$ [ - {\pi \over 2}; {\pi \over 2} ] @f$ like this:
 @f[
-    longtitude = \arctan \left(
+    longitude = \arctan \left(
         {1 \over 2} \cdot (e^y - e^{-y})
     \right)
 @f]

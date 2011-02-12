@@ -29,9 +29,9 @@ namespace Kompas { namespace Core {
 /**
  * @brief WGS84 (GPS) coordinates
  *
- * Class for storing latitude and longtitude coordinates (in degrees).
+ * Class for storing latitude and longitude coordinates (in degrees).
  * Only valid coordinates are stored. If a valid coordinates were not passed,
- * resets both longtitude and latitude to zero and marks the coordinates as
+ * resets both longitude and latitude to zero and marks the coordinates as
  * invalid. Coordinates can be converted to string representation with user
  * defined decimal precision of seconds and string format.
  */
@@ -48,8 +48,8 @@ class CORE_EXPORT Wgs84Coords {
          * contains of @b ten parts separated by (eight) LF characters
          * (@c '@\n').
          * -# Prefix before latitude - @c ''
-         * -# Separator between latitude and longtitude - @c ' '
-         * -# Suffix after longtitude - @c ''
+         * -# Separator between latitude and longitude - @c ' '
+         * -# Suffix after longitude - @c ''
          * -# Degrees sign - @c '°'
          * -# Minutes sign - @c '''
          * -# Seconds sign - @c '"'
@@ -94,7 +94,7 @@ class CORE_EXPORT Wgs84Coords {
          *
          * Positive value means east, negative west.
          */
-        inline double longtitude() const { return _lon; }
+        inline double longitude() const { return _lon; }
 
         /** @brief Whether the coordinates are valid */
         inline bool isValid() const { return _isValid; }

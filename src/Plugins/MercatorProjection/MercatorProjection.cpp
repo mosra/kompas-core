@@ -29,9 +29,9 @@ PLUGIN_REGISTER_STATIC(MercatorProjection,
 namespace Kompas { namespace Plugins {
 
 Coords<double> MercatorProjection::fromWgs84(const Wgs84Coords& coords) const {
-    /* Transform longtitude range from -180° - +180° to 0 - 1 and shift origin
+    /* Transform longitude range from -180° - +180° to 0 - 1 and shift origin
         to left top corner */
-    double x = (1 + coords.longtitude()/180)/2;
+    double x = (1 + coords.longitude()/180)/2;
 
     /* Convert latitude to radians */
     double latitude = coords.latitude()*PI/180;
@@ -60,10 +60,10 @@ Wgs84Coords MercatorProjection::toWgs84(const Coords<double>& coords) const {
     /* Reproject Mercator projection to latitude, transform to -90 - 90° */
     double latitude = atan(0.5 * (exp(_coords.y) - exp(-_coords.y)))*180/PI;
 
-    /* Convert longtitude range from 0 - 1 to  -180° - 180° */
-    double longtitude = (2*_coords.x - 1)*180;
+    /* Convert longitude range from 0 - 1 to  -180° - 180° */
+    double longitude = (2*_coords.x - 1)*180;
 
-    return Wgs84Coords(latitude, longtitude);
+    return Wgs84Coords(latitude, longitude);
 }
 
 }}

@@ -251,7 +251,7 @@ bool Wgs84Coords::operator==(const Wgs84Coords& other) const {
         return false;
     }
 
-    if(abs(latitude() - other.latitude()) < EPSILON && abs(longtitude() - other.longtitude()) < EPSILON)
+    if(abs(latitude() - other.latitude()) < EPSILON && abs(longitude() - other.longitude()) < EPSILON)
         return true;
 
     return false;
@@ -276,14 +276,14 @@ string ConfigurationValue<Core::Wgs84Coords>::toString(const Core::Wgs84Coords& 
 
     ostringstream stream;
     stream.precision(12);
-    stream << value.latitude() << " " << value.longtitude();
+    stream << value.latitude() << " " << value.longitude();
 
     return stream.str();
 }
 
 Debug& operator<<(Debug debug, const Core::Wgs84Coords& value) {
     std::ostringstream o;
-    o << "Wgs84Coords(" << value.latitude() << ", " << value.longtitude() << ")";
+    o << "Wgs84Coords(" << value.latitude() << ", " << value.longitude() << ")";
 
     return debug << o.str();
 }
