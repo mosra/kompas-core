@@ -2,6 +2,10 @@ add_definitions(-Wall -pedantic)
 
 include_directories(${KOMPAS_CORE_INCLUDE_DIR} ${KOMPAS_PLUGINS_INCLUDE_DIR})
 
+if(BUILD_TESTS)
+    include_directories(${QT_INCLUDE_DIR})
+endif()
+
 add_subdirectory(PluginManager)
 add_subdirectory(Plugins)
 add_subdirectory(Utility)
