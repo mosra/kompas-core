@@ -14,6 +14,7 @@
 */
 
 #include "AbstractRasterModel.h"
+#include "AbstractCache.h"
 
 using namespace std;
 
@@ -28,10 +29,16 @@ bool AbstractRasterModel::setOnline(bool enabled) {
     return _online;
 }
 
-bool AbstractRasterModel::setCache(const string& cacheDir) {
-    /** @todo @c VERSION-0.2 Implement! */
-    return false;
+string AbstractRasterModel::tileFromCache(const string& layer, Zoom z, const TileCoords& coords) {
+    /* No cache set */
+    if(!_cache) return "";
+    return _cache->rasterTile(plugin(), layer, z, coords);
 }
 
+bool AbstractRasterModel::tileToCache(const std::string& layer, Zoom z, const Kompas::Core::TileCoords& coords, const std::string& data) {
+    /* No cache set */
+    if(!_cache) return false;
+    return _cache->setRasterTile(plugin(), layer, z, coords, data);
+}
 
 }}

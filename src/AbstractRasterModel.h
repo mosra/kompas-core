@@ -31,6 +31,7 @@
 namespace Kompas { namespace Core {
 
 class AbstractProjection;
+class AbstractCache;
 
 typedef Coords<unsigned int> TileSize;              /**< @brief Tile size */
 typedef unsigned int Zoom;                          /**< @brief Map zoom */
@@ -405,6 +406,10 @@ class CORE_EXPORT AbstractRasterModel: public TranslatablePlugin {
             DeprecatedSupport       /**< @brief The model can open the file, but the support is deprecated */
         };
 
+        /** @copydoc PluginManager::Plugin::Plugin */
+        AbstractRasterModel(PluginManager::AbstractPluginManager* manager, const std::string& plugin):
+            TranslatablePlugin(manager, plugin), _online(false), _cache(0) {}
+
         /** @{ @name Utilites */
 
         /**
@@ -485,10 +490,6 @@ class CORE_EXPORT AbstractRasterModel: public TranslatablePlugin {
         inline virtual std::string copyright() const { return ""; }
 
         /*@}*/
-
-        /** @copydoc PluginManager::Plugin::Plugin() */
-        AbstractRasterModel(PluginManager::AbstractPluginManager* manager, const std::string& plugin):
-            TranslatablePlugin(manager, plugin), _online(false) {}
 
         /** @{ @name Map parameters */
 
@@ -597,13 +598,21 @@ class CORE_EXPORT AbstractRasterModel: public TranslatablePlugin {
 
         /**
          * @brief Set cache for online maps
-         * @param cacheDir  Directory with cache files.
+         * @param cache     Initialized cache instance or 0.
          * @return Whether the cache is available. Enabling can fail if cache
          *      dir is not readable or writable.
          *
          * Downloaded tiles can be pushed into cache for later usage.
+         * @todo Hierarchic cache --- passing cache pointer to tileToCache()
          */
-        virtual bool setCache(const std::string& cacheDir);
+        inline void setCache(AbstractCache* cache) { _cache = cache; }
+
+        /**
+         * @brief Cache for online maps
+         *
+         * Currently used cache or 0, if no cache is used.
+         */
+        inline AbstractCache* cache() const { return _cache; }
 
         /*@}*/
 
@@ -618,6 +627,17 @@ class CORE_EXPORT AbstractRasterModel: public TranslatablePlugin {
          * @see AbstractRasterModel::LoadableFromUrl
          */
         virtual inline std::string tileUrl(const std::string& layer, Zoom z, const TileCoords& coords) const { return ""; }
+
+        /**
+         * @brief Get tile data from cache
+         * @param layer     Map layer or overlay
+         * @param z         Zoom level
+         * @param coords    Coordinates
+         * @return Tile data (image) or empty string, if tile was not found in
+         *      the cache.
+         * @see setCache(), tileToCache()
+         */
+        std::string tileFromCache(const std::string& layer, Zoom z, const TileCoords& coords);
 
         /**
          * @brief Get tile data from package
@@ -665,6 +685,18 @@ class CORE_EXPORT AbstractRasterModel: public TranslatablePlugin {
         inline virtual bool setPackageAttribute(PackageAttribute type, const std::string& data) { return false; }
 
         /**
+         * @brief Save tile to cache
+         * @param layer     Map layer or overlay
+         * @param z         Zoom level
+         * @param coords    Coordinates
+         * @param data      Tile data
+         * @return True if the package was saved to cache (the cache is set with
+         *      setCache() and saving succeeded).
+         * @see setCache(), tileFromCache()
+         */
+        bool tileToCache(const std::string& layer, Zoom z, const TileCoords& coords, const std::string& data);
+
+        /**
          * @brief Save tile to package
          * @param layer     Map layer or overlay
          * @param z         Zoom level
@@ -693,6 +725,7 @@ class CORE_EXPORT AbstractRasterModel: public TranslatablePlugin {
 
     private:
         bool _online;
+        AbstractCache* _cache;
 };
 
 }}

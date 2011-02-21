@@ -14,6 +14,7 @@ add_subdirectory(Utility)
 
 set(Kompas_Core_SRCS
     LatLonCoords.cpp
+    AbstractCache.cpp
     AbstractCelestialBody.cpp
     AbstractRasterModel.cpp
     Plugins/registerStatic.cpp
