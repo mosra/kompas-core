@@ -43,16 +43,22 @@ make %{?_smp_mflags}
 rm -rf $RPM_BUILD_ROOT
 cd build
 make DESTDIR=$RPM_BUILD_ROOT install
+strip $RPM_BUILD_ROOT/%{_prefix}/lib*/* $RPM_BUILD_ROOT/%{_prefix}/bin/*
+
+%post -p /sbin/ldconfig
+
+%postun -p /sbin/ldconfig
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%{_prefix}/lib*
+%{_prefix}/lib*/*.so.*
 
 %files devel
 %defattr(-,root,root,-)
 %{_prefix}/bin/kompas-rc
 %{_prefix}/include/Kompas
 %{_prefix}/share/*/Modules
+%{_prefix}/lib*/*.so
