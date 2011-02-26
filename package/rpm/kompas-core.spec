@@ -3,7 +3,11 @@ URL: http://mosra.cz/blog/kompas.php
 Version: 0.1.1
 Release: 1
 License: LGPLv3
+%if %{defined suse_version}
 Group: System/Libraries
+%else
+Group: System Environment/Libraries
+%endif
 Source: https://github.com/mosra/%{name}/tarball/v%{version}/%{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: cmake >= 2.6.0
@@ -14,7 +18,11 @@ Summary: Core library for Kompas navigation software
 Core interfaces and plugin management for Kompas.
 
 %package devel
+%if %{defined suse_version}
 Group: Development/Libraries/C and C++
+%else
+Group: Development/Libraries
+%endif
 Summary: Kompas Core development files
 Requires: %{name} = %{version}
 
