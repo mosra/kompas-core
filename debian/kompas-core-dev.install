@@ -1,0 +1,4 @@
+usr/bin/*
+usr/include/Kompas/*
+usr/lib*/lib*.so
+usr/share/cmake*
