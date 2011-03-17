@@ -10,6 +10,7 @@ Group: System Environment/Libraries
 %endif
 Source: https://github.com/mosra/%{name}/tarball/v%{version}/%{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
+BuildRequires: gcc-c++
 BuildRequires: cmake >= 2.6.0
 
 Summary: Core library for Kompas navigation software
