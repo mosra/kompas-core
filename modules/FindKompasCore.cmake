@@ -58,7 +58,6 @@ endif()
 
 if(KOMPASCORE_FOUND)
     include(KompasMacros)
-    include(KompasLibSuffix)
 
     # Installation dirs
     if(WIN32)
@@ -68,6 +67,7 @@ if(KOMPASCORE_FOUND)
         set_parent_scope(KOMPAS_INCLUDE_INSTALL_DIR include/Kompas)
         set_parent_scope(KOMPAS_DATA_INSTALL_DIR )
     else()
+        include(KompasLibSuffix)
         set_parent_scope(KOMPAS_BINARY_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/bin)
         set_parent_scope(KOMPAS_LIBRARY_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX})
         set_parent_scope(KOMPAS_CMAKE_MODULE_INSTALL_DIR ${CMAKE_ROOT}/Modules)
