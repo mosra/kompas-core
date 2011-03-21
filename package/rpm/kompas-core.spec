@@ -1,6 +1,6 @@
 Name: kompas-core
 URL: http://mosra.cz/blog/kompas.php
-Version: 0.1.1
+Version: 0.1.2
 Release: 1
 License: LGPLv3
 %if %{defined suse_version}
@@ -31,7 +31,7 @@ Requires: %{name} = %{version}
 Core headers and tools needed for developing for Kompas.
 
 %prep
-%setup -q -n mosra-kompas-core-a23e2f7
+%setup -q -n mosra-kompas-core-6f5eaea
 
 %build
 mkdir build && cd build
@@ -67,5 +67,8 @@ rm -rf $RPM_BUILD_ROOT
 %doc COPYING COPYING.LESSER
 
 %changelog
+* Sun Mar 20 2011 Vladimír Vondruš <mosra@centrum.cz> - 0.1.2-1
+- New upstream version 0.1.2.
+
 * Sat Feb 26 2011 Vladimír Vondruš <mosra@centrum.cz> - 0.1.1-1
 - Initial release.
