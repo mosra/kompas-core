@@ -222,7 +222,7 @@ void LatLonCoords::decimalToDms(double angle, int precision, bool skipTrailingZe
 
     } else {
         /* Round degrees first to prevent 60" in output */
-        int p = pow(10, precision);
+        int p = pow(10.0, precision);
         dDegrees = round(abs(angle)*60*60*p)/(60*60*p);
 
         degrees = floor(dDegrees);
