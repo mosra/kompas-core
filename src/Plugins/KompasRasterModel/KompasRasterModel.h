@@ -41,15 +41,15 @@ class CORE_EXPORT KompasRasterModel: public Core::AbstractRasterModel {
 
         virtual ~KompasRasterModel();
 
-        inline virtual int features() const { return WriteableFormat|SequentialFormat|MultipleFileFormat|SelfRecognizable; }
-        inline virtual std::vector<std::string> fileExtensions() const { return extensions; }
-        virtual SupportLevel recognizeFile(const std::string& filename, std::istream& file) const;
-        inline virtual Core::TileSize tileSize() const { return _tileSize; }
+        inline int features() const { return WriteableFormat|SequentialFormat|MultipleFileFormat|SelfRecognizable; }
+        inline std::vector<std::string> fileExtensions() const { return extensions; }
+        SupportLevel recognizeFile(const std::string& filename, std::istream& file) const;
+        inline Core::TileSize tileSize() const { return _tileSize; }
 
-        inline virtual std::set<Core::Zoom> zoomLevels() const { return _zoomLevels; }
-        inline virtual Core::TileArea area() const { return _area; }
-        inline virtual std::vector<std::string> layers() const { return _layers; }
-        inline virtual std::vector<std::string> overlays() const { return _overlays; }
+        inline std::set<Core::Zoom> zoomLevels() const { return _zoomLevels; }
+        inline Core::TileArea area() const { return _area; }
+        inline std::vector<std::string> layers() const { return _layers; }
+        inline std::vector<std::string> overlays() const { return _overlays; }
 
         /**
          * @copydoc Core::AbstractRasterModel::addPackage()
@@ -57,15 +57,15 @@ class CORE_EXPORT KompasRasterModel: public Core::AbstractRasterModel {
          * Calls parsePackage(), then expands map zoom levels, map area and
          * available layers with package data.
          */
-        virtual int addPackage(const std::string& filename);
-        inline virtual int packageCount() const { return packages.size(); }
-        virtual std::string packageAttribute(int package, PackageAttribute type) const;
-        virtual std::string tileFromPackage(const std::string& layer, Core::Zoom z, const Core::TileCoords& coords);
+        int addPackage(const std::string& filename);
+        inline int packageCount() const { return packages.size(); }
+        std::string packageAttribute(int package, PackageAttribute type) const;
+        std::string tileFromPackage(const std::string& layer, Core::Zoom z, const Core::TileCoords& coords);
 
-        virtual bool initializePackage(const std::string& filename, const Core::TileSize& tileSize, const std::vector<Core::Zoom>& zoomLevels, const Core::TileArea& area, const std::vector< std::string>& layers, const std::vector<std::string>& overlays);
-        virtual bool setPackageAttribute(PackageAttribute type, const std::string& data);
-        virtual bool tileToPackage(const std::string& layer, Core::Zoom z, const Core::TileCoords& coords, const std::string& data);
-        virtual bool finalizePackage();
+        bool initializePackage(const std::string& filename, const Core::TileSize& tileSize, const std::vector<Core::Zoom>& zoomLevels, const Core::TileArea& area, const std::vector< std::string>& layers, const std::vector<std::string>& overlays);
+        bool setPackageAttribute(PackageAttribute type, const std::string& data);
+        bool tileToPackage(const std::string& layer, Core::Zoom z, const Core::TileCoords& coords, const std::string& data);
+        bool finalizePackage();
 
     protected:
         /** @brief Opened package */

@@ -26,8 +26,8 @@ class KompasMultiRasterModel: public KompasRasterModel {
         KompasMultiRasterModel(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
             KompasRasterModel(manager, plugin) {}
 
-        inline virtual int features() const { return KompasRasterModel::features()|MultiplePackages; }
-        inline virtual Core::TileSize tileSize() const { return Core::TileSize(256, 256); }
+        inline int features() const { return KompasRasterModel::features()|MultiplePackages; }
+        inline Core::TileSize tileSize() const { return Core::TileSize(256, 256); }
 };
 
 class KompasMultiRasterModelTest: public QObject {

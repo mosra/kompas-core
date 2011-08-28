@@ -205,8 +205,8 @@ class MyRasterModel: public AbstractRasterModel {
             // Configure the projection here...
         }
 
-        inline virtual int features() const { return ConvertableCoords; }
-        inline virtual const AbstractProjection* projection() const { return &myProjection; }
+        inline int features() const { return ConvertableCoords; }
+        inline const AbstractProjection* projection() const { return &myProjection; }
 
         //...
 
@@ -253,11 +253,11 @@ MyOnlineRasterModel: public AbstractRasterModel {
             // fill the areaOnline, zoomLevelsOnline, layersOnline variables ...
         }
 
-        inline virtual std::set<Zoom> zoomLevels() const { return online() ? zoomLevelsOnline : zoomLevels; }
-        inline virtual TileArea area() const { return online() ? areaOnline : area; }
-        inline virtual std::vector<std::string> layers() const { return online() ? layersOnline : layers; }
+        inline std::set<Zoom> zoomLevels() const { return online() ? zoomLevelsOnline : zoomLevels; }
+        inline TileArea area() const { return online() ? areaOnline : area; }
+        inline std::vector<std::string> layers() const { return online() ? layersOnline : layers; }
 
-        virtual int addPackage(const std::string& filename) {
+        int addPackage(const std::string& filename) {
             // operate with area, zoomLevels, layers variables ...
         }
 

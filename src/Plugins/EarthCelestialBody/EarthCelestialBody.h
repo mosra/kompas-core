@@ -32,12 +32,12 @@ class EarthCelestialBody: public Core::AbstractCelestialBody {
         EarthCelestialBody(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""): AbstractCelestialBody(manager, plugin) {}
 
         /** @todo Which values are closer to reality? */
-        inline virtual double equatorialRadius() const { return 6378137; }
-      //inline virtual double equatorialRadius() const { return 6378136.6; }
-        inline virtual double polarRadius() const { return 6356752.3142; }
-      //inline virtual double polarRadius() const { return 6356751.9; }
-        inline virtual double flattening() const { return 1/298.257223563; }
-      //inline virtual double flattening() const { return 1/298.25642; }
+        inline double equatorialRadius() const { return 6378137; }
+      //inline double equatorialRadius() const { return 6378136.6; }
+        inline double polarRadius() const { return 6356752.3142; }
+      //inline double polarRadius() const { return 6356751.9; }
+        inline double flattening() const { return 1/298.257223563; }
+      //inline double flattening() const { return 1/298.25642; }
 };
 
 }}

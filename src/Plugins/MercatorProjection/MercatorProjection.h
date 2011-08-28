@@ -54,9 +54,9 @@ class CORE_EXPORT MercatorProjection: public Core::AbstractProjection {
         /** @copydoc Core::AbstractProjection::AbstractProjection */
         MercatorProjection(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = "");
 
-        virtual Core::Coords<double> fromLatLon(const Core::LatLonCoords& coords) const;
-        virtual Core::LatLonCoords toLatLon(const Core::Coords<double>& coords) const;
-        virtual std::vector<Core::LatLonCoords> seams() const;
+        Core::Coords<double> fromLatLon(const Core::LatLonCoords& coords) const;
+        Core::LatLonCoords toLatLon(const Core::Coords<double>& coords) const;
+        std::vector<Core::LatLonCoords> seams() const;
 
         /**
          * @brief Set map stretch

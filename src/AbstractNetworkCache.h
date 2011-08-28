@@ -36,11 +36,11 @@ class AbstractNetworkCache: public AbstractCache {
         inline AbstractNetworkCache(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
             AbstractCache(manager, plugin) {}
 
-        virtual int features() { return MultiUser|Network; }
-        inline virtual size_t cacheSize() { return 0; }
-        inline virtual void setCacheSize(size_t size) {}
-        inline virtual void purge() {}
-        inline virtual void optimize() {}
+        int features() { return MultiUser|Network; }
+        inline size_t cacheSize() { return 0; }
+        inline void setCacheSize(size_t size) {}
+        inline void purge() {}
+        inline void optimize() {}
 };
 
 }}
