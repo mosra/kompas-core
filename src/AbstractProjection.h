@@ -51,6 +51,18 @@ class AbstractProjection: public PluginManager::Plugin {
          * @return Lat/lon coordinates
          */
         virtual LatLonCoords toLatLon(const Coords<double>& coords) const = 0;
+
+        /**
+         * @brief List of map seams
+         *
+         * Because the map is projected from sphere to surface, it must be cut
+         * somewhere to make it flat. Line of cut is called seam, on Earth maps
+         * it is mostly between North America and Asia or around hemispheres on
+         * stereographic maps. Each three @ref LatLonCoords define one seam.
+         * This data are then used for seamless rendering in e.g. 3D map view or
+         * when rendering vector maps with given projection.
+         */
+        virtual std::vector<LatLonCoords> seams() const { return std::vector<LatLonCoords>(); }
 };
 
 }}
