@@ -83,6 +83,29 @@ class CORE_EXPORT LatLonCoords {
         static std::string decimalToDms(double decimal, int precision = 3, bool skipTrailingZeros = false, const std::string& _format = format);
 
         /**
+         * @brief Create coordinates from point on a sphere
+         * @param x             X coordinate (right is positive)
+         * @param y             Y coordinate (up is positive)
+         * @param z             Z coordinate (backward is positive)
+         * @return If the coordinates are not point on a sphere (vector length
+         * is not 1), returns invalid coordinates.
+         *
+         * Converts coordinates in right-handed Cartesian space to latitude
+         * and longitude:
+         * @f[
+         *     \begin{array}{lcl}
+         *         latitude & = & \arcsin y                                 \\
+         *         longitude & = & \arcsin {x \over \sqrt {x^2 + z^2}}
+         *     \end{array}
+         * @f]
+         * Longitude is computed only to range
+         * @f$ [ - 90^\circ ; 90^\circ ] @f$, so if the Z coordinate
+         * is negative, the longitude is converted to range
+         * @f$ [ -180^\circ ; -90^\circ ] \cup [ 90^\circ ; 180^\circ ] @f$.
+         */
+        static LatLonCoords fromPointOnSphere(double x, double y, double z);
+
+        /**
          * @brief Latitude
          *
          * Positive value means north, negative south.
@@ -142,6 +165,23 @@ class CORE_EXPORT LatLonCoords {
          * <tt>49°9'33.167"N 15°12'4.774"E</tt>).
          */
         std::string toString(int precision = 3, bool skipTrailingZeros = false, const std::string& _format = format) const;
+
+        /**
+         * @brief Convert coordinates to point on a sphere
+         * @param x             Pointer to store X coordinate (right is positive)
+         * @param y             Pointer to store Y coordinate (up is positive)
+         * @param z             Pointer to store Z coordinate (backward is positive)
+         *
+         * Converts coordinates to right-handed Cartesian space:
+         * @f[
+         *     \begin{array}{lcl}
+         *         x & = & \sin longitude \cos latitude                     \\
+         *         y & = & \sin latitude                                    \\
+         *         z & = & \cos longitude \cos latitude
+         *     \end{array}
+         * @f]
+         */
+        void toPointOnSphere(double* x, double* y, double* z) const;
 
         /** @brief Equality operator */
         bool operator==(const LatLonCoords& other) const;

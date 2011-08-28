@@ -192,6 +192,21 @@ void LatLonCoordsTest::fromString() {
     QVERIFY(actual == output);
 }
 
+void LatLonCoordsTest::pointOnSphere_data() {
+    QTest::addColumn<LatLonCoords>("coords");
+
+    QTest::newRow("prague") << LatLonCoords(50.08333, 14.46667);
+    QTest::newRow("ny") << LatLonCoords(40.7142691, -74.0059729);
+    QTest::newRow("sydney") << LatLonCoords(-33.88333, 151.2167);
+}
+
+void LatLonCoordsTest::pointOnSphere() {
+    QFETCH(LatLonCoords, coords);
+    double x, y, z;
+    coords.toPointOnSphere(&x, &y, &z);
+    QVERIFY(LatLonCoords::fromPointOnSphere(x, y, z) == coords);
+}
+
 void LatLonCoordsTest::debug() {
     ostringstream o;
     Debug(&o) << LatLonCoords(49.159, -15.201);

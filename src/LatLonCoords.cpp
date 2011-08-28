@@ -88,6 +88,20 @@ string LatLonCoords::decimalToDms(double decimal, int precision, bool skipTraili
     return out.str();
 }
 
+LatLonCoords LatLonCoords::fromPointOnSphere(double x, double y, double z) {
+    double xz = x*x+z*z;
+    if(abs(xz+y*y-1) > EPSILON) return LatLonCoords();
+
+    double latitude = asin(y);
+    double longitude = asin(x/sqrt(xz));
+
+    /* Negative Z, fix longitude */
+    if(z < 0) longitude = (x < 0 ? -PI : PI) - longitude;
+
+    /* Convert to degrees and return */
+    return LatLonCoords(latitude*180/PI, longitude*180/PI);
+}
+
 LatLonCoords::LatLonCoords(double __lat, double __lon) {
     if(__lon >= -180.0 && __lon <= 180.0 &&
        __lat >= -90.0 && __lat <= 90.0) {
@@ -190,6 +204,17 @@ std::string LatLonCoords::toString(int precision, bool skipTrailingZeros, const 
     out << formatters[ew] << formatters[2];
 
     return out.str();
+}
+
+void LatLonCoords::toPointOnSphere(double* x, double* y, double* z) const {
+    /* Convert to radians */
+    double latitude = _lat*PI/180;
+    double longitude = _lon*PI/180;
+
+    *x = *z = cos(latitude);
+    *x *= sin(longitude);
+    *y = sin(latitude);
+    *z *= cos(longitude);
 }
 
 vector<string> LatLonCoords::parseFormatters(const std::string& format) {

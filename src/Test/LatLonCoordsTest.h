@@ -35,6 +35,9 @@ class LatLonCoordsTest: public QObject {
         void fromString_data();
         void fromString();
 
+        void pointOnSphere_data();
+        void pointOnSphere();
+
         void debug();
 
         void decimalToDms();
