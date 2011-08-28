@@ -52,11 +52,11 @@ Coordinate calculation based on http://wiki.openstreetmap.org/wiki/Slippy_map_ti
 class CORE_EXPORT MercatorProjection: public Core::AbstractProjection {
     public:
         /** @copydoc Core::AbstractProjection::AbstractProjection */
-        inline MercatorProjection(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
-            AbstractProjection(manager, plugin), stretch(Core::Coords<double>(1, 1)), shift(Core::Coords<double>(0, 0)) {}
+        MercatorProjection(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = "");
 
         virtual Core::Coords<double> fromLatLon(const Core::LatLonCoords& coords) const;
         virtual Core::LatLonCoords toLatLon(const Core::Coords<double>& coords) const;
+        virtual std::vector<Core::LatLonCoords> seams() const;
 
         /**
          * @brief Set map stretch
@@ -78,6 +78,7 @@ class CORE_EXPORT MercatorProjection: public Core::AbstractProjection {
             { shift = _shift; }
 
     private:
+        std::vector<Core::LatLonCoords> _seams;
         Core::Coords<double> stretch, shift;
 };
 

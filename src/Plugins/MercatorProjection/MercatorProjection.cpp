@@ -20,6 +20,7 @@
 
 #include "constants.h"
 
+using namespace std;
 using namespace Kompas::Core;
 
 PLUGIN_REGISTER_STATIC(MercatorProjection,
@@ -27,6 +28,13 @@ PLUGIN_REGISTER_STATIC(MercatorProjection,
     "cz.mosra.Kompas.Core.AbstractProjection/0.2")
 
 namespace Kompas { namespace Plugins {
+
+MercatorProjection::MercatorProjection(PluginManager::AbstractPluginManager* manager, const std::string& plugin): AbstractProjection(manager, plugin), stretch(Coords<double>(1, 1)), shift(Coords<double>(0, 0)) {
+    _seams.reserve(3);
+    _seams.push_back(LatLonCoords(60, 180));
+    _seams.push_back(LatLonCoords(0, 180));
+    _seams.push_back(LatLonCoords(-60, 180));
+}
 
 Coords<double> MercatorProjection::fromLatLon(const LatLonCoords& coords) const {
     /* Transform longitude range from -180° - +180° to 0 - 1 and shift origin
@@ -64,6 +72,12 @@ LatLonCoords MercatorProjection::toLatLon(const Coords<double>& coords) const {
     double longitude = (2*_coords.x - 1)*180;
 
     return LatLonCoords(latitude, longitude);
+}
+
+vector<LatLonCoords> MercatorProjection::seams() const {
+    if(stretch == Coords<double>(1, 1) && shift == Coords<double>(0, 0))
+        return _seams;
+    else return AbstractProjection::seams();
 }
 
 }}
