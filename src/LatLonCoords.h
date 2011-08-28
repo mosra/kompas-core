@@ -33,7 +33,7 @@ namespace Kompas { namespace Core {
  * Only valid coordinates are stored. If a valid coordinates were not passed,
  * resets both longitude and latitude to zero and marks the coordinates as
  * invalid. Coordinates can be converted to string representation with user
- * defined decimal precision of seconds and string format.
+ * defined precision and string format.
  */
 class CORE_EXPORT LatLonCoords {
     private:
