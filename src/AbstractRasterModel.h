@@ -96,23 +96,22 @@ retrieved with packageCount() and packageAttribute().
 
 Tile data can be retrieved from loaded packages with function tileFromPackage().
 
-<em>Getting the tiles from cache, saving downloaded tiles to cache:</em>
+<em>Getting the tiles from cache:</em>
 
 The cache act as layer between fast packages and slow data download. The package
 mostly contain an limited amount of tile data, but warrants fast access to the
 data. The cache is here to manage often used tile data, so they don't have to
 be downloaded on every request. The cache has a limited size and periodically
 removes tile data, which aren't used for a long time. Because of that tile data
-retrieving is not as fast as from the packages.
+retrieving from cache is not as fast as from the packages.
 
-@todo @c VERSION-0.2 Merge cache branch, implement, then finish the doc
+Tile data can be retrieved from initialized cache using tileFromCache().
 
-<em>Downloading tile data:</em>
+<em>Downloading tile data, saving downloaded tiles to cache:</em>
 
 If the raster model supports LoadableFromUrl feature, function tileUrl()
-returns URL of tile data, which the client can then download.
-
-@todo After finishing cache, document tileToCache() here
+returns URL of tile data, which the client can then download. The downloaded
+data should be then saved to cache using tileToCache().
 
 @subsection AbstractRasterModel_Usage_Write Creating map packages
 If the model supports @ref WriteableFormat feature, the data can be not only
@@ -408,7 +407,7 @@ class CORE_EXPORT AbstractRasterModel: public TranslatablePlugin {
 
         /** @copydoc PluginManager::Plugin::Plugin */
         AbstractRasterModel(PluginManager::AbstractPluginManager* manager, const std::string& plugin):
-            TranslatablePlugin(manager, plugin), _online(false), _cache(0) {}
+            TranslatablePlugin(manager, plugin), _online(false) {}
 
         /** @{ @name Utilites */
 
@@ -596,24 +595,6 @@ class CORE_EXPORT AbstractRasterModel: public TranslatablePlugin {
         /** @brief Whether online maps are enabled */
         inline bool online() const { return _online; }
 
-        /**
-         * @brief Set cache for online maps
-         * @param cache     Initialized cache instance or 0.
-         * @return Whether the cache is available. Enabling can fail if cache
-         *      dir is not readable or writable.
-         *
-         * Downloaded tiles can be pushed into cache for later usage.
-         * @todo Hierarchic cache --- passing cache pointer to tileToCache()
-         */
-        inline void setCache(AbstractCache* cache) { _cache = cache; }
-
-        /**
-         * @brief Cache for online maps
-         *
-         * Currently used cache or 0, if no cache is used.
-         */
-        inline AbstractCache* cache() const { return _cache; }
-
         /*@}*/
 
         /** @{ @name Getting map data */
@@ -630,14 +611,15 @@ class CORE_EXPORT AbstractRasterModel: public TranslatablePlugin {
 
         /**
          * @brief Get tile data from cache
+         * @param cache     Initialized cache instance
          * @param layer     Map layer or overlay
          * @param z         Zoom level
          * @param coords    Coordinates
          * @return Tile data (image) or empty string, if tile was not found in
          *      the cache.
-         * @see setCache(), tileToCache()
+         * @see tileToCache()
          */
-        std::string tileFromCache(const std::string& layer, Zoom z, const TileCoords& coords);
+        std::string tileFromCache(AbstractCache* cache, const std::string& layer, Zoom z, const TileCoords& coords);
 
         /**
          * @brief Get tile data from package
@@ -686,15 +668,16 @@ class CORE_EXPORT AbstractRasterModel: public TranslatablePlugin {
 
         /**
          * @brief Save tile to cache
+         * @param cache     Initialized cache instance
          * @param layer     Map layer or overlay
          * @param z         Zoom level
          * @param coords    Coordinates
          * @param data      Tile data
          * @return True if the package was saved to cache (the cache is set with
          *      setCache() and saving succeeded).
-         * @see setCache(), tileFromCache()
+         * @see tileFromCache()
          */
-        bool tileToCache(const std::string& layer, Zoom z, const TileCoords& coords, const std::string& data);
+        bool tileToCache(AbstractCache* cache, const std::string& layer, Zoom z, const TileCoords& coords, const std::string& data);
 
         /**
          * @brief Save tile to package
@@ -725,7 +708,6 @@ class CORE_EXPORT AbstractRasterModel: public TranslatablePlugin {
 
     private:
         bool _online;
-        AbstractCache* _cache;
 };
 
 }}

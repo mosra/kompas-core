@@ -29,16 +29,12 @@ bool AbstractRasterModel::setOnline(bool enabled) {
     return _online;
 }
 
-string AbstractRasterModel::tileFromCache(const string& layer, Zoom z, const TileCoords& coords) {
-    /* No cache set */
-    if(!_cache) return "";
-    return _cache->rasterTile(plugin(), layer, z, coords);
+string AbstractRasterModel::tileFromCache(AbstractCache* cache, const string& layer, Zoom z, const TileCoords& coords) {
+    return cache->rasterTile(plugin(), layer, z, coords);
 }
 
-bool AbstractRasterModel::tileToCache(const std::string& layer, Zoom z, const Kompas::Core::TileCoords& coords, const std::string& data) {
-    /* No cache set */
-    if(!_cache) return false;
-    return _cache->setRasterTile(plugin(), layer, z, coords, data);
+bool AbstractRasterModel::tileToCache(AbstractCache* cache, const std::string& layer, Zoom z, const Kompas::Core::TileCoords& coords, const std::string& data) {
+    return cache->setRasterTile(plugin(), layer, z, coords, data);
 }
 
 }}
