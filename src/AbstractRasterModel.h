@@ -416,10 +416,7 @@ class CORE_EXPORT AbstractRasterModel: public TranslatablePlugin {
          * @param area      %Area size in pixels
          * @return Tile count
          */
-        inline Coords<unsigned int> tilesInArea(const Coords<unsigned int>& area) const {
-            return Coords<unsigned int>((area.x-2)/tileSize().x + 2,
-                                        (area.y-2)/tileSize().y + 2);
-        }
+        Coords<unsigned int> tilesInArea(const Coords<unsigned int>& area) const;
 
         /*@}*/
 

@@ -20,6 +20,12 @@ using namespace std;
 
 namespace Kompas { namespace Core {
 
+Coords<unsigned int> AbstractRasterModel::tilesInArea(const Coords<unsigned int>& area) const {
+    return Coords<unsigned int>(
+        area.x < 2 ? area.x : (area.x-2)/tileSize().x + 2,
+        area.y < 2 ? area.y : (area.y-2)/tileSize().y + 2);
+}
+
 bool AbstractRasterModel::setOnline(bool enabled) {
     if(!enabled || !(features() & LoadableFromUrl))
         _online = false;
