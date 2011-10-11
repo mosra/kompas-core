@@ -30,10 +30,14 @@ bool AbstractRasterModel::setOnline(bool enabled) {
 }
 
 string AbstractRasterModel::tileFromCache(AbstractCache* cache, const string& layer, Zoom z, const TileCoords& coords) {
+    if(!cache)
+        return "";
     return cache->rasterTile(plugin(), layer, z, coords);
 }
 
 bool AbstractRasterModel::tileToCache(AbstractCache* cache, const std::string& layer, Zoom z, const Kompas::Core::TileCoords& coords, const std::string& data) {
+    if(!cache)
+        return false;
     return cache->setRasterTile(plugin(), layer, z, coords, data);
 }
 
