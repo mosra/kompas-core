@@ -190,7 +190,7 @@ string KompasRasterModel::tileFromPackage(const string& layer, Zoom z, const Til
         /* Get archive with given layer or open new */
         map<string, vector<KompasRasterArchiveReader*> >::iterator archives = (*package)->archives.find(layer);
         if(archives == (*package)->archives.end()) {
-            (*package)->archives.insert(pair<string, vector<KompasRasterArchiveReader*> >(layer, vector<KompasRasterArchiveReader*>()));
+            (*package)->archives.insert(make_pair(layer, vector<KompasRasterArchiveReader*>()));
 
             archives = (*package)->archives.find(layer);
         }
@@ -320,7 +320,7 @@ bool KompasRasterModel::tileToPackage(const string& layer, Zoom z, const TileCoo
         unsigned int total = area.w*area.h;
         KompasRasterArchiveMaker* maker = new KompasRasterArchiveMaker(Directory::join(currentlyCreatedPackage->path, prefix.str()), 3, total);
 
-        found = currentlyCreatedPackage->archives.insert(pair<string, KompasRasterArchiveMaker*>(prefix.str(), maker)).first;
+        found = currentlyCreatedPackage->archives.insert(make_pair(prefix.str(), maker)).first;
     }
 
     /* Tile came out of order */
