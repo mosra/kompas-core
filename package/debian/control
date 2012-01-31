@@ -1,7 +1,7 @@
 Source: kompas-core
 Priority: optional
 Maintainer: Vladimír Vondruš <mosra@centrum.cz>
-Build-Depends: debhelper (>= 7.0.50~), cmake (>= 2.6.0)
+Build-Depends: debhelper (>= 7.0.50~), cmake (>= 2.6.0), corrade-dev
 Standards-Version: 3.8.4
 Section: libs
 Homepage: http://mosra.cz/blog/kompas.php
@@ -11,13 +11,13 @@ Vcs-Browser: https://github.com/mosra/kompas-core
 Package: kompas-core-dev
 Section: libdevel
 Architecture: any
-Depends: kompas-core (= ${binary:Version})
+Depends: corrade-dev, kompas-core (= ${binary:Version})
 Description: Kompas Core development files
  Core headers and tools needed for developing for Kompas.
 
 Package: kompas-core
 Section: libs
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: corrade, ${shlibs:Depends}, ${misc:Depends}
 Description: Core library for Kompas navigation software
  Core interfaces and plugin management for Kompas.

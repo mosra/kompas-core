@@ -21,7 +21,7 @@
 #include "Utility/Debug.h"
 
 using namespace std;
-using namespace Kompas::Utility;
+using namespace Corrade::Utility;
 using namespace Kompas::Core;
 
 PLUGIN_REGISTER_STATIC(KompasRasterModel,

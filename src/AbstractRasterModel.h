@@ -406,7 +406,7 @@ class CORE_EXPORT AbstractRasterModel: public TranslatablePlugin {
         };
 
         /** @copydoc PluginManager::Plugin::Plugin */
-        AbstractRasterModel(PluginManager::AbstractPluginManager* manager, const std::string& plugin):
+        AbstractRasterModel(Corrade::PluginManager::AbstractPluginManager* manager, const std::string& plugin):
             TranslatablePlugin(manager, plugin), _online(false) {}
 
         /** @{ @name Utilites */

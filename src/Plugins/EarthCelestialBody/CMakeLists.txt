@@ -1,4 +1,4 @@
-kompas_add_static_plugin(KompasCore_Plugins EarthCelestialBody
+corrade_add_static_plugin(KompasCore_Plugins EarthCelestialBody
     EarthCelestialBody.conf EarthCelestialBody.cpp)
 
 if(WIN32)

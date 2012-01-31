@@ -29,7 +29,7 @@ PLUGIN_REGISTER_STATIC(MercatorProjection,
 
 namespace Kompas { namespace Plugins {
 
-MercatorProjection::MercatorProjection(PluginManager::AbstractPluginManager* manager, const std::string& plugin): AbstractProjection(manager, plugin), stretch(Coords<double>(1, 1)), shift(Coords<double>(0, 0)) {
+MercatorProjection::MercatorProjection(Corrade::PluginManager::AbstractPluginManager* manager, const std::string& plugin): AbstractProjection(manager, plugin), stretch(Coords<double>(1, 1)), shift(Coords<double>(0, 0)) {
     _seams.reserve(3);
     _seams.push_back(LatLonCoords(60, 180));
     _seams.push_back(LatLonCoords(0, 180));

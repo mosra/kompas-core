@@ -112,17 +112,17 @@ template <class PositionType> struct AbsoluteArea {
     }
 };
 
-}
+}}
 
-namespace Utility {
+namespace Corrade { namespace Utility {
 
 /** @copydoc Utility::ConfigurationValue */
-template<class PositionType> struct ConfigurationValue<Core::AbsoluteArea<PositionType> > {
+template<class PositionType> struct ConfigurationValue<Kompas::Core::AbsoluteArea<PositionType> > {
     /**
      * @copydoc Utility::ConfigurationValue::toString()
      * Returns four values separated with spaces.
      */
-    static std::string toString(const Core::AbsoluteArea<PositionType>& value, int flags = 0) {
+    static std::string toString(const Kompas::Core::AbsoluteArea<PositionType>& value, int flags = 0) {
         return
             ConfigurationValue<PositionType>::toString(value.x1, flags) + ' ' +
             ConfigurationValue<PositionType>::toString(value.y1, flags) + ' ' +
@@ -135,11 +135,11 @@ template<class PositionType> struct ConfigurationValue<Core::AbsoluteArea<Positi
      * Expects four values separated with spaces. Missing values are set to
      * zero.
      */
-    static Core::AbsoluteArea<PositionType> fromString(const std::string& stringValue, int flags = 0) {
+    static Kompas::Core::AbsoluteArea<PositionType> fromString(const std::string& stringValue, int flags = 0) {
         std::istringstream i(stringValue);
         std::string x1, y1, x2, y2;
 
-        Core::AbsoluteArea<PositionType> area;
+        Kompas::Core::AbsoluteArea<PositionType> area;
         (i >> x1) && (area.x1 = ConfigurationValue<PositionType>::fromString(x1, flags));
         (i >> y1) && (area.y1 = ConfigurationValue<PositionType>::fromString(y1, flags));
         (i >> x2) && (area.x2 = ConfigurationValue<PositionType>::fromString(x2, flags));
@@ -150,7 +150,7 @@ template<class PositionType> struct ConfigurationValue<Core::AbsoluteArea<Positi
 };
 
 /** @copydoc operator<<(Debug, const T&) */
-template<class PositionType> Debug& operator<<(Debug debug, const Core::AbsoluteArea<PositionType>& value) {
+template<class PositionType> Debug& operator<<(Debug debug, const Kompas::Core::AbsoluteArea<PositionType>& value) {
     std::ostringstream o;
     o << "AbsoluteArea(" << value.x1 << ", " << value.y1 << ", " << value.x2 << ", " << value.y2 << ")";
 

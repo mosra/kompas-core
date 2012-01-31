@@ -282,21 +282,21 @@ bool LatLonCoords::operator==(const LatLonCoords& other) const {
     return false;
 }
 
-}
+}}
 
 #ifndef DOXYGEN_GENERATING_OUTPUT
-namespace Utility {
+namespace Corrade { namespace Utility {
 
-Core::LatLonCoords ConfigurationValue<Core::LatLonCoords>::fromString(const string& stringValue, int flags) {
+Kompas::Core::LatLonCoords ConfigurationValue<Kompas::Core::LatLonCoords>::fromString(const string& stringValue, int flags) {
     double lat, lon;
     istringstream stream(stringValue);
     stream >> lat >> lon;
 
-    if(stream.fail()) return Core::LatLonCoords();
-    return Core::LatLonCoords(lat, lon);
+    if(stream.fail()) return Kompas::Core::LatLonCoords();
+    return Kompas::Core::LatLonCoords(lat, lon);
 }
 
-string ConfigurationValue<Core::LatLonCoords>::toString(const Core::LatLonCoords& value, int flags) {
+string ConfigurationValue<Kompas::Core::LatLonCoords>::toString(const Kompas::Core::LatLonCoords& value, int flags) {
     if(!value.isValid()) return "0";
 
     ostringstream stream;
@@ -306,14 +306,12 @@ string ConfigurationValue<Core::LatLonCoords>::toString(const Core::LatLonCoords
     return stream.str();
 }
 
-Debug& operator<<(Debug debug, const Core::LatLonCoords& value) {
+Debug& operator<<(Debug debug, const Kompas::Core::LatLonCoords& value) {
     std::ostringstream o;
     o << "LatLonCoords(" << value.latitude() << ", " << value.longitude() << ")";
 
     return debug << o.str();
 }
 
-} // namespace Utility
+}}
 #endif
-
-}

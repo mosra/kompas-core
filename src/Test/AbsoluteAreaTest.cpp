@@ -26,8 +26,8 @@ QTEST_APPLESS_MAIN(Kompas::Core::Test::AbsoluteAreaTest)
 Q_DECLARE_METATYPE(UAbsoluteArea)
 
 using namespace std;
+using namespace Corrade::Utility;
 using namespace Kompas::Core;
-using namespace Kompas::Utility;
 
 namespace Kompas { namespace Core { namespace Test {
 

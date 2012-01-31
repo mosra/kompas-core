@@ -23,7 +23,7 @@ namespace Kompas { namespace Plugins { namespace Test {
 
 class KompasMultiRasterModel: public KompasRasterModel {
     public:
-        KompasMultiRasterModel(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
+        KompasMultiRasterModel(Corrade::PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
             KompasRasterModel(manager, plugin) {}
 
         inline int features() const { return KompasRasterModel::features()|MultiplePackages; }

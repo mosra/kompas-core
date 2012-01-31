@@ -21,6 +21,7 @@
 
 #include "PluginManager/Plugin.h"
 #include "Utility/Translator.h"
+#include "utilities.h"
 
 namespace Kompas { namespace Core {
 
@@ -35,12 +36,12 @@ namespace Kompas { namespace Core {
  * dynamic language, so after calling Translator::setLocale() the translations
  * are updated to new language.
  */
-class CORE_EXPORT TranslatablePlugin: public PluginManager::Plugin {
+class CORE_EXPORT TranslatablePlugin: public Corrade::PluginManager::Plugin {
     public:
         /** @copydoc PluginManager::Plugin::Plugin */
-        TranslatablePlugin(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""): Plugin(manager, plugin) {
+        TranslatablePlugin(Corrade::PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""): Plugin(manager, plugin) {
             if(!configuration()) return;
-            const Utility::ConfigurationGroup* g = configuration()->group("translation");
+            const Corrade::Utility::ConfigurationGroup* g = configuration()->group("translation");
             translator.setPrimary(g, true);
             translator.setFallback(g);
         }
@@ -53,7 +54,7 @@ class CORE_EXPORT TranslatablePlugin: public PluginManager::Plugin {
         inline const std::string* tr(const std::string& key) { return translator.get(key); }
 
     private:
-        Utility::Translator translator;
+        Corrade::Utility::Translator translator;
 };
 
 }}

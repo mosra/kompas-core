@@ -1,4 +1,4 @@
-kompas_add_static_plugin(KompasCore_Plugins MercatorProjection
+corrade_add_static_plugin(KompasCore_Plugins MercatorProjection
     MercatorProjection.conf MercatorProjection.cpp)
 
 if(WIN32)

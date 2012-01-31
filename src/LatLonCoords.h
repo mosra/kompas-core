@@ -23,6 +23,7 @@
 
 #include "Utility/ConfigurationGroup.h"
 #include "Utility/Debug.h"
+#include "utilities.h"
 
 namespace Kompas { namespace Core {
 
@@ -197,33 +198,31 @@ class CORE_EXPORT LatLonCoords {
         static void decimalToDms(double decimal, int precision, bool skipTrailingZeros, const std::vector<std::string>& formatters, std::ostringstream& out);
 };
 
-}
+}}
 
-namespace Utility {
+namespace Corrade { namespace Utility {
 
 /** @copydoc Utility::ConfigurationValue */
-template<> struct CORE_EXPORT ConfigurationValue<Core::LatLonCoords> {
+template<> struct CORE_EXPORT ConfigurationValue<Kompas::Core::LatLonCoords> {
     /**
      * @copydoc Utility::ConfigurationValue::fromString()
      * Expects two values separated with space. If the configuration string
      * doesn't contain both numeric coordinates, invalid coordinates are
      * returned.
      */
-    static Core::LatLonCoords fromString(const std::string& stringValue, int flags);
+    static Kompas::Core::LatLonCoords fromString(const std::string& stringValue, int flags);
 
     /**
      * @copydoc Utility::ConfigurationValue::toString()
      * Returns two values separated with space. Invalid coordinates are
      * converted to single zero character.
      */
-    static std::string toString(const Core::LatLonCoords& value, int flags);
+    static std::string toString(const Kompas::Core::LatLonCoords& value, int flags);
 };
 
 /** @copydoc operator<<(Debug, const T&) */
-Debug& operator<<(Debug debug, const Core::LatLonCoords& value);
+Debug& operator<<(Debug debug, const Kompas::Core::LatLonCoords& value);
 
-}
-
-}
+}}
 
 #endif

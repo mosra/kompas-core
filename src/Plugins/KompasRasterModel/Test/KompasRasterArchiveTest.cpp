@@ -29,7 +29,7 @@
 QTEST_APPLESS_MAIN(Kompas::Plugins::Test::KompasRasterArchiveTest)
 
 using namespace std;
-using namespace Kompas::Utility;
+using namespace Corrade::Utility;
 
 namespace Kompas { namespace Plugins { namespace Test {
 

@@ -30,7 +30,7 @@ namespace Kompas { namespace Core {
 See also AbstractNetworkCache, which can be used as convenient base for network
 caches.
 */
-class AbstractCache: public PluginManager::Plugin {
+class AbstractCache: public Corrade::PluginManager::Plugin {
     PLUGIN_INTERFACE("cz.mosra.Kompas.Core.AbstractCache/0.2")
 
     public:
@@ -57,7 +57,7 @@ class AbstractCache: public PluginManager::Plugin {
         };
 
         /** @copydoc PluginManager::Plugin::Plugin */
-        inline AbstractCache(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
+        inline AbstractCache(Corrade::PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
             Plugin(manager, plugin) {}
 
         /**

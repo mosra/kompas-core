@@ -35,7 +35,7 @@ namespace Kompas { namespace Plugins {
 class CORE_EXPORT KompasRasterModel: public Core::AbstractRasterModel {
     public:
         /** @copydoc Core::AbstractRasterModel::AbstractRasterModel */
-        inline KompasRasterModel(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""): AbstractRasterModel(manager, plugin), currentPackageZoom(0), currentlyCreatedPackage(0) {
+        inline KompasRasterModel(Corrade::PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""): AbstractRasterModel(manager, plugin), currentPackageZoom(0), currentlyCreatedPackage(0) {
             extensions.push_back("*.conf");
         }
 
@@ -94,7 +94,7 @@ class CORE_EXPORT KompasRasterModel: public Core::AbstractRasterModel {
          * Called from addPackage(). Checks configuration file version and
          * fills in package data.
          */
-        virtual Package* parsePackage(const Utility::Configuration* conf);
+        virtual Package* parsePackage(const Corrade::Utility::Configuration* conf);
 
         /**
          * @brief Get tile from given archive
@@ -119,8 +119,8 @@ class CORE_EXPORT KompasRasterModel: public Core::AbstractRasterModel {
 
     private:
         struct CurrentlyCreatedPackage {
-            CurrentlyCreatedPackage(const std::string& filename): conf(filename, Utility::Configuration::Truncate), minZoom(0) {}
-            Utility::Configuration conf;
+            CurrentlyCreatedPackage(const std::string& filename): conf(filename, Corrade::Utility::Configuration::Truncate), minZoom(0) {}
+            Corrade::Utility::Configuration conf;
             std::string path;
             std::map<std::string, KompasRasterArchiveMaker*> archives;
             Core::TileArea area;

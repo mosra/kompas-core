@@ -29,7 +29,7 @@ namespace Kompas { namespace Plugins {
 class EarthCelestialBody: public Core::AbstractCelestialBody {
     public:
         /** @copydoc Core::AbstractCelestialBody::AbstractCelestialBody */
-        EarthCelestialBody(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""): AbstractCelestialBody(manager, plugin) {}
+        EarthCelestialBody(Corrade::PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""): AbstractCelestialBody(manager, plugin) {}
 
         /** @todo Which values are closer to reality? */
         inline double equatorialRadius() const { return 6378137; }

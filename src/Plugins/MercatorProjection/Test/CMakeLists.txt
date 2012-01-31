@@ -1,2 +1,2 @@
-kompas_add_test(MercatorProjectionTest
+corrade_add_test(MercatorProjectionTest
     MercatorProjectionTest.h MercatorProjectionTest.cpp KompasCore)

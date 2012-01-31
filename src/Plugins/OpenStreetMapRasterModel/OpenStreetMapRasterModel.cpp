@@ -27,7 +27,7 @@ PLUGIN_REGISTER_STATIC(OpenStreetMapRasterModel,
 
 namespace Kompas { namespace Plugins {
 
-OpenStreetMapRasterModel::OpenStreetMapRasterModel(PluginManager::AbstractPluginManager* manager, const std::string& plugin): KompasRasterModel(manager, plugin), areaOnline(0, 0, 1, 1) {
+OpenStreetMapRasterModel::OpenStreetMapRasterModel(Corrade::PluginManager::AbstractPluginManager* manager, const std::string& plugin): KompasRasterModel(manager, plugin), areaOnline(0, 0, 1, 1) {
     /* All zoom levels for online maps */
     for(Zoom i = 0; i != 19; ++i)
         zoomLevelsOnline.insert(i);

@@ -24,7 +24,7 @@ Q_DECLARE_METATYPE(Kompas::Core::LatLonCoords)
 Q_DECLARE_METATYPE(std::string)
 
 using namespace std;
-using namespace Kompas::Utility;
+using namespace Corrade::Utility;
 
 namespace Kompas { namespace Core { namespace Test {
 

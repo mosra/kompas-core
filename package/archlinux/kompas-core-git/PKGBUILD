@@ -6,6 +6,7 @@ pkgdesc="Core library for Kompas navigation software (Git version)"
 arch=('i686' 'x86_64')
 url="http://mosra.cz/blog/kompas.php"
 license=('LGPLv3')
+depends=('corrade')
 makedepends=('cmake' 'git')
 provides=('kompas-core')
 conflicts=('kompas-core')

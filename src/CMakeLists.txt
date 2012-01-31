@@ -1,6 +1,6 @@
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic")
 
-include_directories(${KOMPAS_CORE_INCLUDE_DIR} ${KOMPAS_PLUGINS_INCLUDE_DIR})
+include_directories(${CORRADE_INCLUDE_DIR} ${KOMPAS_CORE_INCLUDE_DIR} ${KOMPAS_PLUGINS_INCLUDE_DIR})
 
 if(BUILD_TESTS)
     # Don't display long long warnings for Qt
@@ -8,9 +8,7 @@ if(BUILD_TESTS)
     include_directories(${QT_INCLUDE_DIR})
 endif()
 
-add_subdirectory(PluginManager)
 add_subdirectory(Plugins)
-add_subdirectory(Utility)
 
 set(Kompas_Core_SRCS
     LatLonCoords.cpp
@@ -21,7 +19,7 @@ set(Kompas_Core_SRCS
 )
 
 add_library(KompasCore SHARED ${Kompas_Core_SRCS})
-target_link_libraries(KompasCore KompasUtility KompasPluginManager ${KompasCore_Plugins})
+target_link_libraries(KompasCore ${CORRADE_UTILITY_LIBRARY} ${CORRADE_PLUGINMANAGER_LIBRARY} ${KompasCore_Plugins})
 set_target_properties(KompasCore PROPERTIES VERSION ${KOMPAS_CORE_LIBRARY_VERSION} SOVERSION ${KOMPAS_CORE_LIBRARY_SOVERSION})
 
 if(WIN32)
@@ -32,7 +30,9 @@ install(TARGETS KompasCore DESTINATION ${KOMPAS_LIBRARY_INSTALL_DIR})
 
 # Include also runtime libs for Win32
 if(WIN32)
-    kompas_bundle_dlls(${KOMPAS_LIBRARY_INSTALL_DIR}
+    corrade_bundle_dlls(${KOMPAS_LIBRARY_INSTALL_DIR}
+        libCorradeUtility.dll
+        libCorradePluginManager.dll
         libgcc_s_sjlj-1.dll
         libstdc++-6.dll
         mingwm10.dll

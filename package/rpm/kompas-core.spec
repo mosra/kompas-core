@@ -12,6 +12,8 @@ Source: https://github.com/mosra/%{name}/tarball/v%{version}/%{name}-%{version}.
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: gcc-c++
 BuildRequires: cmake >= 2.6.0
+BuildRequires: corrade-devel
+Requires: corrade
 
 Summary: Core library for Kompas navigation software
 
@@ -26,6 +28,7 @@ Group: Development/Libraries
 %endif
 Summary: Kompas Core development files
 Requires: %{name} = %{version}
+Requires: corrade-devel
 
 %description devel
 Core headers and tools needed for developing for Kompas.
@@ -60,7 +63,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(-,root,root,-)
-%{_prefix}/bin/kompas-rc
 %{_prefix}/include/Kompas
 %{_prefix}/share/*/Modules
 %{_prefix}/lib*/*.so

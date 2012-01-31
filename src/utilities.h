@@ -1,5 +1,5 @@
-#ifndef Kompas_Utility_Test_TranslatorTest_h
-#define Kompas_Utility_Test_TranslatorTest_h
+#ifndef Kompas_utilities_h
+#define Kompas_utilities_h
 /*
     Copyright © 2007, 2008, 2009, 2010, 2011 Vladimír Vondruš <mosra@centrum.cz>
 
@@ -15,19 +15,18 @@
     GNU Lesser General Public License version 3 for more details.
 */
 
-#include <QtCore/QObject>
+/** @file
+ * @brief Utilities
+ */
 
-namespace Kompas { namespace Utility { namespace Test {
-
-class TranslatorTest: public QObject {
-    Q_OBJECT
-
-    private slots:
-        void file();
-        void group();
-        void dynamic();
-};
-
-}}}
+#ifdef _WIN32
+#ifdef CORE_EXPORTING
+    #define CORE_EXPORT __declspec(dllexport)
+#else
+    #define CORE_EXPORT __declspec(dllimport)
+#endif
+#else
+    #define CORE_EXPORT
+#endif
 
 #endif

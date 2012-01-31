@@ -112,17 +112,17 @@ template <class PositionType, class SizeType> struct Area {
     }
 };
 
-}
+}}
 
-namespace Utility {
+namespace Corrade { namespace Utility {
 
 /** @copydoc Utility::ConfigurationValue */
-template<class PositionType, class SizeType> struct ConfigurationValue<Core::Area<PositionType, SizeType> > {
+template<class PositionType, class SizeType> struct ConfigurationValue<Kompas::Core::Area<PositionType, SizeType> > {
     /**
      * @copydoc Utility::ConfigurationValue::toString()
      * Returns four values separated with spaces.
      */
-    static std::string toString(const Core::Area<PositionType, SizeType>& value, int flags = 0) {
+    static std::string toString(const Kompas::Core::Area<PositionType, SizeType>& value, int flags = 0) {
         return
             ConfigurationValue<PositionType>::toString(value.x, flags) + ' ' +
             ConfigurationValue<PositionType>::toString(value.y, flags) + ' ' +
@@ -135,11 +135,11 @@ template<class PositionType, class SizeType> struct ConfigurationValue<Core::Are
      * Expects four values separated with spaces. Missing values are set to
      * zero.
      */
-    static Core::Area<PositionType, SizeType> fromString(const std::string& stringValue, int flags = 0) {
+    static Kompas::Core::Area<PositionType, SizeType> fromString(const std::string& stringValue, int flags = 0) {
         std::istringstream i(stringValue);
         std::string x, y, w, h;
 
-        Core::Area<PositionType, SizeType> area;
+        Kompas::Core::Area<PositionType, SizeType> area;
         (i >> x) && (area.x = ConfigurationValue<PositionType>::fromString(x, flags));
         (i >> y) && (area.y = ConfigurationValue<PositionType>::fromString(y, flags));
         (i >> w) && (area.w = ConfigurationValue<SizeType>::fromString(w, flags));
@@ -150,7 +150,7 @@ template<class PositionType, class SizeType> struct ConfigurationValue<Core::Are
 };
 
 /** @copydoc operator<<(Debug, const T&) */
-template<class PositionType, class SizeType> Debug& operator<<(Debug debug, const Core::Area<PositionType, SizeType>& value) {
+template<class PositionType, class SizeType> Debug& operator<<(Debug debug, const Kompas::Core::Area<PositionType, SizeType>& value) {
     std::ostringstream o;
     o << "Area(" << value.x << ", " << value.y << ", " << value.w << ", " << value.h << ")";
 

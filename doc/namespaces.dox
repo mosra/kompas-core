@@ -18,23 +18,6 @@ Plugin interfaces:
 
 */
 
-/** @namespace Kompas::Utility
-@brief Simple utitlities
-
-This library contains utility classes used by all other Kompas parts, like debug
-and error output (class Debug), directory listing (class Directory), access to
-configuration files (class Configuration), on which is based translation support
-(class Translator) or compiling data files into the executable (class Resource).
-*/
-
-/** @namespace Kompas::PluginManager
-@brief %Plugin management
-
-This library contains plugin manager, which takes care of loading, unloading
-and instancing plugins. There is also an Plugin class, which is the base of all
-plugins. See @ref PluginManagement for a brief introduction to how plugins work.
-*/
-
 /** @namespace Kompas::Plugins
 @brief All plugins go here
 */

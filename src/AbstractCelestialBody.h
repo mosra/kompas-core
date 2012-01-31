@@ -28,12 +28,12 @@ namespace Kompas { namespace Core {
 /**
  * @brief Abstract class for celestial bodies
  */
-class CORE_EXPORT AbstractCelestialBody: public PluginManager::Plugin {
+class CORE_EXPORT AbstractCelestialBody: public Corrade::PluginManager::Plugin {
     PLUGIN_INTERFACE("cz.mosra.Kompas.Core.AbstractCelestialBody/0.2")
 
     public:
         /** @copydoc PluginManager::Plugin::Plugin() */
-        inline AbstractCelestialBody(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
+        inline AbstractCelestialBody(Corrade::PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
             Plugin(manager, plugin) {}
 
         /**

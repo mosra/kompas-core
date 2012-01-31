@@ -52,7 +52,7 @@ Coordinate calculation based on http://wiki.openstreetmap.org/wiki/Slippy_map_ti
 class CORE_EXPORT MercatorProjection: public Core::AbstractProjection {
     public:
         /** @copydoc Core::AbstractProjection::AbstractProjection */
-        MercatorProjection(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = "");
+        MercatorProjection(Corrade::PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = "");
 
         Core::Coords<double> fromLatLon(const Core::LatLonCoords& coords) const;
         Core::LatLonCoords toLatLon(const Core::Coords<double>& coords) const;

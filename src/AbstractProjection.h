@@ -30,12 +30,12 @@ namespace Kompas { namespace Core {
  *
  * Provides converting to and from lat/lon coordinates.
  */
-class AbstractProjection: public PluginManager::Plugin {
+class AbstractProjection: public Corrade::PluginManager::Plugin {
     PLUGIN_INTERFACE("cz.mosra.Kompas.Core.AbstractProjection/0.2")
 
     public:
         /** @copydoc PluginManager::Plugin::Plugin */
-        inline AbstractProjection(PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
+        inline AbstractProjection(Corrade::PluginManager::AbstractPluginManager* manager = 0, const std::string& plugin = ""):
             Plugin(manager, plugin) {}
 
         /**

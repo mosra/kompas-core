@@ -1,4 +1,4 @@
-kompas_add_static_plugin(KompasCore_Plugins
+corrade_add_static_plugin(KompasCore_Plugins
     OpenStreetMapRasterModel OpenStreetMapRasterModel.conf OpenStreetMapRasterModel.cpp)
 
 if(WIN32)

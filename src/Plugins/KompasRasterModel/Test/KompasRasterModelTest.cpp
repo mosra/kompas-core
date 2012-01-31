@@ -25,7 +25,7 @@
 QTEST_APPLESS_MAIN(Kompas::Plugins::Test::KompasRasterModelTest)
 
 using namespace std;
-using namespace Kompas::Utility;
+using namespace Corrade::Utility;
 using namespace Kompas::Core;
 
 namespace Kompas { namespace Plugins { namespace Test {

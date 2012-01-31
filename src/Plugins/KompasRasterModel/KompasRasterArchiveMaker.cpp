@@ -18,7 +18,7 @@
 #include "Utility/Endianness.h"
 
 using namespace std;
-using namespace Kompas::Utility;
+using namespace Corrade::Utility;
 
 namespace Kompas { namespace Plugins {
 
