@@ -7,8 +7,7 @@ arch=('i686' 'x86_64')
 url="http://mosra.cz/blog/kompas.php"
 license=('LGPLv3')
 depends=('corrade')
-makedepends=('cmake')
-optdepends=('qt')
+makedepends=('cmake' 'qt')
 options=(!strip)
 
 build() {
@@ -20,6 +19,11 @@ build() {
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DBUILD_TESTS=TRUE
     make
+}
+
+check() {
+    cd "$startdir/build"
+    ctest
 }
 
 package() {
