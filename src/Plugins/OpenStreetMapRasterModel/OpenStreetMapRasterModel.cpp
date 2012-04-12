@@ -21,9 +21,8 @@
 using namespace std;
 using namespace Kompas::Core;
 
-PLUGIN_REGISTER_STATIC(OpenStreetMapRasterModel,
-                       Kompas::Plugins::OpenStreetMapRasterModel,
-                       "cz.mosra.Kompas.Core.AbstractRasterModel/0.2")
+PLUGIN_REGISTER(OpenStreetMapRasterModel, Kompas::Plugins::OpenStreetMapRasterModel,
+                "cz.mosra.Kompas.Core.AbstractRasterModel/0.2")
 
 namespace Kompas { namespace Plugins {
 

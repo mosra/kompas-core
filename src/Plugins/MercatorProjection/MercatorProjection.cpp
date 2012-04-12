@@ -23,9 +23,8 @@
 using namespace std;
 using namespace Kompas::Core;
 
-PLUGIN_REGISTER_STATIC(MercatorProjection,
-    Kompas::Plugins::MercatorProjection,
-    "cz.mosra.Kompas.Core.AbstractProjection/0.2")
+PLUGIN_REGISTER(MercatorProjection, Kompas::Plugins::MercatorProjection,
+                "cz.mosra.Kompas.Core.AbstractProjection/0.2")
 
 namespace Kompas { namespace Plugins {
 

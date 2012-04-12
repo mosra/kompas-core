@@ -24,9 +24,8 @@ using namespace std;
 using namespace Corrade::Utility;
 using namespace Kompas::Core;
 
-PLUGIN_REGISTER_STATIC(KompasRasterModel,
-                       Kompas::Plugins::KompasRasterModel,
-                       "cz.mosra.Kompas.Core.AbstractRasterModel/0.2")
+PLUGIN_REGISTER(KompasRasterModel, Kompas::Plugins::KompasRasterModel,
+                "cz.mosra.Kompas.Core.AbstractRasterModel/0.2")
 
 namespace Kompas { namespace Plugins {
 

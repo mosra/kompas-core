@@ -15,6 +15,5 @@
 
 #include "EarthCelestialBody.h"
 
-PLUGIN_REGISTER_STATIC(EarthCelestialBody,
-                       Kompas::Plugins::EarthCelestialBody,
-                       "cz.mosra.Kompas.Core.AbstractCelestialBody/0.2")
+PLUGIN_REGISTER(EarthCelestialBody, Kompas::Plugins::EarthCelestialBody,
+                "cz.mosra.Kompas.Core.AbstractCelestialBody/0.2")
